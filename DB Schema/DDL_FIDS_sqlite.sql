@@ -1,8 +1,10 @@
 PRAGMA foreign_keys = ON;
-
 -- =============================
 -- Table: Airports
 -- Stores airport information including location and status.
+-- Author: Lee
+-- Date Created: 2025-04-11
+-- Last Modified: 2025-04-11
 -- =============================
 CREATE TABLE Airports (
     AirportCode TEXT NOT NULL PRIMARY KEY,
@@ -16,6 +18,9 @@ CREATE TABLE Airports (
 -- =============================
 -- Table: Airlines
 -- Stores airline information including status.
+-- Author: Lee
+-- Date Created: 2025-04-11
+-- Last Modified: 2025-04-11
 -- =============================
 CREATE TABLE Airlines (
     AirlineCode TEXT NOT NULL PRIMARY KEY,
@@ -27,6 +32,9 @@ CREATE TABLE Airlines (
 -- =============================
 -- Table: Remarks
 -- Stores remark codes and descriptions for flight status.
+-- Author: Lee
+-- Date Created: 2025-04-11
+-- Last Modified: 2025-04-11
 -- =============================
 CREATE TABLE Remarks (
     RemarkCode TEXT NOT NULL PRIMARY KEY,
@@ -36,17 +44,11 @@ CREATE TABLE Remarks (
 );
 
 -- =============================
--- Table: FlightStatus
--- Stores the overall status of flights.
--- =============================
-CREATE TABLE FlightStatus (
-    StatusCode TEXT NOT NULL PRIMARY KEY,
-    Description TEXT NOT NULL
-);
-
--- =============================
 -- Table: Roles
 -- Stores system user roles.
+-- Author: Lee
+-- Date Created: 2025-04-11
+-- Last Modified: 2025-04-11
 -- =============================
 CREATE TABLE Roles (
     RoleID TEXT NOT NULL PRIMARY KEY,
@@ -57,6 +59,9 @@ CREATE TABLE Roles (
 -- =============================
 -- Table: Users
 -- Stores user information including linked airline and airport.
+-- Author: Lee
+-- Date Created: 2025-04-11
+-- Last Modified: 2025-04-11
 -- =============================
 CREATE TABLE Users (
     UserID TEXT NOT NULL PRIMARY KEY,
@@ -71,6 +76,9 @@ CREATE TABLE Users (
 -- =============================
 -- Table: UserRoles
 -- Assigns roles to users (many-to-many relationship).
+-- Author: Lee
+-- Date Created: 2025-04-11
+-- Last Modified: 2025-04-11
 -- =============================
 CREATE TABLE UserRoles (
     UserRoleID TEXT NOT NULL PRIMARY KEY,
@@ -84,6 +92,9 @@ CREATE TABLE UserRoles (
 -- =============================
 -- Table: ActiveFlightSchedules
 -- Stores active flight schedules, including timing, locations, and remarks.
+-- Author: Lee
+-- Date Created: 2025-04-11
+-- Last Modified: 2025-04-11
 -- =============================
 CREATE TABLE ActiveFlightSchedules (
     FlightId INTEGER PRIMARY KEY AUTOINCREMENT,
