@@ -1,5 +1,8 @@
 -- =============================
 -- Sample Data: Airports
+-- Author: Jiyeong Oh
+-- Date Created: 2025-04-11
+-- Last Modified: 2025-04-11
 -- =============================
 INSERT INTO Airports (AirportCode, AirportName, City, Country, UseYn) VALUES
 ('JFK', 'John F. Kennedy International Airport', 'New York', 'USA', 'Y'),
@@ -8,6 +11,9 @@ INSERT INTO Airports (AirportCode, AirportName, City, Country, UseYn) VALUES
 
 -- =============================
 -- Sample Data: Airlines
+-- Author: Jiyeong Oh
+-- Date Created: 2025-04-11
+-- Last Modified: 2025-04-11
 -- =============================
 INSERT INTO Airlines (AirlineCode, AirlineName, UseYn) VALUES
 ('AA', 'American Airlines', 'Y'),
@@ -16,6 +22,9 @@ INSERT INTO Airlines (AirlineCode, AirlineName, UseYn) VALUES
 
 -- =============================
 -- Sample Data: Remarks
+-- Author: Jiyeong Oh
+-- Date Created: 2025-04-11
+-- Last Modified: 2025-04-11
 -- =============================
 INSERT INTO Remarks (RemarkCode, RemarkName, UseYn) VALUES
 ('PRG', 'Progressing', 'Y'),
@@ -28,6 +37,9 @@ INSERT INTO Remarks (RemarkCode, RemarkName, UseYn) VALUES
 
 -- =============================
 -- Sample Data: Roles
+-- Author: Jiyeong Oh
+-- Date Created: 2025-04-11
+-- Last Modified: 2025-04-11
 -- =============================
 INSERT INTO Roles (RoleID, RoleName) VALUES
 ('ADMIN', 'Administrator'),
@@ -38,6 +50,9 @@ INSERT INTO Roles (RoleID, RoleName) VALUES
 -- Sample Data: Users
 -- Passwords are hashed (use SHA-256 or better in production!)
 -- Here simple text for demonstration
+-- Author: Jiyeong Oh
+-- Date Created: 2025-04-11
+-- Last Modified: 2025-04-11
 -- =============================
 INSERT INTO Users (UserID, UserName, Password, AirportCode, AirlineCode) VALUES
 ('user01', 'Alice Johnson', '5e884898da28047151d0e56f8dc62927', 'JFK', 'AA'),
@@ -46,6 +61,9 @@ INSERT INTO Users (UserID, UserName, Password, AirportCode, AirlineCode) VALUES
 
 -- =============================
 -- Sample Data: UserRoles
+-- Author: Jiyeong Oh
+-- Date Created: 2025-04-11
+-- Last Modified: 2025-04-11
 -- =============================
 INSERT INTO UserRoles (UserRoleID, UserID, RoleID) VALUES
 ('UR01', 'user01', 'ADMIN'),
@@ -54,6 +72,9 @@ INSERT INTO UserRoles (UserRoleID, UserID, RoleID) VALUES
 
 -- =============================
 -- Sample Data: ActiveFlightSchedules
+-- Author: Jiyeong Oh
+-- Date Created: 2025-04-11
+-- Last Modified: 2025-04-11
 -- =============================
 INSERT INTO ActiveFlightSchedules (FlightNumber, AirportCode, AirlineCode, ScheduledDate, ScheduledTime, EstimatedDate, EstimatedTime, OriginDestAirport, Remarks) VALUES
 ('1001', 'JFK', 'AA', '20250415', '0800', '20250415', '0815', 'LAX', 'PRG'),

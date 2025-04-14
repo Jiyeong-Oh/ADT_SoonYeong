@@ -3,7 +3,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- =============================
 -- Table: Airports
 -- Stores airport information including location and status.
--- Author: Lee
+-- Author: Soon-Hyuck Lee
 -- Date Created: 2025-04-11
 -- Last Modified: 2025-04-11
 -- =============================
@@ -20,7 +20,7 @@ CREATE TABLE Airports (
 -- =============================
 -- Table: Airlines
 -- Stores airline information including status.
--- Author: Lee
+-- Author: Soon-Hyuck Lee
 -- Date Created: 2025-04-11
 -- Last Modified: 2025-04-11
 -- =============================
@@ -35,7 +35,7 @@ CREATE TABLE Airlines (
 -- =============================
 -- Table: Remarks
 -- Stores remark codes and descriptions for flight status.
--- Author: Lee
+-- Author: Soon-Hyuck Lee
 -- Date Created: 2025-04-11
 -- Last Modified: 2025-04-11
 -- =============================
@@ -50,7 +50,7 @@ CREATE TABLE Remarks (
 -- =============================
 -- Table: Roles
 -- Stores system user roles.
--- Author: Lee
+-- Author: Soon-Hyuck Lee
 -- Date Created: 2025-04-11
 -- Last Modified: 2025-04-11
 -- =============================
@@ -64,7 +64,7 @@ CREATE TABLE Roles (
 -- =============================
 -- Table: Users
 -- Stores user information including linked airline and airport.
--- Author: Lee
+-- Author: Soon-Hyuck Lee
 -- Date Created: 2025-04-11
 -- Last Modified: 2025-04-11
 -- =============================
@@ -82,7 +82,7 @@ CREATE TABLE Users (
 -- =============================
 -- Table: UserRoles
 -- Assigns roles to users (many-to-many relationship).
--- Author: Lee
+-- Author: Soon-Hyuck Lee
 -- Date Created: 2025-04-11
 -- Last Modified: 2025-04-11
 -- =============================
@@ -99,7 +99,7 @@ CREATE TABLE UserRoles (
 -- =============================
 -- Table: ActiveFlightSchedules
 -- Stores active flight schedules, including timing, locations, and remarks.
--- Author: Lee
+-- Author: Soon-Hyuck Lee
 -- Date Created: 2025-04-11
 -- Last Modified: 2025-04-11
 -- =============================
