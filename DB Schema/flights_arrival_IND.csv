@@ -1,0 +1,145 @@
+Airline,Flight #,Origin,ETA,Gate #,Status,AirlineCode,AirportCode,ScheduledDate,ScheduledTime,EstimatedDate,OriginDestAirport,BoardingGate,EstimatedTime,Remarks,FlightNumber
+https://www.ind.com/assets/images/airlines/aa.png,AA 4585,Boston,12:10 am,RMTE,Arrived,AA,IND,20250415,0010,20250415,Boston,RMTE,0010,Arr,4585
+https://www.ind.com/assets/images/airlines/aa.png,AA 1033,Charlotte,2:23 am,B9,Arrived,AA,IND,20250415,0223,20250415,Charlotte,B9,0223,Arr,1033
+https://www.ind.com/assets/images/airlines/aa.png,AA 2919,Chicago/O'Hare,12:41 am,B7,Arrived,AA,IND,20250415,0041,20250415,Chicago/O'Hare,B7,0041,Arr,2919
+https://www.ind.com/assets/images/airlines/wn.png,WN 3226,San Diego,12:11 am,B23,Arrived,WN,IND,20250415,0011,20250415,San Diego,B23,0011,Arr,3226
+https://www.ind.com/assets/images/airlines/wn.png,WN 4050,Las Vegas,12:26 am,B21,Arrived,WN,IND,20250415,0026,20250415,Las Vegas,B21,0026,Arr,4050
+https://www.ind.com/assets/images/airlines/sy.png,SY 8690,Long Beach,1:30 am,A22,Arrived,SY,IND,20250415,0130,20250415,Long Beach,A22,0130,Arr,8690
+https://www.ind.com/assets/images/airlines/sy.png,SY 8688,Long Beach,2:25 am,A22,Arrived,SY,IND,20250415,0225,20250415,Long Beach,A22,0225,Arr,8688
+https://www.ind.com/assets/images/airlines/nk.png,NK 426,Las Vegas,3:55 am,A20,Arrived,NK,IND,20250415,0355,20250415,Las Vegas,A20,0355,Arr,426
+https://www.ind.com/assets/images/airlines/ua.png,UA 1603,San Francisco,5:52 am,A25,Arrived,UA,IND,20250415,0552,20250415,San Francisco,A25,0552,Arr,1603
+https://www.ind.com/assets/images/airlines/dl.png,DL 909,Los Angeles,5:49 am,A5,Arrived,DL,IND,20250415,0549,20250415,Los Angeles,A5,0549,Arr,909
+https://www.ind.com/assets/images/airlines/wn.png,WN 743,Tampa,8:06 am,B22,Arrived,WN,IND,20250415,0806,20250415,Tampa,B22,0806,Arr,743
+https://www.ind.com/assets/images/airlines/aa.png,AA 4679,Washington DC,8:37 am,B14,Arrived,AA,IND,20250415,0837,20250415,Washington DC,B14,0837,Arr,4679
+https://www.ind.com/assets/images/airlines/dl.png,DL 3125,Atlanta,8:40 am,A6,Arrived,DL,IND,20250415,0840,20250415,Atlanta,A6,0840,Arr,3125
+https://www.ind.com/assets/images/airlines/nk.png,NK 365,Ft. Lauderdale,8:47 am,A20,Arrived,NK,IND,20250415,0847,20250415,Ft. Lauderdale,A20,0847,Arr,365
+https://www.ind.com/assets/images/airlines/wn.png,WN 1514,Fort Myers,8:55 am,B21,Arrived,WN,IND,20250415,0855,20250415,Fort Myers,B21,0855,Arr,1514
+https://www.ind.com/assets/images/airlines/ua.png,UA 5717,Chicago/O'Hare,9:25 am,A17,Arrived,UA,IND,20250415,0925,20250415,Chicago/O'Hare,A17,0925,Arr,5717
+https://www.ind.com/assets/images/airlines/g4.png,G4 2795,Savannah/Hilton,9:26 am,B4,Arrived,G4,IND,20250415,0926,20250415,Savannah/Hilton,B4,0926,Arr,2795
+https://www.ind.com/assets/images/airlines/dl.png,DL 5593,Detroit,9:28 am,A7,Arrived,DL,IND,20250415,0928,20250415,Detroit,A7,0928,Arr,5593
+https://www.ind.com/assets/images/airlines/aa.png,AA 3963,Chicago/O'Hare,9:31 am,B6,Arrived,AA,IND,20250415,0931,20250415,Chicago/O'Hare,B6,0931,Arr,3963
+https://www.ind.com/assets/images/airlines/aa.png,AA 4489,Indianapolis,8:08 am,B6,Arrived,AA,IND,20250415,0808,20250415,Indianapolis,B6,0808,Arr,4489
+https://www.ind.com/assets/images/airlines/aa.png,AA 4725,Boston,9:31 am,B13,Arrived,AA,IND,20250415,0931,20250415,Boston,B13,0931,Arr,4725
+https://www.ind.com/assets/images/airlines/wn.png,WN 1529,Orlando Int'l,10:02 am,B20,Arrived,WN,IND,20250415,1002,20250415,Orlando Int'l,B20,1002,Arr,1529
+https://www.ind.com/assets/images/airlines/ua.png,UA 3561,Wash. Dulles,10:20 am,A25,Arrived,UA,IND,20250415,1020,20250415,Wash. Dulles,A25,1020,Arr,3561
+https://www.ind.com/assets/images/airlines/aa.png,AA 5420,Philadelphia,12:25 pm,B10,Arrived,AA,IND,20250415,1225,20250415,Philadelphia,B10,1225,Arr,5420
+https://www.ind.com/assets/images/airlines/f9.png,F9 3202,Dallas-Ft. Worth,10:14 am,A3,Arrived,F9,IND,20250415,1014,20250415,Dallas-Ft. Worth,A3,1014,Arr,3202
+https://www.ind.com/assets/images/airlines/dl.png,DL 5705,New York/LGA,10:05 am,A8,Arrived,DL,IND,20250415,1005,20250415,New York/LGA,A8,1005,Arr,5705
+https://www.ind.com/assets/images/airlines/aa.png,AA 1506,Dallas-Ft. Worth,10:07 am,B9,Arrived,AA,IND,20250415,1007,20250415,Dallas-Ft. Worth,B9,1007,Arr,1506
+https://www.ind.com/assets/images/airlines/wn.png,WN 2155,Baltimore,11:25 am,B23,Arrived,WN,IND,20250415,1125,20250415,Baltimore,B23,1125,Arr,2155
+https://www.ind.com/assets/images/airlines/nk.png,NK 856,Tampa,10:19 am,A20,Arrived,NK,IND,20250415,1019,20250415,Tampa,A20,1019,Arr,856
+https://www.ind.com/assets/images/airlines/dl.png,DL 2952,Atlanta,10:29 am,A11,Arrived,DL,IND,20250415,1029,20250415,Atlanta,A11,1029,Arr,2952
+https://www.ind.com/assets/images/airlines/ua.png,UA 6055,Houston,10:35 am,A21,Arrived,UA,IND,20250415,1035,20250415,Houston,A21,1035,Arr,6055
+https://www.ind.com/assets/images/airlines/dl.png,DL 5628,Boston,10:49 am,A13,Arrived,DL,IND,20250415,1049,20250415,Boston,A13,1049,Arr,5628
+https://www.ind.com/assets/images/airlines/aa.png,AA 4565,New York/LGA,10:44 am,B6,Arrived,AA,IND,20250415,1044,20250415,New York/LGA,B6,1044,Arr,4565
+https://www.ind.com/assets/images/airlines/aa.png,AA 2093,Charlotte,11:00 am,B14,Arrived,AA,IND,20250415,1100,20250415,Charlotte,B14,1100,Arr,2093
+https://www.ind.com/assets/images/airlines/wn.png,WN 614,Austin,11:11 am,B22,Arrived,WN,IND,20250415,1111,20250415,Austin,B22,1111,Arr,614
+https://www.ind.com/assets/images/airlines/aa.png,AA 1961,Miami,11:22 am,B10,Arrived,AA,IND,20250415,1122,20250415,Miami,B10,1122,Arr,1961
+https://www.ind.com/assets/images/airlines/dl.png,DL 2991,Minneapolis-St. Paul,12:07 pm,A8,Arrived,DL,IND,20250415,1207,20250415,Minneapolis-St. Paul,A8,1207,Arr,2991
+https://www.ind.com/assets/images/airlines/wn.png,WN 197,Houston/Hobby Field,11:27 am,B21,Arrived,WN,IND,20250415,1127,20250415,Houston/Hobby Field,B21,1127,Arr,197
+https://www.ind.com/assets/images/airlines/aa.png,AA 4537,Chicago/O'Hare,11:35 am,B13,Arrived,AA,IND,20250415,1135,20250415,Chicago/O'Hare,B13,1135,Arr,4537
+https://www.ind.com/assets/images/airlines/ua.png,UA 3669,Newark,11:44 am,A23,Arrived,UA,IND,20250415,1144,20250415,Newark,A23,1144,Arr,3669
+https://www.ind.com/assets/images/airlines/wn.png,WN 336,Orlando Int'l,12:04 pm,B20,Arrived,WN,IND,20250415,1204,20250415,Orlando Int'l,B20,1204,Arr,336
+https://www.ind.com/assets/images/airlines/aa.png,AA 4701,Washington DC,11:45 am,B8,Arrived,AA,IND,20250415,1145,20250415,Washington DC,B8,1145,Arr,4701
+https://www.ind.com/assets/images/airlines/wn.png,WN 2435,Denver,11:53 am,B22,Arrived,WN,IND,20250415,1153,20250415,Denver,B22,1153,Arr,2435
+https://www.ind.com/assets/images/airlines/wn.png,WN 2316,Ft. Lauderdale,12:09 pm,B23,Arrived,WN,IND,20250415,1209,20250415,Ft. Lauderdale,B23,1209,Arr,2316
+https://www.ind.com/assets/images/airlines/dl.png,DL 4976,New York/JFK,12:05 pm,A7,Arrived,DL,IND,20250415,1205,20250415,New York/JFK,A7,1205,Arr,4976
+https://www.ind.com/assets/images/airlines/ua.png,UA 3426,Chicago/O'Hare,12:27 pm,A21,Arrived,UA,IND,20250415,1227,20250415,Chicago/O'Hare,A21,1227,Arr,3426
+https://www.ind.com/assets/images/airlines/dl.png,DL 3013,Atlanta,12:36 pm,A6,Arrived,DL,IND,20250415,1236,20250415,Atlanta,A6,1236,Arr,3013
+https://www.ind.com/assets/images/airlines/wn.png,WN 1790,Dallas/Love Field,1:05 pm,B21,Arrived,WN,IND,20250415,1305,20250415,Dallas/Love Field,B21,1305,Arr,1790
+https://www.ind.com/assets/images/airlines/nk.png,NK 433,Orlando Int'l,12:49 pm,A20,Arrived,NK,IND,20250415,1249,20250415,Orlando Int'l,A20,1249,Arr,433
+https://www.ind.com/assets/images/airlines/g4.png,G4 590,Sarasota,12:38 pm,B3,Arrived,G4,IND,20250415,1238,20250415,Sarasota,B3,1238,Arr,590
+https://www.ind.com/assets/images/airlines/wn.png,WN 1320,Las Vegas,12:44 pm,B22,Arrived,WN,IND,20250415,1244,20250415,Las Vegas,B22,1244,Arr,1320
+https://www.ind.com/assets/images/airlines/dl.png,DL 5592,Detroit,1:27 pm,A11,Arrived,DL,IND,20250415,1327,20250415,Detroit,A11,1327,Arr,5592
+https://www.ind.com/assets/images/airlines/aa.png,AA 4747,New York/LGA,1:24 pm,B6,Arrived,AA,IND,20250415,1324,20250415,New York/LGA,B6,1324,Arr,4747
+https://www.ind.com/assets/images/airlines/aa.png,AA 2456,Dallas-Ft. Worth,3:07 pm,B14,Arrived,AA,IND,20250415,1507,20250415,Dallas-Ft. Worth,B14,1507,Arr,2456
+https://www.ind.com/assets/images/airlines/nk.png,NK 657,Newark,1:31 pm,A16,Arrived,NK,IND,20250415,1331,20250415,Newark,A16,1331,Arr,657
+https://www.ind.com/assets/images/airlines/dl.png,DL 4822,New York/LGA,1:36 pm,A7,Arrived,DL,IND,20250415,1336,20250415,New York/LGA,A7,1336,Arr,4822
+https://www.ind.com/assets/images/airlines/wn.png,WN 1728,Phoenix,1:34 pm,B23,Arrived,WN,IND,20250415,1334,20250415,Phoenix,B23,1334,Arr,1728
+https://www.ind.com/assets/images/airlines/ua.png,UA 3446,Newark,1:59 pm,A25,Arrived,UA,IND,20250415,1359,20250415,Newark,A25,1359,Arr,3446
+https://www.ind.com/assets/images/airlines/aa.png,AA 3375,Chicago/O'Hare,1:50 pm,B8,Arrived,AA,IND,20250415,1350,20250415,Chicago/O'Hare,B8,1350,Arr,3375
+https://www.ind.com/assets/images/airlines/wn.png,WN 2371,Nashville,2:08 pm,B20,Arrived,WN,IND,20250415,1408,20250415,Nashville,B20,1408,Arr,2371
+https://www.ind.com/assets/images/airlines/ua.png,UA 3563,Wash. Dulles,2:26 pm,A21,Arrived,UA,IND,20250415,1426,20250415,Wash. Dulles,A21,1426,Arr,3563
+https://www.ind.com/assets/images/airlines/ua.png,UA 2255,Denver,2:40 pm,A17,Arrived,UA,IND,20250415,1440,20250415,Denver,A17,1440,Arr,2255
+https://www.ind.com/assets/images/airlines/aa.png,AA 1589,Charlotte,3:03 pm,B10,Arrived,AA,IND,20250415,1503,20250415,Charlotte,B10,1503,Arr,1589
+https://www.ind.com/assets/images/airlines/wn.png,WN 2959,Tampa,2:54 pm,B22,Arrived,WN,IND,20250415,1454,20250415,Tampa,B22,1454,Arr,2959
+https://www.ind.com/assets/images/airlines/wn.png,WN 1912,Baltimore,2:56 pm,B21,Arrived,WN,IND,20250415,1456,20250415,Baltimore,B21,1456,Arr,1912
+https://www.ind.com/assets/images/airlines/ua.png,UA 3571,Chicago/O'Hare,3:05 pm,A25,Arrived,UA,IND,20250415,1505,20250415,Chicago/O'Hare,A25,1505,Arr,3571
+https://www.ind.com/assets/images/airlines/aa.png,AA 4441,Chicago/O'Hare,3:40 pm,B9,Arrived,AA,IND,20250415,1540,20250415,Chicago/O'Hare,B9,1540,Arr,4441
+https://www.ind.com/assets/images/airlines/dl.png,DL 4656,Minneapolis-St. Paul,3:25 pm,A12,Arrived,DL,IND,20250415,1525,20250415,Minneapolis-St. Paul,A12,1525,Arr,4656
+https://www.ind.com/assets/images/airlines/aa.png,AA 3817,Washington DC,3:39 pm,B6,Arrived,AA,IND,20250415,1539,20250415,Washington DC,B6,1539,Arr,3817
+https://www.ind.com/assets/images/airlines/aa.png,AA 2954,Phoenix,3:39 pm,B8,Arrived,AA,IND,20250415,1539,20250415,Phoenix,B8,1539,Arr,2954
+https://www.ind.com/assets/images/airlines/ua.png,UA 1892,Houston,3:45 pm,A21,Arrived,UA,IND,20250415,1545,20250415,Houston,A21,1545,Arr,1892
+https://www.ind.com/assets/images/airlines/dl.png,DL 4984,New York/JFK,4:20 pm,A10,Arrived,DL,IND,20250415,1620,20250415,New York/JFK,A10,1620,Arr,4984
+https://www.ind.com/assets/images/airlines/dl.png,DL 5627,Boston,4:12 pm,A13,Arrived,DL,IND,20250415,1612,20250415,Boston,A13,1612,Arr,5627
+https://www.ind.com/assets/images/airlines/dl.png,DL 3126,Atlanta,4:14 pm,A6,Arrived,DL,IND,20250415,1614,20250415,Atlanta,A6,1614,Arr,3126
+https://www.ind.com/assets/images/airlines/aa.png,AA 4385,New York/JFK,4:47 pm,B9,Arrived,AA,IND,20250415,1647,20250415,New York/JFK,B9,1647,Arr,4385
+https://www.ind.com/assets/images/airlines/ua.png,UA 2370,Chicago/O'Hare,4:37 pm,A23,Arrived,UA,IND,20250415,1637,20250415,Chicago/O'Hare,A23,1637,Arr,2370
+https://www.ind.com/assets/images/airlines/aa.png,AA 1899,Los Angeles,4:33 pm,B13,Arrived,AA,IND,20250415,1633,20250415,Los Angeles,B13,1633,Arr,1899
+https://www.ind.com/assets/images/airlines/f9.png,F9 2497,Atlanta,5:08 pm,A3,Arrived,F9,IND,20250415,1708,20250415,Atlanta,A3,1708,Arr,2497
+https://www.ind.com/assets/images/airlines/dl.png,DL 4826,New York/LGA,5:16 pm,A7,Arrived,DL,IND,20250415,1716,20250415,New York/LGA,A7,1716,Arr,4826
+https://www.ind.com/assets/images/airlines/dl.png,DL 4893,Detroit,5:34 pm,A12,Arrived,DL,IND,20250415,1734,20250415,Detroit,A12,1734,Arr,4893
+https://www.ind.com/assets/images/airlines/ua.png,UA 3601,Wash. Dulles,5:41 pm,A25,Arrived,UA,IND,20250415,1741,20250415,Wash. Dulles,A25,1741,Arr,3601
+https://www.ind.com/assets/images/airlines/wn.png,WN 1274,Denver,5:10 pm,B20,Arrived,WN,IND,20250415,1710,20250415,Denver,B20,1710,Arr,1274
+https://www.ind.com/assets/images/airlines/wn.png,WN 3582,Atlanta,5:34 pm,B23,Arrived,WN,IND,20250415,1734,20250415,Atlanta,B23,1734,Arr,3582
+https://www.ind.com/assets/images/airlines/as.png,AS 500,Seattle-Tacoma,7:15 pm,B5,Arrived,AS,IND,20250415,1915,20250415,Seattle-Tacoma,B5,1915,Arr,500
+https://www.ind.com/assets/images/airlines/aa.png,AA 4793,New York/LGA,5:45 pm,B6,Arrived,AA,IND,20250415,1745,20250415,New York/LGA,B6,1745,Arr,4793
+https://www.ind.com/assets/images/airlines/aa.png,AA 5239,Philadelphia,7:44 pm,B13,Arrived,AA,IND,20250415,1944,20250415,Philadelphia,B13,1944,Arr,5239
+https://www.ind.com/assets/images/airlines/wn.png,WN 2619,Las Vegas,6:09 pm,B22,Arrived,WN,IND,20250415,1809,20250415,Las Vegas,B22,1809,Arr,2619
+https://www.ind.com/assets/images/airlines/aa.png,AA 1981,Charlotte,5:58 pm,B10,Arrived,AA,IND,20250415,1758,20250415,Charlotte,B10,1758,Arr,1981
+https://www.ind.com/assets/images/airlines/ua.png,UA 3690,Chicago/O'Hare,5:51 pm,A21,Arrived,UA,IND,20250415,1751,20250415,Chicago/O'Hare,A21,1751,Arr,3690
+https://www.ind.com/assets/images/airlines/wn.png,WN 3570,Orlando Int'l,6:04 pm,B21,Arrived,WN,IND,20250415,1804,20250415,Orlando Int'l,B21,1804,Arr,3570
+https://www.ind.com/assets/images/airlines/aa.png,AA 4449,New York/JFK,6:04 pm,B14,Arrived,AA,IND,20250415,1804,20250415,New York/JFK,B14,1804,Arr,4449
+https://www.ind.com/assets/images/airlines/wn.png,WN 3587,Kansas City (MO),11:38 pm,B21,Arrived,WN,IND,20250415,2338,20250415,Kansas City (MO),B21,2338,Arr,3587
+https://www.ind.com/assets/images/airlines/aa.png,AA 1517,Washington DC,6:25 pm,B9,Arrived,AA,IND,20250415,1825,20250415,Washington DC,B9,1825,Arr,1517
+https://www.ind.com/assets/images/airlines/dl.png,DL 2415,Minneapolis-St. Paul,6:55 pm,A8,Arrived,DL,IND,20250415,1855,20250415,Minneapolis-St. Paul,A8,1855,Arr,2415
+https://www.ind.com/assets/images/airlines/ua.png,UA 1403,San Francisco,6:20 pm,A17,Arrived,UA,IND,20250415,1820,20250415,San Francisco,A17,1820,Arr,1403
+https://www.ind.com/assets/images/airlines/g4.png,G4 604,Jacksonville,6:27 pm,B3,Arrived,G4,IND,20250415,1827,20250415,Jacksonville,B3,1827,Arr,604
+https://www.ind.com/assets/images/airlines/ua.png,UA 3573,Newark,7:09 pm,A25,Arrived,UA,IND,20250415,1909,20250415,Newark,A25,1909,Arr,3573
+https://www.ind.com/assets/images/airlines/aa.png,AA 3689,Chicago/O'Hare,6:37 pm,B6,Arrived,AA,IND,20250415,1837,20250415,Chicago/O'Hare,B6,1837,Arr,3689
+https://www.ind.com/assets/images/airlines/dl.png,DL 3120,Atlanta,6:36 pm,A6,Arrived,DL,IND,20250415,1836,20250415,Atlanta,A6,1836,Arr,3120
+https://www.ind.com/assets/images/airlines/nk.png,NK 424,Orlando Int'l,6:39 pm,A20,Arrived,NK,IND,20250415,1839,20250415,Orlando Int'l,A20,1839,Arr,424
+https://www.ind.com/assets/images/airlines/wn.png,WN 2932,San Diego,7:12 pm,B21,Arrived,WN,IND,20250415,1912,20250415,San Diego,B21,1912,Arr,2932
+https://www.ind.com/assets/images/airlines/wn.png,WN 2156,Fort Myers,7:15 pm,B20,Arrived,WN,IND,20250415,1915,20250415,Fort Myers,B20,1915,Arr,2156
+https://www.ind.com/assets/images/airlines/ua.png,UA 3585,Wash. Dulles,7:28 pm,A24,Arrived,UA,IND,20250415,1928,20250415,Wash. Dulles,A24,1928,Arr,3585
+https://www.ind.com/assets/images/airlines/aa.png,AA 3108,Dallas-Ft. Worth,7:34 pm,B9,Arrived,AA,IND,20250415,1934,20250415,Dallas-Ft. Worth,B9,1934,Arr,3108
+https://www.ind.com/assets/images/airlines/g4.png,G4 592,Las Vegas,7:23 pm,B4,Arrived,G4,IND,20250415,1923,20250415,Las Vegas,B4,1923,Arr,592
+https://www.ind.com/assets/images/airlines/g4.png,G4 621,Punta Gorda,7:33 pm,B3,Arrived,G4,IND,20250415,1933,20250415,Punta Gorda,B3,1933,Arr,621
+https://www.ind.com/assets/images/airlines/aa.png,AA 4501,Washington DC,7:59 pm,RME,Arrived,AA,IND,20250415,1959,20250415,Washington DC,RME,1959,Arr,4501
+https://www.ind.com/assets/images/airlines/wn.png,WN 372,Baltimore,8:10 pm,B22,Arrived,WN,IND,20250415,2010,20250415,Baltimore,B22,2010,Arr,372
+https://www.ind.com/assets/images/airlines/ua.png,UA 3628,Chicago/O'Hare,7:42 pm,A25,Arrived,UA,IND,20250415,1942,20250415,Chicago/O'Hare,A25,1942,Arr,3628
+https://www.ind.com/assets/images/airlines/ua.png,UA 6031,Houston,8:01 pm,A17,Arrived,UA,IND,20250415,2001,20250415,Houston,A17,2001,Arr,6031
+https://www.ind.com/assets/images/airlines/dl.png,DL 5635,New York/LGA,8:04 pm,A13,Arrived,DL,IND,20250415,2004,20250415,New York/LGA,A13,2004,Arr,5635
+https://www.ind.com/assets/images/airlines/dl.png,DL 4914,New York/JFK,8:49 pm,A12,Arrived,DL,IND,20250415,2049,20250415,New York/JFK,A12,2049,Arr,4914
+https://www.ind.com/assets/images/airlines/aa.png,AA 4557,Philadelphia,9:05 pm,B16,Arrived,AA,IND,20250415,2105,20250415,Philadelphia,B16,2105,Arr,4557
+https://www.ind.com/assets/images/airlines/aa.png,AA 4740,Chicago/O'Hare,8:47 pm,B14,Arrived,AA,IND,20250415,2047,20250415,Chicago/O'Hare,B14,2047,Arr,4740
+https://www.ind.com/assets/images/airlines/aa.png,AA 4586,New York/JFK,9:08 pm,RME,Arrived,AA,IND,20250415,2108,20250415,New York/JFK,RME,2108,Arr,4586
+https://www.ind.com/assets/images/airlines/dl.png,DL 5319,Detroit,9:09 pm,A15,Arrived,DL,IND,20250415,2109,20250415,Detroit,A15,2109,Arr,5319
+https://www.ind.com/assets/images/airlines/wn.png,WN 6407,Fort Myers,9:38 pm,,Arrived,WN,IND,20250415,2138,20250415,Fort Myers,,2138,Arr,6407
+https://www.ind.com/assets/images/airlines/dl.png,DL 5761,New York/LGA,9:33 pm,A8,Arrived,DL,IND,20250415,2133,20250415,New York/LGA,A8,2133,Arr,5761
+https://www.ind.com/assets/images/airlines/dl.png,DL 2805,Atlanta,10:23 pm,A14,Arrived,DL,IND,20250415,2223,20250415,Atlanta,A14,2223,Arr,2805
+https://www.ind.com/assets/images/airlines/aa.png,AA 648,Charlotte,10:33 pm,B10,Arrived,AA,IND,20250415,2233,20250415,Charlotte,B10,2233,Arr,648
+https://www.ind.com/assets/images/airlines/dl.png,DL 5616,Boston,9:40 pm,A11,Arrived,DL,IND,20250415,2140,20250415,Boston,A11,2140,Arr,5616
+https://www.ind.com/assets/images/airlines/aa.png,AA 4427,New York/LGA,9:42 pm,HGR,Arrived,AA,IND,20250415,2142,20250415,New York/LGA,HGR,2142,Arr,4427
+https://www.ind.com/assets/images/airlines/wn.png,WN 2199,Denver,10:35 pm,,Arrived,WN,IND,20250415,2235,20250415,Denver,,2235,Arr,2199
+https://www.ind.com/assets/images/airlines/ua.png,UA 3707,Chicago/O'Hare,9:51 pm,A21,Arrived,UA,IND,20250415,2151,20250415,Chicago/O'Hare,A21,2151,Arr,3707
+https://www.ind.com/assets/images/airlines/wn.png,WN 339,Orlando Int'l,9:56 pm,,Arrived,WN,IND,20250415,2156,20250415,Orlando Int'l,,2156,Arr,339
+https://www.ind.com/assets/images/airlines/wn.png,WN 1288,Austin,10:25 pm,,Arrived,WN,IND,20250415,2225,20250415,Austin,,2225,Arr,1288
+https://www.ind.com/assets/images/airlines/ua.png,UA 1199,Denver,10:15 pm,A24,Arrived,UA,IND,20250415,2215,20250415,Denver,A24,2215,Arr,1199
+https://www.ind.com/assets/images/airlines/aa.png,AA 2800,Dallas-Ft. Worth,10:34 pm,B9,Arrived,AA,IND,20250415,2234,20250415,Dallas-Ft. Worth,B9,2234,Arr,2800
+https://www.ind.com/assets/images/airlines/dl.png,DL 2228,Salt Lake City,10:18 pm,A7,Arrived,DL,IND,20250415,2218,20250415,Salt Lake City,A7,2218,Arr,2228
+https://www.ind.com/assets/images/airlines/wn.png,WN 4947,Las Vegas,10:30 pm,,Arrived,WN,IND,20250415,2230,20250415,Las Vegas,,2230,Arr,4947
+https://www.ind.com/assets/images/airlines/aa.png,AA 4585,Boston,10:31 pm,HGR,Arrived,AA,IND,20250415,2231,20250415,Boston,HGR,2231,Arr,4585
+https://www.ind.com/assets/images/airlines/ua.png,UA 3558,Newark,10:55 pm,A23,Arrived,UA,IND,20250415,2255,20250415,Newark,A23,2255,Arr,3558
+https://www.ind.com/assets/images/airlines/wn.png,WN 4368,Tampa,10:38 pm,,Arrived,WN,IND,20250415,2238,20250415,Tampa,,2238,Arr,4368
+https://www.ind.com/assets/images/airlines/wn.png,WN 4631,Houston/Hobby Field,10:39 pm,,Arrived,WN,IND,20250415,2239,20250415,Houston/Hobby Field,,2239,Arr,4631
+https://www.ind.com/assets/images/airlines/dl.png,DL 1986,Atlanta,10:55 pm,A8,Arrived,DL,IND,20250415,2255,20250415,Atlanta,A8,2255,Arr,1986
+https://www.ind.com/assets/images/airlines/aa.png,AA 4543,Philadelphia,11:31 pm,B6,Arrived,AA,IND,20250415,2331,20250415,Philadelphia,B6,2331,Arr,4543
+https://www.ind.com/assets/images/airlines/wn.png,WN 2314,Phoenix,11:14 pm,,Arrived,WN,IND,20250415,2314,20250415,Phoenix,,2314,Arr,2314
+https://www.ind.com/assets/images/airlines/wn.png,WN 3474,Dallas/Love Field,11:22 pm,,Arrived,WN,IND,20250415,2322,20250415,Dallas/Love Field,,2322,Arr,3474
+https://www.ind.com/assets/images/airlines/ua.png,UA 3650,Chicago/O'Hare,11:20 pm,A21,Arrived,UA,IND,20250415,2320,20250415,Chicago/O'Hare,A21,2320,Arr,3650
+https://www.ind.com/assets/images/airlines/aa.png,AA 2518,Miami,11:31 pm,B14,Arrived,AA,IND,20250415,2331,20250415,Miami,B14,2331,Arr,2518
+https://www.ind.com/assets/images/airlines/dl.png,DL 4909,Detroit,11:57 pm,A10,On Time,DL,IND,20250415,2357,20250415,Detroit,A10,2357,On ,4909
+https://www.ind.com/assets/images/airlines/ua.png,UA 1956,Houston,11:37 pm,A23,Arrived,UA,IND,20250415,2337,20250415,Houston,A23,2337,Arr,1956
+https://www.ind.com/assets/images/airlines/aa.png,AA 766,Dallas-Ft. Worth,11:55 pm,B15,On Time,AA,IND,20250415,2355,20250415,Dallas-Ft. Worth,B15,2355,On ,766
+https://www.ind.com/assets/images/airlines/wn.png,WN 1373,Denver,11:51 pm,,Arrived,WN,IND,20250415,2351,20250415,Denver,,2351,Arr,1373

@@ -1,3 +1,7 @@
+DROP DATABASE flight_data;
+CREATE DATABASE flight_data;
+USE flight_data;
+
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- =============================
@@ -9,12 +13,13 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- =============================
 CREATE TABLE Airports (
     AirportCode CHAR(3) NOT NULL COMMENT 'Primary key representing the airport code.',
-    AirportName VARCHAR(50) NOT NULL COMMENT 'Name of the airport along with its IATA code.',
+    AirportName VARCHAR(100) NOT NULL COMMENT 'Name of the airport along with its IATA code.',
     City VARCHAR(50) COMMENT 'Name of the city where the airport is located.',
     Country VARCHAR(50) COMMENT 'Name of the country where the airport is located.',
     UseYn CHAR(1) NOT NULL DEFAULT 'Y' CHECK (UseYn IN ('Y', 'N')) COMMENT 'Indicates whether the record is active. (Y for Yes, N for No)',
     PRIMARY KEY (AirportCode),
-    UNIQUE (AirportName, City, Country) -- Avoid duplicate airport definitions
+    UNIQUE (AirportName)
+    -- UNIQUE (AirportName, City, Country) -- Avoid duplicate airport definitions
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Stores airport information including location and status.';
 
 -- =============================
