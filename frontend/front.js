@@ -5,40 +5,56 @@ import "ag-grid-community/styles/ag-theme-alpine.css";
 
 const App = () => {
     const [rowData, setRowData] = useState([]);
-    const [newFlight, setNewFlight] = useState({ flight: "", departure: "", arrival: "", status: "On Time" });
+    const [newFlight, setNewFlight] = useState({
+        FlightNumber: "",
+        ScheduledDate: "",
+        ScheduledTime: "",
+        EstimatedDate: "",
+        EstimatedTime: "",
+        AirportCode: "",
+        OriginDestAirport: "",
+        AirlineCode: "",
+        Remarks: "ON_TIME"
+    });
 
-    // 데이터 로드
+    // Load flight data
     useEffect(() => {
-        fetch("http://localhost:5000/api/flights")
+        fetch("http://localhost:9999/api/flights")
             .then((res) => res.json())
             .then((data) => setRowData(data));
     }, []);
 
-    // 데이터 추가
+    // Add new flight
     const addFlight = () => {
-        fetch("http://localhost:5000/api/flights", {
+        fetch("http://localhost:9999/api/flights", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(newFlight),
         })
             .then((res) => res.json())
-            .then(() => window.location.reload()); // 새로고침하여 반영
+            .then(() => window.location.reload());
     };
 
-    // 데이터 삭제
+    // Delete flight
     const deleteFlight = (id) => {
-        fetch(`http://localhost:5000/api/flights/${id}`, { method: "DELETE" })
-            .then(() => setRowData(rowData.filter((row) => row.id !== id)));
+        fetch(`http://localhost:9999/api/flights/${id}`, { method: "DELETE" })
+            .then(() => setRowData(rowData.filter((row) => row.FlightId !== id)));
     };
 
-    // 컬럼 정의
+    // Column definitions
     const columnDefs = [
-        { field: "flight", headerName: "항공편", sortable: true },
-        { field: "departure", headerName: "출발 시간", sortable: true },
-        { field: "arrival", headerName: "도착 시간", sortable: true },
+        { field: "FlightId", headerName: "ID", width: 80 },
+        { field: "FlightNumber", headerName: "Flight Number", sortable: true },
+        { field: "ScheduledDate", headerName: "Scheduled Date" },
+        { field: "ScheduledTime", headerName: "Scheduled Time" },
+        { field: "EstimatedDate", headerName: "Estimated Date" },
+        { field: "EstimatedTime", headerName: "Estimated Time" },
+        { field: "AirlineName", headerName: "Airline" },
+        { field: "DepartureAirport", headerName: "Departure Airport" },
+        { field: "ArrivalAirport", headerName: "Arrival Airport" },
         {
-            field: "status",
-            headerName: "상태",
+            field: "RemarkName",
+            headerName: "Status",
             cellStyle: (params) => ({
                 backgroundColor: params.value === "Delayed" ? "red" : "green",
                 color: "white",
@@ -46,31 +62,45 @@ const App = () => {
             }),
         },
         {
-            headerName: "삭제",
+            headerName: "Delete",
             cellRenderer: (params) => (
-                <button onClick={() => deleteFlight(params.data.id)}>삭제</button>
+                <button onClick={() => deleteFlight(params.data.FlightId)}>Delete</button>
             ),
         },
     ];
 
     return (
-        <div style={{ width: "80%", margin: "auto", padding: "20px" }}>
-            <h2>항공기 스케줄 관리</h2>
-            
-            {/* 신규 데이터 입력 폼 */}
+        <div style={{ width: "90%", margin: "auto", padding: "20px" }}>
+            <h2>Flight Schedule Management</h2>
+
+            {/* Flight input form */}
             <div style={{ marginBottom: "10px" }}>
-                <input placeholder="항공편" onChange={(e) => setNewFlight({ ...newFlight, flight: e.target.value })} />
-                <input placeholder="출발" onChange={(e) => setNewFlight({ ...newFlight, departure: e.target.value })} />
-                <input placeholder="도착" onChange={(e) => setNewFlight({ ...newFlight, arrival: e.target.value })} />
-                <select onChange={(e) => setNewFlight({ ...newFlight, status: e.target.value })}>
-                    <option value="On Time">On Time</option>
-                    <option value="Delayed">Delayed</option>
+                <input placeholder="Flight Number (e.g., 1234)"
+                    onChange={(e) => setNewFlight({ ...newFlight, FlightNumber: e.target.value })} />
+                <input placeholder="Scheduled Date (YYYYMMDD)"
+                    onChange={(e) => setNewFlight({ ...newFlight, ScheduledDate: e.target.value })} />
+                <input placeholder="Scheduled Time (HHmm)"
+                    onChange={(e) => setNewFlight({ ...newFlight, ScheduledTime: e.target.value })} />
+                <input placeholder="Estimated Date (YYYYMMDD)"
+                    onChange={(e) => setNewFlight({ ...newFlight, EstimatedDate: e.target.value })} />
+                <input placeholder="Estimated Time (HHmm)"
+                    onChange={(e) => setNewFlight({ ...newFlight, EstimatedTime: e.target.value })} />
+                <input placeholder="Departure Airport Code (e.g., IND)"
+                    onChange={(e) => setNewFlight({ ...newFlight, AirportCode: e.target.value })} />
+                <input placeholder="Arrival Airport Code (e.g., ORD)"
+                    onChange={(e) => setNewFlight({ ...newFlight, OriginDestAirport: e.target.value })} />
+                <input placeholder="Airline Code (e.g., AA)"
+                    onChange={(e) => setNewFlight({ ...newFlight, AirlineCode: e.target.value })} />
+                <select onChange={(e) => setNewFlight({ ...newFlight, Remarks: e.target.value })}>
+                    <option value="ON_TIME">On Time</option>
+                    <option value="DELAYED">Delayed</option>
+                    <option value="CANCELLED">Cancelled</option>
                 </select>
-                <button onClick={addFlight}>추가</button>
+                <button onClick={addFlight}>Add</button>
             </div>
 
-            {/* AG Grid 테이블 */}
-            <div className="ag-theme-alpine" style={{ height: 400, width: "100%" }}>
+            {/* AG Grid table */}
+            <div className="ag-theme-alpine" style={{ height: 500, width: "100%" }}>
                 <AgGridReact rowData={rowData} columnDefs={columnDefs} />
             </div>
         </div>

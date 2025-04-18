@@ -4,13 +4,15 @@ import "./Admin.css"; // Custom styling
 
 const Admin = () => {
     const [newFlight, setNewFlight] = useState({
-        sta: "",
-        eta: "",
-        airline: "",
-        logo: "",
-        flight_number: "",
-        origin: "",
-        remark: "Scheduled",
+        FlightNumber: "",
+        ScheduledDate: "",
+        ScheduledTime: "",
+        EstimatedDate: "",
+        EstimatedTime: "",
+        AirportCode: "",
+        OriginDestAirport: "",
+        AirlineCode: "",
+        Remarks: "ON_TIME",
     });
 
     const [message, setMessage] = useState("");
@@ -20,13 +22,15 @@ const Admin = () => {
             .then(() => {
                 setMessage("✅ Flight added successfully!");
                 setNewFlight({
-                    sta: "",
-                    eta: "",
-                    airline: "",
-                    logo: "",
-                    flight_number: "",
-                    origin: "",
-                    remark: "Scheduled",
+                    FlightNumber: "",
+                    ScheduledDate: "",
+                    ScheduledTime: "",
+                    EstimatedDate: "",
+                    EstimatedTime: "",
+                    AirportCode: "",
+                    OriginDestAirport: "",
+                    AirlineCode: "",
+                    Remarks: "ON_TIME",
                 });
             })
             .catch(() => {
@@ -41,47 +45,59 @@ const Admin = () => {
             <div className="admin-form">
                 <input
                     type="text"
-                    placeholder="STA (Scheduled Time)"
-                    value={newFlight.sta}
-                    onChange={(e) => setNewFlight({ ...newFlight, sta: e.target.value })}
+                    placeholder="Flight Number (e.g. 1234)"
+                    value={newFlight.FlightNumber}
+                    onChange={(e) => setNewFlight({ ...newFlight, FlightNumber: e.target.value })}
                 />
                 <input
                     type="text"
-                    placeholder="ETA (Estimated Time)"
-                    value={newFlight.eta}
-                    onChange={(e) => setNewFlight({ ...newFlight, eta: e.target.value })}
+                    placeholder="Scheduled Date (YYYYMMDD)"
+                    value={newFlight.ScheduledDate}
+                    onChange={(e) => setNewFlight({ ...newFlight, ScheduledDate: e.target.value })}
                 />
                 <input
                     type="text"
-                    placeholder="Airline Name"
-                    value={newFlight.airline}
-                    onChange={(e) => setNewFlight({ ...newFlight, airline: e.target.value })}
+                    placeholder="Scheduled Time (HHmm)"
+                    value={newFlight.ScheduledTime}
+                    onChange={(e) => setNewFlight({ ...newFlight, ScheduledTime: e.target.value })}
                 />
                 <input
                     type="text"
-                    placeholder="Airline Logo URL"
-                    value={newFlight.logo}
-                    onChange={(e) => setNewFlight({ ...newFlight, logo: e.target.value })}
+                    placeholder="Estimated Date (YYYYMMDD)"
+                    value={newFlight.EstimatedDate}
+                    onChange={(e) => setNewFlight({ ...newFlight, EstimatedDate: e.target.value })}
                 />
                 <input
                     type="text"
-                    placeholder="Flight Number"
-                    value={newFlight.flight_number}
-                    onChange={(e) => setNewFlight({ ...newFlight, flight_number: e.target.value })}
+                    placeholder="Estimated Time (HHmm)"
+                    value={newFlight.EstimatedTime}
+                    onChange={(e) => setNewFlight({ ...newFlight, EstimatedTime: e.target.value })}
                 />
                 <input
                     type="text"
-                    placeholder="Origin (City)"
-                    value={newFlight.origin}
-                    onChange={(e) => setNewFlight({ ...newFlight, origin: e.target.value })}
+                    placeholder="Departure Airport Code (e.g. IND)"
+                    value={newFlight.AirportCode}
+                    onChange={(e) => setNewFlight({ ...newFlight, AirportCode: e.target.value })}
+                />
+                <input
+                    type="text"
+                    placeholder="Arrival Airport Code (e.g. ORD)"
+                    value={newFlight.OriginDestAirport}
+                    onChange={(e) => setNewFlight({ ...newFlight, OriginDestAirport: e.target.value })}
+                />
+                <input
+                    type="text"
+                    placeholder="Airline Code (e.g. AA)"
+                    value={newFlight.AirlineCode}
+                    onChange={(e) => setNewFlight({ ...newFlight, AirlineCode: e.target.value })}
                 />
                 <select
-                    value={newFlight.remark}
-                    onChange={(e) => setNewFlight({ ...newFlight, remark: e.target.value })}
+                    value={newFlight.Remarks}
+                    onChange={(e) => setNewFlight({ ...newFlight, Remarks: e.target.value })}
                 >
-                    <option value="Scheduled">Scheduled</option>
-                    <option value="Landed">Landed</option>
-                    <option value="Delayed">Delayed</option>
+                    <option value="ON_TIME">On Time</option>
+                    <option value="DELAYED">Delayed</option>
+                    <option value="CANCELLED">Cancelled</option>
                 </select>
 
                 <button onClick={addFlight} className="admin-btn">Add Flight</button>
