@@ -16,7 +16,6 @@ const Navbar = ({ isLoggedIn }) => {
         {isLoggedIn && (
           <ul className="nav-links">
             <li><Link to="/home">Home</Link></li>
-            <li><Link to="/display">Display Management<span> </span></Link></li>
             <li><div className="nav-item dropdown">
               <span className="menu-title">Display Management</span>
               <div className="dropdown-menu">
@@ -25,7 +24,8 @@ const Navbar = ({ isLoggedIn }) => {
                 <a href="/display">Mixed Display</a>
               </div>
             </div></li>
-            <li><Link to="/coden">Code Management <span> </span></Link></li>
+            <li><Link to="/flgiht">Flight Schedule Management<span> </span></Link></li>
+            <li><Link to="/code">Code Management <span> </span></Link></li>
             <li><Link to="/system">System Management</Link></li>
           </ul>
         )}
