@@ -1,0 +1,130 @@
+.flight-mgt-container {
+    max-width: 95%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9fafb;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    font-family: Arial, sans-serif;
+  }
+  
+  .header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .header-row h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+  .search-input {
+    padding: 8px 12px;
+    font-size: 1rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    margin-right: 8px;
+  }
+  
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .form-row input,
+  .form-row select {
+    flex: 1 1 200px;
+    padding: 10px;
+    font-size: 0.95rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+  }
+  
+  .btn,
+  .btn-sm {
+    background-color: #2563eb;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .btn:hover,
+  .btn-sm:hover {
+    background-color: #1e40af;
+  }
+  
+  .btn-sm {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    margin-right: 4px;
+  }
+  
+  .flight-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #e5e7eb;
+  }
+  
+  .flight-table th,
+  .flight-table td {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 0.95rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .flight-table th {
+    background-color: #1e3a8a;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+  }
+  
+  .flight-table tr:hover {
+    background-color: #f1f5f9;
+  }
+  
+  .message-text {
+    margin-top: 10px;
+    color: #16a34a;
+    font-weight: bold;
+  }
+  .flight-table input,
+  .flight-table select {
+    width: 100%;
+    padding: 6px 8px;
+    font-size: 0.9rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    background-color: #f9fafb;
+    color: #111827;
+  }
+  
+  .flight-table input:focus,
+  .flight-table select:focus {
+    outline: 2px solid #2563eb;
+    border-color: #2563eb;
+    background-color: #ffffff;
+  }
+  
+  .flight-table td {
+    vertical-align: middle;
+  }
+  
+  .btn-sm {
+    margin-top: 4px;
+    display: inline-block;
+  }  

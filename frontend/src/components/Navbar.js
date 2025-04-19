@@ -24,9 +24,9 @@ const Navbar = ({ isLoggedIn }) => {
                 <a href="/display">Mixed Display</a>
               </div>
             </div></li>
-            <li><Link to="/flgiht">Flight Schedule Management<span> </span></Link></li>
-            <li><Link to="/code">Code Management <span> </span></Link></li>
-            <li><Link to="/system">System Management</Link></li>
+            <li><Link to="/flightschedulemgt">Flight Schedule Management<span> </span></Link></li>
+            <li><Link to="/codemgt">Code Management <span> </span></Link></li>
+            <li><Link to="/usermgt">User Management</Link></li>
           </ul>
         )}
       </div>

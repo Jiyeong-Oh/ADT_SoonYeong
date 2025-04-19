@@ -3,10 +3,12 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Display from "./pages/Display";
-import Admin from "./pages/Admin";
+import FlightScheduleMgt from "./pages/FlightScheduleMgt";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Logout from "./pages/Logout";
+import CodeMgt from "./pages/CodeMgt";
+import UserMgt from "./pages/UserMgt";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -39,13 +41,29 @@ function App() {
           }
         />
         <Route
-          path="/admin"
+          path="/flightschedulemgt"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <Admin />
+              <FlightScheduleMgt />
             </ProtectedRoute>
           }
-        />        
+        />
+        <Route
+          path="/codemgt"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <CodeMgt />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/usermgt"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <UserMgt />
+            </ProtectedRoute>
+          }
+        />
 
         <Route path="/logout" element={<Logout setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
