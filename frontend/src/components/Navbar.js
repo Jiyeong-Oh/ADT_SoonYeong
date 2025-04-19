@@ -17,7 +17,14 @@ const Navbar = ({ isLoggedIn }) => {
           <ul className="nav-links">
             <li><Link to="/home">Home</Link></li>
             <li><Link to="/display">Display Management<span> </span></Link></li>
-            <li><Link to="/schedule">Flight Schedule <span> </span></Link></li>
+            <li><div className="nav-item dropdown">
+              <span className="menu-title">Display Management</span>
+              <div className="dropdown-menu">
+                <a href="/departure">Departure Display</a>
+                <a href="/display">Arrival Display</a>
+                <a href="/mixed">Mixed Display</a>
+              </div>
+            </div></li>
             <li><Link to="/coden">Code Management <span> </span></Link></li>
             <li><Link to="/system">System Management</Link></li>
           </ul>

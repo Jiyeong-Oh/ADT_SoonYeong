@@ -57,3 +57,40 @@
     object-fit: contain;
     vertical-align: middle;
   }
+  .nav-item {
+    position: relative;
+    display: inline-block;
+    padding: 0 20px;
+    cursor: pointer;
+  }
+  
+  .menu-title {
+    font-size: 1.0rem;
+    color: #333;
+  }
+  
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+    top: 100%;
+    left: 0;
+  }
+  
+  .dropdown-menu a {
+    color: black;
+    padding: 10px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-menu a:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .nav-item:hover .dropdown-menu {
+    display: block;
+  }
