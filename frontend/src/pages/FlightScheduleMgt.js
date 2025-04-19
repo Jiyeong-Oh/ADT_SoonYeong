@@ -65,7 +65,6 @@ const FlightScheduleMgt = () => {
     const updatedFlights = [...flights];
     updatedFlights[index][field] = value;
 
-    // 셀, 행 모두 업데이트
     const updatedCells = new Set(editedCells);
     updatedCells.add(`${index}-${field}`);
     setEditedCells(updatedCells);
@@ -80,7 +79,6 @@ const FlightScheduleMgt = () => {
   const handleSave = (flight, index) => {
     axios.post("http://localhost:9999/api/flights", flight)
       .then(() => {
-        // 저장 후 해당 행의 모든 셀, 행 highlight 해제
         setEditedCells(prev => {
           const updated = new Set(prev);
           Object.keys(flight).forEach(field => {
