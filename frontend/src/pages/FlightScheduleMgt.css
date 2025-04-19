@@ -1,130 +1,195 @@
+/* FlightScheduleMgt.css */
+
+/* Container */
 .flight-mgt-container {
-    max-width: 95%;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #f9fafb;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    font-family: Arial, sans-serif;
+  max-width: 1200px;
+  margin: 32px auto;
+  padding: 24px 24px 32px 24px;
+  background-color: #f9fafb;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* Header Row */
+.header-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.header-row h2 {
+  flex: 1 1 200px;
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #1e3a8a;
+  letter-spacing: 1px;
+}
+
+.header-row select,
+.header-row input[type="date"],
+.header-row .search-input {
+  padding: 8px 12px;
+  font-size: 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  margin-right: 4px;
+  background: #fff;
+  min-width: 140px;
+}
+
+.header-row .btn {
+  margin-left: 4px;
+}
+
+/* Table Styles */
+.flight-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px #e5e7eb;
+  margin-top: 10px;
+}
+
+.flight-table th,
+.flight-table td {
+  padding: 12px 10px;
+  text-align: left;
+  font-size: 0.97rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.flight-table th {
+  background-color: #1e3a8a;
+  color: #fff;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.flight-table tr:last-child td {
+  border-bottom: none;
+}
+
+.flight-table tr:hover:not(.highlight-row) {
+  background-color: #f1f5f9;
+}
+
+.flight-table .highlight-row {
+  background-color: #fef08a !important;
+  transition: background-color 0.2s;
+}
+
+/* Table Inputs & Selects */
+.flight-table input,
+.flight-table select {
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 0.93rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  background-color: #f9fafb;
+  color: #111827;
+  box-sizing: border-box;
+}
+
+.flight-table input:focus,
+.flight-table select:focus {
+  outline: 2px solid #2563eb;
+  border-color: #2563eb;
+  background-color: #fff;
+}
+
+/* Table Cell Alignment */
+.flight-table td {
+  vertical-align: middle;
+  white-space: nowrap;
+
+}
+/* Buttons */
+.btn,
+.btn-sm {
+  background-color: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.18s;
+  box-shadow: 0 1px 2px rgba(30, 58, 138, 0.04);
+}
+
+.btn {
+  padding: 10px 18px;
+  font-size: 1rem;
+  margin-right: 2px;
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.89rem;
+  margin-right: 4px;
+  margin-top: 2px;
+  display: inline-block;
+}
+
+.btn:hover,
+.btn-sm:hover {
+  background-color: #1e40af;
+}
+
+/* Message Text */
+.message-text {
+  margin-top: 12px;
+  color: #16a34a;
+  font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .flight-mgt-container {
+    padding: 10px 2vw;
+  }
+  .flight-table th,
+  .flight-table td {
+    padding: 8px 5px;
+    font-size: 0.93rem;
   }
   
   .header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
   }
-  
-  .header-row h2 {
-    margin: 0;
-    font-size: 1.25rem;
-    font-weight: bold;
-  }
-  
-  .search-input {
-    padding: 8px 12px;
-    font-size: 1rem;
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    margin-right: 8px;
-  }
-  
-  .form-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 20px;
-  }
-  
-  .form-row input,
-  .form-row select {
-    flex: 1 1 200px;
-    padding: 10px;
-    font-size: 0.95rem;
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
-  }
-  
-  .btn,
-  .btn-sm {
-    background-color: #2563eb;
-    color: white;
-    font-weight: 600;
-    border: none;
-    border-radius: 6px;
-    padding: 10px 16px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  .btn:hover,
-  .btn-sm:hover {
-    background-color: #1e40af;
-  }
-  
-  .btn-sm {
-    padding: 6px 10px;
-    font-size: 0.85rem;
-    margin-right: 4px;
-  }
-  
+}
+
+.header-row select {
+  width: 90px;
+  transition: width 0.2s cubic-bezier(.4,2,.6,1);
+}
+
+.header-row select:focus {
+  width: 180px;
+}
+
+/* For very small screens, make table scrollable */
+@media (max-width: 600px) {
   .flight-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: white;
-    border-radius: 6px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #e5e7eb;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
   }
-  
-  .flight-table th,
   .flight-table td {
-    padding: 12px 16px;
-    text-align: left;
-    font-size: 0.95rem;
-    border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
   }
-  
-  .flight-table th {
-    background-color: #1e3a8a;
-    color: white;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 0.8rem;
+  .flight-mgt-container {
+    padding: 4px 0;
   }
-  
-  .flight-table tr:hover {
-    background-color: #f1f5f9;
-  }
-  
-  .message-text {
-    margin-top: 10px;
-    color: #16a34a;
-    font-weight: bold;
-  }
-  .flight-table input,
-  .flight-table select {
-    width: 100%;
-    padding: 6px 8px;
-    font-size: 0.9rem;
-    border: 1px solid #cbd5e1;
-    border-radius: 4px;
-    background-color: #f9fafb;
-    color: #111827;
-  }
-  
-  .flight-table input:focus,
-  .flight-table select:focus {
-    outline: 2px solid #2563eb;
-    border-color: #2563eb;
-    background-color: #ffffff;
-  }
-  
-  .flight-table td {
-    vertical-align: middle;
-  }
-  
-  .btn-sm {
-    margin-top: 4px;
-    display: inline-block;
-  }  
+}
+

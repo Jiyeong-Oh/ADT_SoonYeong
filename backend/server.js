@@ -53,9 +53,34 @@ db.run(`
   )
 `);
 
-// ✅ Get all active flights with joined info
+// ✅ Get all active flights with filters
 app.get("/api/flights", (req, res) => {
-  const sql = `
+  const { airline, airport, flightNumber, date } = req.query;
+  let whereClauses = [];
+  let params = [];
+
+  if (airline) {
+    whereClauses.push("af.AirlineCode = ?");
+    params.push(airline);
+  }
+
+  if (airport) {
+    whereClauses.push("(af.AirportCode = ? OR af.OriginDestAirport = ?)");
+    params.push(airport, airport);
+  }
+
+  if (flightNumber) {
+    whereClauses.push("af.FlightNumber LIKE ?");
+    params.push(`%${flightNumber}%`);
+  }
+
+  if (date) {
+    const formattedDate = date.replace(/-/g, "");
+    whereClauses.push("af.ScheduledDate = ?");
+    params.push(formattedDate);
+  }
+
+  let sql = `
     SELECT 
       af.FlightId, 
       af.FlightNumber, 
@@ -76,7 +101,12 @@ app.get("/api/flights", (req, res) => {
     LEFT JOIN Airlines al ON af.AirlineCode = al.AirlineCode
     LEFT JOIN Remarks r ON af.Remarks = r.RemarkCode
   `;
-  db.all(sql, [], (err, rows) => {
+
+  if (whereClauses.length > 0) {
+    sql += " WHERE " + whereClauses.join(" AND ");
+  }
+
+  db.all(sql, params, (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json(rows);
   });
@@ -120,6 +150,15 @@ app.delete("/api/flights/:id", (req, res) => {
 // ✅ Get airline list for combo box
 app.get("/api/airlines", (req, res) => {
   const sql = `SELECT AirlineCode, AirlineName FROM Airlines ORDER BY AirlineName ASC`;
+  db.all(sql, [], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
+// ✅ Get airline list for combo box
+app.get("/api/airports", (req, res) => {
+  const sql = `SELECT AirportCode, AirportName FROM Airports ORDER BY AirportName ASC`;
   db.all(sql, [], (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json(rows);

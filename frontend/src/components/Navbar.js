@@ -19,9 +19,9 @@ const Navbar = ({ isLoggedIn }) => {
             <li><div className="nav-item dropdown">
               <span className="menu-title">Display Management</span>
               <div className="dropdown-menu">
-                <a href="/departure">Departure Display</a>
-                <a href="/arrival">Arrival Display</a>
-                <a href="/display">Mixed Display</a>
+                <a href="/departure">Departures</a>
+                <a href="/arrival">Arrivals</a>
+                <a href="/display">Mixed Flights</a>
               </div>
             </div></li>
             <li><Link to="/flightschedulemgt">Flight Schedule Management<span> </span></Link></li>
