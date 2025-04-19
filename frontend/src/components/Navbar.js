@@ -20,9 +20,9 @@ const Navbar = ({ isLoggedIn }) => {
             <li><div className="nav-item dropdown">
               <span className="menu-title">Display Management</span>
               <div className="dropdown-menu">
-                <a href="/departure">Departure Display</a>
+                <a href="/display">Departure Display</a>
                 <a href="/display">Arrival Display</a>
-                <a href="/mixed">Mixed Display</a>
+                <a href="/display">Mixed Display</a>
               </div>
             </div></li>
             <li><Link to="/coden">Code Management <span> </span></Link></li>
