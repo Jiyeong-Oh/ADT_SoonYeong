@@ -6,17 +6,19 @@ import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-mod
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import axios from "axios";
-import "./Arrival.css";
+import "./Departure.css";
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
-const Arrival = ({ type = "A" }) => {
+const Departure = ({ type = "D" }) => {
   const [flights, setFlights] = useState([]);
   const [gridApi, setGridApi] = useState(null);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const toggleFullscreen = () => setIsFullscreen(prev => !prev);
+  const toggleFullscreen = () => {
+    setIsFullscreen((prev) => !prev);
+  };
 
   const formatTime = (hhmm) => {
     if (!hhmm || hhmm.length !== 4) return "--:--";
@@ -35,13 +37,13 @@ const Arrival = ({ type = "A" }) => {
 
         const formattedData = filtered.map(flight => ({
           id: flight.FlightId,
-          sta: formatTime(flight.ScheduledTime),
-          eta: formatTime(flight.EstimatedTime),
+          std: formatTime(flight.ScheduledTime),
+          etd: formatTime(flight.EstimatedTime),
           airline: flight.AirlineName || "Unknown",
           logo: flight.LogoPath || "/images/blank.png",
           flight_number: flight.AirlineCode && flight.FlightNumber
             ? `${flight.AirlineCode} ${flight.FlightNumber}` : "N/A",
-          origin: flight.AirportName || "Unknown",
+          destination: flight.AirportName || "Unknown",
           remark: flight.RemarkName || "Scheduled"
         }));
 
@@ -67,8 +69,8 @@ const Arrival = ({ type = "A" }) => {
   }, [gridApi]);
 
   const columnDefs = [
-    { field: "sta", headerName: "STA", flex: 1, cellClass: "center-text bold-text", headerClass: "center-header" },
-    { field: "eta", headerName: "ETA", flex: 1, cellClass: "center-text bold-text", headerClass: "center-header" },
+    { field: "std", headerName: "STD", flex: 1, cellClass: "center-text bold-text", headerClass: "center-header" },
+    { field: "etd", headerName: "ETD", flex: 1, cellClass: "center-text bold-text", headerClass: "center-header" },
     {
       field: "airline",
       headerName: "Airline",
@@ -87,34 +89,22 @@ const Arrival = ({ type = "A" }) => {
       )
     },
     { field: "flight_number", headerName: "Flight", flex: 2, cellClass: "center-text bold-text", headerClass: "center-header" },
-    { field: "origin", headerName: "Origin", flex: 3, cellClass: "left-text", headerClass: "center-header" },
+    { field: "destination", headerName: "Destination", flex: 3, cellClass: "left-text", headerClass: "center-header" },
     {
       field: "remark",
       headerName: "Status",
       flex: 2,
       headerClass: "center-header",
-      cellClass: "left-text",
-      cellRenderer: (params) => {
+      cellClass: (params) => {
         const base = "left-text";
         const value = params.value?.toUpperCase();
-        let remarkClass = "remark-normal";
-        let icon = "";
 
-        if (value === "ARRIVED") {
-          remarkClass = "remark-landed";
-          icon = "🟢";
-        } else if (value === "DELAYED") {
-          remarkClass = "remark-delayed";
-        } else if (value === "CANCELLED") {
-          remarkClass = "remark-cancelled";
-          icon = "❌";
-        }
+        if (value === "DELAYED") return `${base} remark-delayed`;
+        if (value === "DEPARTED") return `${base} remark-departed`;
+        if (value === "BOARDING") return `${base} remark-boarding`;
+        if (value === "PROGRESSING") return `${base} remark-progressing`;
 
-        return (
-          <span className={`${base} ${remarkClass}`}>
-            {params.value} {icon}
-          </span>
-        );
+        return `${base} remark-normal`;
       }
     }
   ];
@@ -154,4 +144,4 @@ const Arrival = ({ type = "A" }) => {
   );
 };
 
-export default Arrival;
+export default Departure;

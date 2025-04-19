@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -10,9 +10,24 @@ import Logout from "./pages/Logout";
 import CodeMgt from "./pages/CodeMgt";
 import UserMgt from "./pages/UserMgt";
 import Arrival from "./pages/Arrival";
+import Departure from "./pages/Departure";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+
 function App() {
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Block Ctrl+S or Cmd+S
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+        e.preventDefault();
+       // alert("💡 Saving this page is disabled.");
+      }
+    };
+  
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem("isLoggedIn") === "true";
   });
@@ -46,6 +61,14 @@ function App() {
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
               <Arrival />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/departure"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <Departure />
             </ProtectedRoute>
           }
         />

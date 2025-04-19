@@ -1,4 +1,4 @@
-/* Full FIDS Container */
+/* === Container === */
 .fids-container {
     width: 95vw;
     margin: auto;
@@ -10,11 +10,11 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Header Bar */
+/* === Header === */
 .fids-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     flex-wrap: wrap;
     background-color: #1e2a38;
     color: white;
@@ -22,28 +22,40 @@
     font-size: 2.5vh;
     font-weight: bold;
     border-bottom: 3px solid #ff8c00;
+    gap: 1rem;
 }
 
-.fids-title {
-    flex: 1 1 100%;
-    text-align: center;
-    color: white;
-    background-color: #ff8c00;
-    padding: 1vh;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 3vh;
-    text-transform: uppercase;
+/* === Header Right Side (Clock + Fullscreen) === */
+.fids-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+    margin-left: auto; /* ✅ Pushes to the right */
+
 }
 
 .fids-clock {
     font-size: 2vh;
     font-weight: bold;
-    padding: 1vh;
     color: white;
 }
 
-/* AG Grid Table Styling */
+/* === Fullscreen Button === */
+.fullscreen-button {
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+.fullscreen-button:hover {
+    background-color: #2563eb;
+}
+
+/* === AG Grid Table === */
 .fids-table {
     width: 100%;
     max-height: 70vh;
@@ -59,7 +71,6 @@
     border-radius: 5px;
 }
 
-/* Table Header Styling */
 .ag-theme-alpine-dark .ag-header {
     background-color: #ff8c00 !important;
     color: white !important;
@@ -68,66 +79,15 @@
     text-transform: uppercase;
 }
 
-/* Grid Cell Styling */
 .ag-theme-alpine-dark .ag-cell {
     font-size: 1.8vh;
     padding: 1vh;
 }
 
-/* Centered Text */
-.center-text {
-    text-align: center;
+.ag-header-cell-label {
+    justify-content: center;
 }
 
-/* Bold Text */
-.bold-text {
-    font-weight: bold;
-    font-size: 2vh;
-}
-
-/* Airline Column Styling */
-.airline-cell {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 0.8vw;
-    padding-left: 1vw;
-}
-
-/* Airline Logos */
-.airline-logo {
-    width: 5vh;
-    height: 5vh;
-    border-radius: 5px;
-    background-color: white;
-    padding: 0.5vh;
-}
-
-/* icon size */
-.fids-icon {
-    width: 6vh;
-    height: 5vh;
-    margin-right: 3vw;
-    vertical-align: middle;
-}
-
-/* Remark Column */
-.ag-theme-alpine-dark .ag-cell[col-id='remark'] {
-    font-size: 2vh;
-    font-weight: bold;
-    text-align: center;
-}
-
-/* Remark Colors */
-.remark-landed {
-    color: limegreen !important;
-}
-
-.remark-delayed {
-    color: red !important;
-}
-
-/* Alternating Row Background Colors */
 .ag-theme-alpine-dark .ag-row:nth-child(even) {
     background-color: #2a3b4d !important;
 }
@@ -136,38 +96,125 @@
     background-color: #1e2a38 !important;
 }
 
+/* === Fullscreen Mode === */
+.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #1e293b;
+    z-index: 9999;
+    padding: 1rem;
+}
+.fullscreen .ag-root-wrapper {
+    height: 100% !important;
+}
+
+/* === Icon in Header === */
+.fids-icon {
+    width: 6vh;
+    height: 5vh;
+    margin-right: 3vw;
+    vertical-align: middle;
+}
+
+/* === Airline Column === */
+.airline-cell {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.8vw;
+    padding-left: 1vw;
+}
+.airline-logo {
+    width: 5vh;
+    height: 5vh;
+    border-radius: 5px;
+    background-color: white;
+    padding: 0.5vh;
+}
+
+/* === Alignment Helpers === */
+.left-text {
+    text-align: left !important;
+    justify-content: flex-start !important;
+    padding-left: 10px;
+}
+.center-text {
+    text-align: center !important;
+}
+.right-text {
+    text-align: right !important;
+}
+.center-header {
+    justify-content: center !important;
+}
+
+/* === Text Styling === */
+.bold-text {
+    font-weight: bold;
+    font-size: 2vh;
+}
+
+/* === Remark Colors === */
+.remark-landed {
+    color: limegreen !important;
+}
+.remark-delayed {
+    color: yellow !important;
+}
+.remark-cancelled {
+    color: red !important;
+}
+.remark-normal {
+    color: white !important;
+}
+
+
+/* Remark Cell Styling */
+.ag-theme-alpine-dark .ag-cell[col-id='remark'] {
+    font-size: 2vh;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+/* === Flashing Effect === */
+.flashing {
+    animation: blink 1s infinite;
+}
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* === Responsive Tweaks === */
 @media screen and (max-width: 768px) {
     .fids-header {
+        display: flex;
         flex-direction: column;
         font-size: 2vh;
+        align-items: center;
     }
-
-    .fids-title {
-        font-size: 2.5vh;
+    .fids-header h2 {
+        text-align: left;      /* ✅ left-align the title text */
+        margin: 0;             /* ✅ optional: remove auto-centering */
+      }
+    .fids-right {
+        align-items: right;
     }
-
-    .fids-clock {
-        font-size: 1.8vh;
-    }
-
-    .airline-logo {
-        width: 4vh;
-        height: 4vh;
-    }
-
     .fids-icon {
         width: 5vh;
         height: 4vh;
         margin-right: 1vw;
     }
-
-    .ag-theme-alpine-dark .ag-header, 
+    .airline-logo {
+        width: 4vh;
+        height: 4vh;
+    }
+    .ag-theme-alpine-dark .ag-header,
     .ag-theme-alpine-dark .ag-cell {
         font-size: 1.6vh;
     }
 }
-
-/* Center align column headers */
-.ag-header-cell-label {
-    justify-content: center;
-  }

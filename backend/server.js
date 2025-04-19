@@ -39,7 +39,7 @@ db.run(`
     FlightNumber TEXT,
     AirportCode TEXT NOT NULL,
     AirlineCode TEXT NOT NULL,
-    FlightType CHAR(1) CHECK (FlightType IN ('A', 'D'))
+    FlightType CHAR(1) CHECK (FlightType IN ('A', 'D')),
     ScheduledDate TEXT NOT NULL,
     ScheduledTime TEXT NOT NULL,
     EstimatedDate TEXT,
@@ -63,18 +63,16 @@ app.get("/api/flights", (req, res) => {
       af.ScheduledTime,
       af.EstimatedDate, 
       af.EstimatedTime, 
-      af.AirportCode, 
-      dep.AirportName AS DepartureAirport,
       af.OriginDestAirport, 
-      arr.AirportName AS ArrivalAirport,
+      ap.AirportName,
       af.AirlineCode, 
       al.AirlineName,
+      af.FlightType,
       al.LogoPath,                  
       af.Remarks, 
       r.RemarkName
     FROM ActiveFlightSchedules af
-    LEFT JOIN Airports dep ON af.AirportCode = dep.AirportCode
-    LEFT JOIN Airports arr ON af.OriginDestAirport = arr.AirportCode
+    LEFT JOIN Airports ap ON af.OriginDestAirport = ap.AirportCode
     LEFT JOIN Airlines al ON af.AirlineCode = al.AirlineCode
     LEFT JOIN Remarks r ON af.Remarks = r.RemarkCode
   `;
