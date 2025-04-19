@@ -1,16 +1,35 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./Navbar.css";
 
-const Navbar = () => {
-    return (
-        <nav className="bg-blue-600 p-4 text-white flex justify-between">
-            <h1 className="text-xl">ADT Final Project (SoonYoeng)</h1>
-            <div>
-                {/* <Link className="mr-4" to="/">Home</Link> 
-                <Link to="/admin">Admin</Link> */}
-            </div>
-        </nav>
-    );
+const Navbar = ({ isLoggedIn }) => {
+  return (
+    <nav className="navbar">
+      <div className="navbar-left">
+        <div className="logo">
+          <img
+            src="/images/trident-tab-promo.jpg"
+            alt="Logo"
+            className="logo-img"
+          />
+        </div>
+        {isLoggedIn && (
+          <ul className="nav-links">
+            <li><Link to="/home">Home</Link></li>
+            <li><Link to="/display">Display Management<span> </span></Link></li>
+            <li><Link to="/schedule">Flight Schedule <span> </span></Link></li>
+            <li><Link to="/coden">Code Management <span> </span></Link></li>
+            <li><Link to="/system">System Management</Link></li>
+          </ul>
+        )}
+      </div>
+      {isLoggedIn && (
+        <Link to="/logout" className="logout-button">
+          Logout
+        </Link>
+      )}
+    </nav>
+  );
 };
 
 export default Navbar;

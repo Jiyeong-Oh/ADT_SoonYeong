@@ -1,9 +1,18 @@
-/* Login.css */
+
+.project-title {
+  text-align: center;
+  padding-top: 50px;           
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: #1e3a8a; /* deep blue */
+}
+
 .login-wrapper {
   display: flex;
   /* align-items: center; */
-  align-items: flex-start;      /* 👈 Push to top */
-  padding-top: 100px;           /* 👈 Add top padding */
+  align-items: flex-start;  
+  padding-top: 50px;           
   justify-content: center;
   min-height: 100vh;
   background-color: #f3f4f6;
@@ -55,4 +64,19 @@
 
 .login-button:hover {
   background-color: #2563eb;
+}
+.signup-text {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.signup-link {
+  color: #3b82f6;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.signup-link:hover {
+  text-decoration: underline;
 }
