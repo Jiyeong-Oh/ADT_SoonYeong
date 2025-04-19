@@ -1,44 +1,70 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Login.css";
 
 const Login = ({ setIsLoggedIn }) => {
   const [form, setForm] = useState({ id: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  const successMessage = location.state?.message || "";
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleLogin = (e) => {
+  // 🔐 SHA-256 Hash
+  const hashPassword = async (password) => {
+    const msgBuffer = new TextEncoder().encode(password);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+    return [...new Uint8Array(hashBuffer)].map(b => b.toString(16).padStart(2, "0")).join("");
+  };
+
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    // ✅ ID-only user list
-    const validUsers = [
-      { id: "soon01", password: "soon1234!" },
-      { id: "admin01", password: "admin1234!" },
-    ];
+    if (!form.id || !form.password) {
+      setError("Please enter both ID and password.");
+      return;
+    }
 
-    const matchedUser = validUsers.find(
-      (user) =>
-        user.id === form.id && user.password === form.password
-    );
-    if (matchedUser) {
+    try {
+      const hashedPassword = await hashPassword(form.password);
+
+      const res = await fetch("http://localhost:9999/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userID: form.id,
+          password: hashedPassword,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Login failed.");
+      }
+
       setIsLoggedIn(true);
       localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("userID", data.user.userID);
+      localStorage.setItem("userName", data.user.userName);
+      localStorage.setItem("airlineCode", data.user.airlineCode || "");
+
       navigate("/home");
-    } else {
-      setError("Invalid ID or password");
+    } catch (err) {
+      setError(err.message);
     }
   };
 
   return (
     <div>
-      <h1 className="project-title">ADT Final Project (SoonYoeng)</h1>
+      <h1 className="project-title">ADT Final Project (SoonYoung)</h1>
       <div className="login-wrapper">
         <div className="login-box">
           <h2 className="login-title">Login</h2>
+          {successMessage && <p className="login-success">{successMessage}</p>}
           {error && <p className="login-error">{error}</p>}
 
           <form onSubmit={handleLogin}>

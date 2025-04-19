@@ -68,8 +68,9 @@ const Signup = () => {
         const resText = await response.text();
         throw new Error(resText || "Signup failed.");
       }
-
-      navigate("/login");
+      navigate("/login", {
+        state: { message: "Account created successfully! Please log in." }
+      });
     } catch (err) {
       setError(err.message || "Signup failed.");
     }

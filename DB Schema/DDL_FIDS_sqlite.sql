@@ -121,6 +121,10 @@ CREATE TABLE ActiveFlightSchedules (
     -- Numeric part of the flight number, e.g., '1234'.
     -- Used in combination with AirlineCode to form the full flight number (e.g., 'AA1234').
     FlightNumber TEXT,
+
+    -- Flight Type A stands for 'Arrival', D stands for 'Departure'
+    FlightType TEXT CHECK (FlightType IN ('A', 'D'))
+
 ㄹ    -- Foreign key referencing Airports table, representing the airport code.
     AirportCode TEXT NOT NULL,
 

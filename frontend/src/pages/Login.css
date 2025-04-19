@@ -1,37 +1,37 @@
-
 .project-title {
   text-align: center;
-  padding-top: 50px;           
-  font-size: 1.8rem;
+  margin-top: 2rem;
+  font-size: 24px;
   font-weight: bold;
-  margin-bottom: 1.5rem;
-  color: #1e3a8a; /* deep blue */
 }
 
 .login-wrapper {
   display: flex;
-  /* align-items: center; */
-  align-items: flex-start;  
-  padding-top: 50px;           
   justify-content: center;
-  min-height: 100vh;
-  background-color: #f3f4f6;
+  align-items: center;
+  min-height: 70vh;
 }
 
 .login-box {
   background-color: #fff;
-  padding: 2rem;
+  padding: 2.5rem;
   border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   max-width: 400px;
   width: 100%;
 }
 
 .login-title {
-  font-size: 24px;
+  font-size: 22px;
+  font-weight: bold;
   text-align: center;
   margin-bottom: 1.5rem;
-  font-weight: bold;
+}
+
+.login-error {
+  color: red;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
 .form-group {
@@ -40,14 +40,15 @@
 
 .form-group label {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
 }
 
 .form-group input {
   width: 100%;
-  padding: 10px;
-  border-radius: 8px;
+  padding: 10px 12px;
   border: 1px solid #ccc;
+  border-radius: 8px;
   font-size: 1rem;
 }
 
@@ -60,15 +61,17 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  margin-top: 0.5rem;
 }
 
 .login-button:hover {
   background-color: #2563eb;
 }
+
 .signup-text {
-  margin-top: 1rem;
   text-align: center;
-  font-size: 0.9rem;
+  margin-top: 1rem;
+  font-size: 0.95rem;
 }
 
 .signup-link {
@@ -76,7 +79,11 @@
   font-weight: bold;
   text-decoration: none;
 }
-
 .signup-link:hover {
   text-decoration: underline;
+}
+.login-success {
+  color: green;
+  text-align: center;
+  margin-bottom: 1rem;
 }

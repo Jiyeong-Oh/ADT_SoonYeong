@@ -20,7 +20,7 @@ const Navbar = ({ isLoggedIn }) => {
               <span className="menu-title">Display Management</span>
               <div className="dropdown-menu">
                 <a href="/display">Departure Display</a>
-                <a href="/display">Arrival Display</a>
+                <a href="/arrival">Arrival Display</a>
                 <a href="/display">Mixed Display</a>
               </div>
             </div></li>

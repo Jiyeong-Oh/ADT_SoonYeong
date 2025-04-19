@@ -9,6 +9,7 @@ import Signup from "./pages/Signup";
 import Logout from "./pages/Logout";
 import CodeMgt from "./pages/CodeMgt";
 import UserMgt from "./pages/UserMgt";
+import Arrival from "./pages/Arrival";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -37,6 +38,14 @@ function App() {
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
               <Display />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/arrival"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <Arrival />
             </ProtectedRoute>
           }
         />

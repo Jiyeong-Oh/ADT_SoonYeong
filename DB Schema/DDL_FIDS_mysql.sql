@@ -109,6 +109,7 @@ CREATE TABLE ActiveFlightSchedules (
     FlightNumber VARCHAR(12) NOT NULL COMMENT 'Numeric part of the flight number, e.g., "1234". Used with AirlineCode to form full flight number (e.g., "AA1234").',
     AirportCode CHAR(3) NOT NULL COMMENT 'Foreign key referencing Airports table, representing the departure airport code.',
     AirlineCode CHAR(2) NOT NULL COMMENT 'Foreign key referencing Airlines table, representing the airline code.',
+    FlightType CHAR(1) CHECK (FlightType IN ('A', 'D')) COMMENT 'Flight Type A stands for "Arrival", D stands for "Departure"'
     ScheduledDate VARCHAR(8) NOT NULL COMMENT 'Scheduled date of the flight in YYYYMMDD format (e.g., 20250411).',
     ScheduledTime VARCHAR(4) NOT NULL COMMENT 'Scheduled time of the flight in 24-hour HHmm format (e.g., 1530).',
     EstimatedDate VARCHAR(8) COMMENT 'Estimated date of the flight in YYYYMMDD format.',
