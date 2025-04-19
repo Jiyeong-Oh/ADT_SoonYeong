@@ -28,6 +28,7 @@ CREATE TABLE Airlines (
     AirlineCode CHAR(2) NOT NULL COMMENT 'Primary key representing the airline code.',
     AirlineName VARCHAR(50) NOT NULL COMMENT 'Name of the airline along with its IATA code.',
     UseYn CHAR(1) NOT NULL DEFAULT 'Y' CHECK (UseYn IN ('Y', 'N')) COMMENT 'Indicates whether the record is active. (Y for Yes, N for No)',
+    LogoPath VARCHAR(255) COMMENT 'File path or URL to the airline logo.',
     PRIMARY KEY (AirlineCode),
     UNIQUE (AirlineName) -- Ensure no duplicate airline names
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Stores airline information including status.';

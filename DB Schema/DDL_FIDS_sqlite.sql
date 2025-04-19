@@ -18,7 +18,7 @@ CREATE TABLE Airports (
     Country TEXT,
 
     -- Indicates whether the record is active. ('Y' for Yes, 'N' for No)
-    UseYn TEXT NOT NULL
+    UseYn TEXT NOT NULL DEFAULT 'Y'
 );
 
 -- =============================
@@ -31,9 +31,13 @@ CREATE TABLE Airlines (
 
     -- Name of the airline along with its IATA code.
     AirlineName TEXT NOT NULL,
+	
+    -- Path for the airline logo image
+	LogoPath TEXT,
+	
+   -- Indicates whether the record is active. ('Y' for Yes, 'N' for No)
+	UseYn TEXT NOT NULL DEFAULT 'Y'
 
-    -- Indicates whether the record is active. ('Y' for Yes, 'N' for No)
-    UseYn TEXT NOT NULL
 );
 
 -- =============================
@@ -48,19 +52,7 @@ CREATE TABLE Remarks (
     RemarkName TEXT NOT NULL,
 
     -- Indicates whether the record is active. ('Y' for Yes, 'N' for No)
-    UseYn TEXT NOT NULL
-);
-
--- =============================
--- Table: FlightStatus
--- Stores the overall status of flights.
--- =============================
-CREATE TABLE FlightStatus (
-    -- Primary key representing the flight status code.
-    StatusCode TEXT NOT NULL PRIMARY KEY,
-
-    -- Description of the flight status.
-    Description TEXT NOT NULL
+    UseYn TEXT NOT NULL DEFAULT 'Y'
 );
 
 -- =============================
@@ -129,8 +121,7 @@ CREATE TABLE ActiveFlightSchedules (
     -- Numeric part of the flight number, e.g., '1234'.
     -- Used in combination with AirlineCode to form the full flight number (e.g., 'AA1234').
     FlightNumber TEXT,
-
-    -- Foreign key referencing Airports table, representing the airport code.
+ㄹ    -- Foreign key referencing Airports table, representing the airport code.
     AirportCode TEXT NOT NULL,
 
     -- Foreign key referencing Airlines table, representing the airline code.
@@ -159,3 +150,5 @@ CREATE TABLE ActiveFlightSchedules (
     FOREIGN KEY (OriginDestAirport) REFERENCES Airports(AirportCode),
     FOREIGN KEY (Remarks) REFERENCES Remarks(RemarkCode)
 );
+
+

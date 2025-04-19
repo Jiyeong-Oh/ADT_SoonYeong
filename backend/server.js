@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to SQLite Database
-const db = new sqlite3.Database("./database.db", (err) => {
+const db = new sqlite3.Database("./FIDS.db", (err) => {
     if (err) console.error("SQLite connection error:", err);
     else console.log("Connected to SQLite");
 });
