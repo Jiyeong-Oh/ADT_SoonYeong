@@ -156,12 +156,124 @@ app.get("/api/airlines", (req, res) => {
   });
 });
 
-// ✅ Get airline list for combo box
+// ✅ Get airport list for combo box
 app.get("/api/airports", (req, res) => {
-  const sql = `SELECT AirportCode, AirportName FROM Airports ORDER BY AirportName ASC`;
+  const sql = `SELECT AirportCode, AirportName, City, Country, UseYn FROM Airports ORDER BY AirportName ASC`;
   db.all(sql, [], (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json(rows);
+  });
+});
+
+// ✅ Get all airports with filters
+app.get("/api/airports_filter", (req, res) => {
+  const { code, name, city, country, yn } = req.query;
+  let whereClauses = [];
+  let params = [];
+
+  if (code?.trim()) {
+    whereClauses.push("AirportCode LIKE ?");
+    params.push(`%${code.trim()}%`);
+  }
+
+  if (name?.trim()) {
+    whereClauses.push("AirportName LIKE ?");
+    params.push(`%${name.trim()}%`);
+  }
+
+  if (city?.trim()) {
+    whereClauses.push("City LIKE ?");
+    params.push(`%${city.trim()}%`);
+  }
+
+  if (country?.trim()) {
+    whereClauses.push("Country LIKE ?");
+    params.push(`%${country.trim()}%`);
+  }
+
+  if (yn?.trim()) {
+    whereClauses.push("UseYn = ?");
+    params.push(yn.trim());
+  }
+
+  let sql = `
+    SELECT 
+      AirportCode,
+      AirportName,
+      City,
+      Country,
+      UseYn
+    FROM Airports
+  `;
+
+  if (whereClauses.length > 0) {
+    sql += " WHERE " + whereClauses.join(" AND ");
+  }
+
+  db.all(sql, params, (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+    
+  });
+});
+
+// ✅ Create Airports
+app.post("/api/airports", (req, res) => {
+  const { AirportCode, AirportName, City, Country, UseYn } = req.body;
+
+  if (!AirportCode || !AirportName) {
+    return res.status(400).json({ error: "AirportCode and AirportName are required." });
+  }
+
+  const sql = `
+    INSERT INTO Airports (AirportCode, AirportName, City, Country, UseYn)
+    VALUES (?, ?, ?, ?, ?)
+  `;
+  const params = [
+    AirportCode,
+    AirportName,
+    City || null,
+    Country || null,
+    UseYn || 'Y'
+  ];
+
+  db.run(sql, params, function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    res.status(201).json({ message: "✅ Airport added successfully.", id: this.lastID });
+  });
+});
+
+// ✅ Update Airports
+app.put("/api/airports/:code", (req, res) => {
+  const { AirportName, City, Country, UseYn } = req.body;
+  const AirportCode = req.params.code;
+
+  const sql = `
+    UPDATE Airports 
+    SET AirportName = ?, City = ?, Country = ?, UseYn = ? 
+    WHERE AirportCode = ?
+  `;
+  const params = [AirportName, City, Country, UseYn, AirportCode];
+
+  db.run(sql, params, function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    if (this.changes === 0) {
+      return res.status(404).json({ error: "Airport not found." });
+    }
+    res.json({ message: "✅ Airport updated successfully." });
+  });
+});
+
+// ✅ Delete Airports
+app.delete("/api/airports/:code", (req, res) => {
+  const AirportCode = req.params.code;
+
+  db.run("DELETE FROM Airports WHERE AirportCode = ?", AirportCode, function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    if (this.changes === 0) {
+      return res.status(404).json({ error: "Airport not found." });
+    }
+    res.json({ message: "✅ Airport deleted successfully." });
   });
 });
 

@@ -144,6 +144,15 @@
   background-color: #1e40af;
 }
 
+.btn-sm.danger {
+  background-color: #dc2626; /* red-600 */
+  color: #fff;
+}
+
+.btn-sm.danger:hover {
+  background-color: #b91c1c; /* red-700 */
+}
+
 /* Message Text */
 .message-text {
   margin-top: 12px;
