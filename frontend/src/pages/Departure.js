@@ -48,10 +48,8 @@ const Departure = ({ type = "D" }) => {
         }));
 
         setFlights(formattedData);
-
         if (gridApi) {
-          gridApi.setRowData(formattedData);
-          gridApi.sizeColumnsToFit();
+          gridApi.sizeColumnsToFit(); 
         }
       })
       .catch(error => console.error("❌ Error fetching flight data:", error));
@@ -60,7 +58,7 @@ const Departure = ({ type = "D" }) => {
     return () => clearInterval(interval);
   }, [gridApi, type]);
 
-  useEffect(() => {
+  useEffect(() => {    
     const handleResize = () => {
       if (gridApi) gridApi.sizeColumnsToFit();
     };

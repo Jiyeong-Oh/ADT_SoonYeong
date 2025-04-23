@@ -8,20 +8,16 @@ const PORT = 9999;
 
 app.use(cors());
 app.use(express.json());
-
-// ✅ Serve static images (like airline logos)
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
-// ✅ Connect to SQLite database
 const db = new sqlite3.Database("./FIDS.db", (err) => {
   if (err) console.error("SQLite connection error:", err);
   else console.log("✅ Connected to SQLite");
 });
 
-// ✅ Enable foreign key support
 db.run(`PRAGMA foreign_keys = ON`);
 
-// ✅ Create Users table
+// ======= TABLES =======
 db.run(`
   CREATE TABLE IF NOT EXISTS Users (
     UserID TEXT PRIMARY KEY,
@@ -32,7 +28,6 @@ db.run(`
   )
 `);
 
-// ✅ Create ActiveFlightSchedules table
 db.run(`
   CREATE TABLE IF NOT EXISTS ActiveFlightSchedules (
     FlightId INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -53,7 +48,9 @@ db.run(`
   )
 `);
 
-// ✅ Get all active flights with filters
+// ======= FLIGHT ENDPOINTS =======
+
+// Get all active flights with filters
 app.get("/api/flights", (req, res) => {
   const { airline, airport, flightNumber, date } = req.query;
   let whereClauses = [];
@@ -82,20 +79,10 @@ app.get("/api/flights", (req, res) => {
 
   let sql = `
     SELECT 
-      af.FlightId, 
-      af.FlightNumber, 
-      af.ScheduledDate, 
-      af.ScheduledTime,
-      af.EstimatedDate, 
-      af.EstimatedTime, 
-      af.OriginDestAirport, 
-      ap.AirportName,
-      af.AirlineCode, 
-      al.AirlineName,
-      af.FlightType,
-      al.LogoPath,                  
-      af.Remarks, 
-      r.RemarkName
+      af.FlightId, af.FlightNumber, af.ScheduledDate, af.ScheduledTime,
+      af.EstimatedDate, af.EstimatedTime, af.OriginDestAirport, ap.AirportName,
+      af.AirlineCode, al.AirlineName, af.FlightType, al.LogoPath,                  
+      af.Remarks, r.RemarkName
     FROM ActiveFlightSchedules af
     LEFT JOIN Airports ap ON af.OriginDestAirport = ap.AirportCode
     LEFT JOIN Airlines al ON af.AirlineCode = al.AirlineCode
@@ -112,25 +99,28 @@ app.get("/api/flights", (req, res) => {
   });
 });
 
-// ✅ Add a new flight
+// Add a new flight
 app.post("/api/flights", (req, res) => {
   const {
     FlightNumber, AirportCode, AirlineCode,
+    FlightType,
     ScheduledDate, ScheduledTime,
     EstimatedDate, EstimatedTime,
     OriginDestAirport, Remarks
   } = req.body;
 
+  const safeAirportCode = AirportCode?.trim() || "IND";
+
   const sql = `
     INSERT INTO ActiveFlightSchedules
-    (FlightNumber, AirportCode, AirlineCode, ScheduledDate, ScheduledTime,
+    (FlightNumber, AirportCode, AirlineCode, FlightType, ScheduledDate, ScheduledTime,
      EstimatedDate, EstimatedTime, OriginDestAirport, Remarks)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    VALUES (?, ?,?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   const params = [
-    FlightNumber, AirportCode, AirlineCode, ScheduledDate, ScheduledTime,
-    EstimatedDate, EstimatedTime, OriginDestAirport, Remarks
+    FlightNumber, safeAirportCode, AirlineCode, FlightType, ScheduledDate, ScheduledTime,
+    EstimatedDate || null, EstimatedTime || null, OriginDestAirport, Remarks
   ];
 
   db.run(sql, params, function (err) {
@@ -139,7 +129,51 @@ app.post("/api/flights", (req, res) => {
   });
 });
 
-// ✅ Delete a flight by ID
+// Update a flight by ID
+app.put("/api/flights/:id", (req, res) => {
+  console.log("✈️ PUT /api/flights/:id", req.params.id);
+  console.log("📝 Body:", req.body);
+
+  const {
+    FlightNumber, AirportCode, AirlineCode,
+    FlightType, ScheduledDate, ScheduledTime,
+    EstimatedDate, EstimatedTime,
+    OriginDestAirport, Remarks
+  } = req.body;
+
+  const safeAirportCode = AirportCode?.trim() || "IND";
+
+  const sql = `
+    UPDATE ActiveFlightSchedules SET
+      FlightNumber = ?, AirportCode = ?, AirlineCode = ?,
+      FlightType = ?, ScheduledDate = ?, ScheduledTime = ?,
+      EstimatedDate = ?, EstimatedTime = ?,
+      OriginDestAirport = ?, Remarks = ?
+    WHERE FlightId = ?
+  `;
+
+  const params = [
+    FlightNumber, safeAirportCode, AirlineCode,
+    FlightType, ScheduledDate, ScheduledTime,
+    EstimatedDate || null, EstimatedTime || null,
+    OriginDestAirport, Remarks, req.params.id
+  ];
+
+  db.run(sql, params, function (err) {
+    if (err) {
+      console.error("❌ 500 error (flight update):", err.message);
+      return res.status(500).json({ error: err.message });
+    }
+
+    if (this.changes === 0) {
+      return res.status(404).json({ error: "Flight not found." });
+    }
+
+    res.json({ message: "✅ Flight updated successfully." });
+  });
+});
+
+// Delete a flight by ID
 app.delete("/api/flights/:id", (req, res) => {
   db.run("DELETE FROM ActiveFlightSchedules WHERE FlightId = ?", req.params.id, function (err) {
     if (err) return res.status(500).json({ error: err.message });
@@ -147,16 +181,8 @@ app.delete("/api/flights/:id", (req, res) => {
   });
 });
 
-// ✅ Get airline list for combo box
-app.get("/api/airlines", (req, res) => {
-  const sql = `SELECT AirlineCode, AirlineName FROM Airlines ORDER BY AirlineName ASC`;
-  db.all(sql, [], (err, rows) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(rows);
-  });
-});
+// ======= AIRPORTS =======
 
-// ✅ Get airport list for combo box
 app.get("/api/airports", (req, res) => {
   const sql = `SELECT AirportCode, AirportName, City, Country, UseYn FROM Airports ORDER BY AirportName ASC`;
   db.all(sql, [], (err, rows) => {
@@ -165,7 +191,6 @@ app.get("/api/airports", (req, res) => {
   });
 });
 
-// ✅ Get all airports with filters
 app.get("/api/airports_filter", (req, res) => {
   const { code, name, city, country, yn } = req.query;
   let whereClauses = [];
@@ -196,16 +221,7 @@ app.get("/api/airports_filter", (req, res) => {
     params.push(yn.trim());
   }
 
-  let sql = `
-    SELECT 
-      AirportCode,
-      AirportName,
-      City,
-      Country,
-      UseYn
-    FROM Airports
-  `;
-
+  let sql = `SELECT AirportCode, AirportName, City, Country, UseYn FROM Airports`;
   if (whereClauses.length > 0) {
     sql += " WHERE " + whereClauses.join(" AND ");
   }
@@ -213,11 +229,9 @@ app.get("/api/airports_filter", (req, res) => {
   db.all(sql, params, (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json(rows);
-    
   });
 });
 
-// ✅ Create Airports
 app.post("/api/airports", (req, res) => {
   const { AirportCode, AirportName, City, Country, UseYn } = req.body;
 
@@ -229,13 +243,8 @@ app.post("/api/airports", (req, res) => {
     INSERT INTO Airports (AirportCode, AirportName, City, Country, UseYn)
     VALUES (?, ?, ?, ?, ?)
   `;
-  const params = [
-    AirportCode,
-    AirportName,
-    City || null,
-    Country || null,
-    UseYn || 'Y'
-  ];
+
+  const params = [AirportCode, AirportName, City || null, Country || null, UseYn || 'Y'];
 
   db.run(sql, params, function (err) {
     if (err) return res.status(500).json({ error: err.message });
@@ -243,7 +252,6 @@ app.post("/api/airports", (req, res) => {
   });
 });
 
-// ✅ Update Airports
 app.put("/api/airports/:code", (req, res) => {
   const { AirportName, City, Country, UseYn } = req.body;
   const AirportCode = req.params.code;
@@ -264,7 +272,6 @@ app.put("/api/airports/:code", (req, res) => {
   });
 });
 
-// ✅ Delete Airports
 app.delete("/api/airports/:code", (req, res) => {
   const AirportCode = req.params.code;
 
@@ -277,7 +284,18 @@ app.delete("/api/airports/:code", (req, res) => {
   });
 });
 
-// ✅ User signup
+// ======= AIRLINES =======
+
+app.get("/api/airlines", (req, res) => {
+  const sql = `SELECT AirlineCode, AirlineName FROM Airlines ORDER BY AirlineName ASC`;
+  db.all(sql, [], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
+// ======= USERS =======
+
 app.post("/api/users", (req, res) => {
   const { userID, userName, password, airlineCode } = req.body;
 
@@ -303,7 +321,6 @@ app.post("/api/users", (req, res) => {
   });
 });
 
-// ✅ User login
 app.post("/api/login", (req, res) => {
   const { userID, password } = req.body;
 
@@ -332,7 +349,6 @@ app.post("/api/login", (req, res) => {
   });
 });
 
-// ✅ Start the server
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
