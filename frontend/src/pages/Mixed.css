@@ -1,0 +1,188 @@
+/* Mixed Container */
+.mixed-fids-container {
+    width: 95vw;
+    gap: 5px;
+    display: flex;
+    margin: auto;
+    background-color: #1e2a38;
+    color: white;
+    text-align: center;
+    padding: 2vh 2vw;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Individual Panels */
+.mixed-fids-panel {
+    flex: 1;
+    background: #1e2a38;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Panel Header */
+.mixed-fids-header {
+    display: flex;
+    color: white;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: #1e2a38;
+    border-bottom: 3px solid #ff8c00;
+}
+
+.mixed-fids-header h2 {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    color: white;
+    font-size: 2.5vh;
+    text-transform: uppercase;
+}
+
+.mixed-fids-header img {
+    height: 50px;
+    margin-right: 15px;
+}
+
+/* Time Display */
+.mixed-fids-time {
+    font-size: 2.5vh;
+    font-weight: bold;
+    color: white;
+    /* background: #2a3b4d; */
+    padding: 8px 15px;
+    border-radius: 5px;
+}
+
+/* Grid Containers */
+.mixed-fids-ag-theme-alpine-dark {
+    height: calc(100% - 70px);
+    background: #1e2a38 !important;
+    font-size: 1.8vh;
+}
+
+/* Grid Header */
+.mixed-fids-ag-theme-alpine-dark .ag-header {
+    background: #ff8c00 !important;
+    color: white !important;
+    font-weight: bold;
+}
+
+/* Grid Rows */
+.mixed-fids-ag-theme-alpine-dark .ag-row {
+    background: #1e2a38;
+    color: white !important;
+    border-bottom: 1px solid #2a3b4d;
+}
+
+.mixed-fids-ag-theme-alpine-dark .ag-row:nth-child(even) {
+    background: #2a3b4d !important;
+        color: white !important;
+}
+
+.mixed-fids-ag-theme-alpine-dark .ag-center-cols-container {
+    background-color: #1e2a38 !important;
+}
+
+.mixed-fids-ag-theme-alpine-dark .ag-header-cell-label,
+.mixed-fids-ag-theme-alpine-dark .ag-header-cell-text {
+    color: white !important;
+}
+
+/* Cell Styling */
+.mixed-fids-center-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.mixed-fids-left-text {
+    padding-left: 15px !important;
+    text-align: left !important;
+}
+
+/* Airline Cell */
+.mixed-fids-airline-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 100%;
+    padding-left: 10px;
+}
+
+.mixed-fids-airline-logo {
+    width: 65px;
+    height: 40px;
+    object-fit: contain;
+    background: white;
+    padding: 3px;
+    border-radius: 4px;
+}
+
+/* Status Colors */
+.mixed-fids-status-delayed {color: #ffd700; }
+.mixed-fids-status-departed { color: #00ff00; }
+.mixed-fids-status-arrived { color: #00ff00; }
+.mixed-fids-status-boarding { color: #00ffff; }
+.mixed-fids-status-cancelled { color: #ff0000; }
+.mixed-fids-status-scheduled { color: #ffffff; }
+
+/* Fullscreen Mode */
+.mixed-fids-fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 9999;
+    background: #1e2a38;
+    padding: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .mixed-fids-container {
+        flex-direction: column;
+        padding: 10px;
+    }
+    
+    .mixed-fids-panel {
+        flex: none;
+        height: 50vh;
+        margin-bottom: 10px;
+    }
+    
+    .mixed-fids-header h2 {
+        color: white;
+        font-size: 2vh;
+    }
+    
+    .mixed-fids-time {
+        font-size: 2vh;
+        padding: 5px 10px;
+    }
+    
+    .mixed-fids-airline-logo {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+/* Fullscreen Button */
+.mixed-fids-fullscreen-button {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.8vh;
+    margin-left: auto;
+}
+
+.mixed-fids-fullscreen-button:hover {
+    background: #2563eb;
+}

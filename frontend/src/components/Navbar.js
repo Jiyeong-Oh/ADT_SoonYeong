@@ -21,7 +21,7 @@ const Navbar = ({ isLoggedIn }) => {
               <div className="dropdown-menu">
                 <a href="/departure">Departures</a>
                 <a href="/arrival">Arrivals</a>
-                <a href="/display">Mixed Flights</a>
+                <a href="/mixed">Mixed</a>
               </div>
             </div></li>
             <li><Link to="/flightschedulemgt">Flight Schedule Management<span> </span></Link></li>

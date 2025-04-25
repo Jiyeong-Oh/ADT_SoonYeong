@@ -45,7 +45,7 @@
     color: white;
 }
 
-/* AG Grid Table Styling */
+
 .fids-table {
     width: 100%;
     max-height: 70vh;
@@ -85,7 +85,7 @@
     padding-left: 1vw;
     min-height: 50px;
     /* or rowHeight */
-}
+} 
 
 /* Airline Logos */
 .airline-logo {
@@ -213,7 +213,7 @@
     }
     .fids-header h2 {
         text-align: left;     
-        margin: 0;             /* ✅ optional: remove auto-centering */
+        margin: 0;            
       }
     .fids-title {
         font-size: 2.5vh;
@@ -223,19 +223,18 @@
         font-size: 1.8vh;
     }
 
-    /* === Header Right Side (Clock + Fullscreen) === */
     .fids-right {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
         gap: 0.5rem;
-        margin-left: auto; /* ✅ Pushes to the right */
+        margin-left: auto; 
 
     }
 
     .airline-logo {
         width: 5vh !important;
-        height: 4vh !important;
+        height: vh !important;
         border-radius: 5px;
         padding: 0.5vh;
     }

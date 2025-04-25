@@ -6,6 +6,7 @@ const FlightScheduleMgt = () => {
   const [flights, setFlights] = useState([]);
   const [airlines, setAirlines] = useState([]);
   const [airports, setAirports] = useState([]);
+  const [remarks, setRemarks] = useState([]);
   const [editedCells, setEditedCells] = useState(new Set());
   const [editedRows, setEditedRows] = useState(new Set());
   const [message, setMessage] = useState(null);
@@ -21,6 +22,7 @@ const FlightScheduleMgt = () => {
     fetchFlights();
     fetchAirlines();
     fetchAirports();
+    fetchRemarks();
   }, []);
 
   useEffect(() => {
@@ -55,6 +57,13 @@ const FlightScheduleMgt = () => {
       .catch((err) => console.error("❌ Error loading airports", err));
   };
 
+  const fetchRemarks = () => {
+    axios
+      .get("http://localhost:9999/api/remarks")
+      .then((res) => setRemarks(res.data))
+      .catch((err) => console.error("❌ Error loading airlines", err));
+  };
+
   const handleSearch = () => {
     axios
       .get("http://localhost:9999/api/flights", { params: search })
@@ -76,7 +85,7 @@ const FlightScheduleMgt = () => {
       AirportCode: "IND",
       OriginDestAirport: "",
       AirlineCode: "",
-      Remarks: "ON_TIME",
+      Remarks: "ONTIME",
       FlightType: "A",
     };
     setFlights([...flights, newRow]);
@@ -378,12 +387,18 @@ const FlightScheduleMgt = () => {
                         handleChange(index, "Remarks", e.target.value)
                       }
                     >
-                      <option value="ON_TIME">On Time</option>
-                      <option value="DELAYED">Delayed</option>
-                      <option value="CANCELLED">Cancelled</option>
+                      <option value="">-- Select --</option>
+                      {remarks.map((a) => (
+                        <option
+                          key={a.RemarkCode}
+                          value={a.RemarkCode}
+                        >
+                          {a.RemarkName}
+                        </option>
+                      ))}
                     </select>
                   ) : (
-                    flight.Remarks
+                    flight.RemarkName || flight.RemarkCode
                   )}
                 </td>
                 <td>

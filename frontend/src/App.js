@@ -11,6 +11,7 @@ import CodeMgt from "./pages/CodeMgt";
 import UserMgt from "./pages/UserMgt";
 import Arrival from "./pages/Arrival";
 import Departure from "./pages/Departure";
+import Mixed from "./pages/Mixed";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 
@@ -20,10 +21,10 @@ function App() {
       // Block Ctrl+S or Cmd+S
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
         e.preventDefault();
-       // alert("💡 Saving this page is disabled.");
+        // alert("💡 Saving this page is disabled.");
       }
     };
-  
+
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
@@ -69,6 +70,14 @@ function App() {
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
               <Departure />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/mixed"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <Mixed />
             </ProtectedRoute>
           }
         />

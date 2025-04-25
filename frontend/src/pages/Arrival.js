@@ -102,12 +102,10 @@ const Arrival = ({ type = "A" }) => {
 
         if (value === "ARRIVED") {
           remarkClass = "remark-landed";
-          icon = "🟢";
         } else if (value === "DELAYED") {
           remarkClass = "remark-delayed";
         } else if (value === "CANCELLED") {
           remarkClass = "remark-cancelled";
-          icon = "❌";
         }
 
         return (

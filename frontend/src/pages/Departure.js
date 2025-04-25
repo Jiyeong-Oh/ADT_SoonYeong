@@ -24,7 +24,7 @@ const Departure = ({ type = "D" }) => {
     if (!hhmm || hhmm.length !== 4) return "--:--";
     return `${hhmm.slice(0, 2)}:${hhmm.slice(2)}`;
   };
-
+  
   useEffect(() => {
     axios.get("http://localhost:9999/api/flights")
       .then((response) => {
@@ -111,7 +111,7 @@ const Departure = ({ type = "D" }) => {
     <div className={`fids-container ${isFullscreen ? "fullscreen" : ""}`}>
       <div className="fids-header">
         <h2>
-          <img src="/images/arrival.png" alt="Arrival Icon" className="fids-icon" />
+          <img src="/images/departure.png" alt="Departue Icon" className="fids-icon" />
           {type === "A" ? "Arrivals" : type === "D" ? "Departures" : "All Flights"}
         </h2>
 

@@ -294,6 +294,16 @@ app.get("/api/airlines", (req, res) => {
   });
 });
 
+// ======= Remarks =======
+
+app.get("/api/remarks", (req, res) => {
+  const sql = `SELECT RemarkCode, RemarkName FROM Remarks ORDER BY RemarkName ASC`;
+  db.all(sql, [], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
 // ======= USERS =======
 
 app.post("/api/users", (req, res) => {
