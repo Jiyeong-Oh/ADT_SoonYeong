@@ -26,36 +26,48 @@ const Departure = ({ type = "D" }) => {
   };
   
   useEffect(() => {
-    axios.get("http://localhost:9999/api/flights")
-      .then((response) => {
-        const rawFlights = response.data;
-
-        const filtered = rawFlights.filter(flight => {
-          if (type === "ALL") return true;
-          return flight.FlightType === type;
-        });
-
-        const formattedData = filtered.map(flight => ({
-          id: flight.FlightId,
-          std: formatTime(flight.ScheduledTime),
-          etd: formatTime(flight.EstimatedTime),
-          airline: flight.AirlineName || "Unknown",
-          logo: flight.LogoPath || "/images/blank.png",
-          flight_number: flight.AirlineCode && flight.FlightNumber
-            ? `${flight.AirlineCode} ${flight.FlightNumber}` : "N/A",
-          destination: flight.AirportName || "Unknown",
-          remark: flight.RemarkName || "Scheduled"
-        }));
-
-        setFlights(formattedData);
-        if (gridApi) {
-          gridApi.sizeColumnsToFit(); 
-        }
-      })
-      .catch(error => console.error("❌ Error fetching flight data:", error));
-
-    const interval = setInterval(() => setCurrentTime(new Date()), 1000);
-    return () => clearInterval(interval);
+    const fetchData = () => {
+      axios.get("http://localhost:9999/api/flights")
+        .then((response) => {
+          const rawFlights = response.data;
+  
+          const filtered = rawFlights.filter(flight => {
+            if (type === "ALL") return true;
+            return flight.FlightType === type;
+          });
+  
+          const formattedData = filtered.map(flight => ({
+            id: flight.FlightId,
+            std: formatTime(flight.ScheduledTime),
+            etd: formatTime(flight.EstimatedTime),
+            airline: flight.AirlineName || "Unknown",
+            logo: flight.LogoPath || "/images/blank.png",
+            flight_number: flight.AirlineCode && flight.FlightNumber
+              ? `${flight.AirlineCode} ${flight.FlightNumber}` : "N/A",
+            destination: flight.AirportName || "Unknown",
+            remark: flight.RemarkName || "Scheduled"
+          }));
+  
+          setFlights(formattedData);
+          if (gridApi) {
+            gridApi.sizeColumnsToFit(); 
+          }
+        })
+        .catch(error => console.error("❌ Error fetching flight data:", error));
+    };
+  
+    // Initial fetch
+    fetchData();
+    
+    // Set up polling
+    const dataInterval = setInterval(fetchData, 5000); // 5 seconds
+    const clockInterval = setInterval(() => setCurrentTime(new Date()), 1000);
+  
+    // Cleanup intervals
+    return () => {
+      clearInterval(dataInterval);
+      clearInterval(clockInterval);
+    };
   }, [gridApi, type]);
 
   useEffect(() => {    
