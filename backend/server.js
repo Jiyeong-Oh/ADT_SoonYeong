@@ -287,10 +287,98 @@ app.delete("/api/airports/:code", (req, res) => {
 // ======= AIRLINES =======
 
 app.get("/api/airlines", (req, res) => {
-  const sql = `SELECT AirlineCode, AirlineName FROM Airlines ORDER BY AirlineName ASC`;
+  const sql = `SELECT AirlineCode, AirlineName, LogoPath, UseYn FROM Airlines ORDER BY AirlineName ASC`;
   db.all(sql, [], (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json(rows);
+  });
+});
+
+app.get("/api/airlines_filter", (req, res) => {
+  const { code, name, logopath, yn } = req.query;
+  let whereClauses = [];
+  let params = [];
+
+  if (code?.trim()) {
+    whereClauses.push("AirlineCode LIKE ?");
+    params.push(`%${code.trim()}%`);
+  }
+
+  if (name?.trim()) {
+    whereClauses.push("AirlineName LIKE ?");
+    params.push(`%${name.trim()}%`);
+  }
+
+  if (logopath?.trim()) {
+    whereClauses.push("LogoPath LIKE ?");
+    params.push(`%${logopath.trim()}%`);
+  }
+
+  if (yn?.trim()) {
+    whereClauses.push("UseYn = ?");
+    params.push(yn.trim());
+  }
+
+  let sql = `SELECT AirlineCode, AirlineName, LogoPath, UseYn FROM Airlines`;
+  if (whereClauses.length > 0) {
+    sql += " WHERE " + whereClauses.join(" AND ");
+  }
+
+  db.all(sql, params, (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
+app.post("/api/airlines", (req, res) => {
+  const { AirlineCode, AirlineName, LogoPath, UseYn } = req.body;
+
+  if (!AirlineCode || !AirlineName) {
+    return res.status(400).json({ error: "AirlineCode and AirlineName are required." });
+  }
+
+  const sql = `
+    INSERT INTO Airlines (AirlineCode, AirlineName, LogoPath, UseYn)
+    VALUES (?, ?, ?, ?)
+  `;
+
+  const params = [AirlineCode, AirlineName || null, LogoPath || null, UseYn || 'Y'];
+
+  db.run(sql, params, function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    res.status(201).json({ message: "✅ Airline added successfully.", id: this.lastID });
+  });
+});
+
+app.put("/api/airlines/:code", (req, res) => {
+  const { AirlineName, LogoPath, UseYn } = req.body;
+  const AirlineCode = req.params.code;
+
+  const sql = `
+    UPDATE Airlines 
+    SET AirlineName = ?, LogoPath = ?, UseYn = ? 
+    WHERE AirlineCode = ?
+  `;
+  const params = [AirlineName, LogoPath, UseYn, AirlineCode];
+
+  db.run(sql, params, function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    if (this.changes === 0) {
+      return res.status(404).json({ error: "Airline not found." });
+    }
+    res.json({ message: "✅ Airline updated successfully." });
+  });
+});
+
+app.delete("/api/airlines/:code", (req, res) => {
+  const AirlineCode = req.params.code;
+
+  db.run("DELETE FROM Airlines WHERE AirlineCode = ?", AirlineCode, function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    if (this.changes === 0) {
+      return res.status(404).json({ error: "Airline not found." });
+    }
+    res.json({ message: "✅ Airline deleted successfully." });
   });
 });
 

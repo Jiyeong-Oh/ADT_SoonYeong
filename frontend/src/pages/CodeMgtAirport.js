@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./FlightScheduleMgt.css";
 
-const CodeMgt = () => {
+const CodeMgtAirport = () => {
   const [airports, setAirports] = useState([]);
   const [filteredFlights, setFilteredFlights] = useState([]);
   const [editedCells, setEditedCells] = useState(new Set());
@@ -272,4 +272,4 @@ const CodeMgt = () => {
   );
 };
 
-export default CodeMgt;
+export default CodeMgtAirport;

@@ -7,7 +7,9 @@ import FlightScheduleMgt from "./pages/FlightScheduleMgt";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Logout from "./pages/Logout";
-import CodeMgt from "./pages/CodeMgt";
+import CodeMgtAirport from "./pages/CodeMgtAirport";
+import CodeMgtAirline from "./pages/CodeMgtAirline";
+import CodeMgtRemark from "./pages/CodeMgtRemark";
 import UserMgt from "./pages/UserMgt";
 import Arrival from "./pages/Arrival";
 import Departure from "./pages/Departure";
@@ -90,10 +92,26 @@ function App() {
           }
         />
         <Route
-          path="/codemgt"
+          path="/codemgtairport"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <CodeMgt />
+              <CodeMgtAirport />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/codemgtairline"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <CodeMgtAirline />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/codemgtremark"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <CodeMgtRemark />
             </ProtectedRoute>
           }
         />

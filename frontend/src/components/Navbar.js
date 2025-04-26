@@ -25,7 +25,15 @@ const Navbar = ({ isLoggedIn }) => {
               </div>
             </div></li>
             <li><Link to="/flightschedulemgt">Flight Schedule Management<span> </span></Link></li>
-            <li><Link to="/codemgt">Code Management <span> </span></Link></li>
+
+            <li><div className="nav-item dropdown">
+              <span className="menu-title">Code Management</span>
+              <div className="dropdown-menu">
+                <a href="/codemgtairport">Airports</a>
+                <a href="/codemgtairline">Airlines</a>
+                <a href="/codemgtremark">Remarks</a>
+              </div>
+            </div></li>
             <li><Link to="/usermgt">User Management</Link></li>
           </ul>
         )}
