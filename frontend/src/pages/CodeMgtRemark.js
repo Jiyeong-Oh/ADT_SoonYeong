@@ -3,7 +3,7 @@ import axios from "axios";
 import "./FlightScheduleMgt.css";
 
 const CodeMgtRemark = () => {
-  const [airports, setAirports] = useState([]);
+  const [remarks, setRemarks] = useState([]);
   const [filteredFlights, setFilteredFlights] = useState([]);
   const [editedCells, setEditedCells] = useState(new Set());
   const [editedRows, setEditedRows] = useState(new Set());
@@ -11,26 +11,24 @@ const CodeMgtRemark = () => {
   const [search, setSearch] = useState({
     code: "",
     name: "",
-    city: "",
-    country: "",
     yn: "Y"
   });
 
   useEffect(() => {
-    fetchAirports();
+    fetchRemarks();
   }, []);
 
-  const fetchAirports = () => {
-    axios.get("http://localhost:9999/api/airports")
+  const fetchRemarks = () => {
+    axios.get("http://localhost:9999/api/remarks")
       .then(res => {
-        setAirports(res.data);
+        setRemarks(res.data);
         setFilteredFlights(res.data); 
       })
-      .catch(err => console.error("❌ Error loading airports", err));
+      .catch(err => console.error("❌ Error loading remarks", err));
   };
 
   const handleSearch = () => {
-    axios.get("http://localhost:9999/api/airports_filter", { params: search })
+    axios.get("http://localhost:9999/api/remarks_filter", { params: search })
       .then(res => 
         {console.log("🛬 Search result:", res.data); // ✅ 여기서 데이터 확인!
           console.log(search);
@@ -41,16 +39,14 @@ const CodeMgtRemark = () => {
 
   const handleAddRow = () => {
     const newRow = {
-      AirportCode: "",
-      AirportName: "",
-      City: "",
-      Country: "",
+      RemarkCode: "",
+      RemarkName: "",
       UseYn: "Y",
       isNew: true,
     };
   
-    const newList = [...airports, newRow];  // ✅ 먼저 새 배열 생성
-    setAirports(newList);
+    const newList = [...remarks, newRow];  // ✅ 먼저 새 배열 생성
+    setRemarks(newList);
     setFilteredFlights(newList);           // ✅ 둘 다 같은 리스트로 업데이트
   };
 
@@ -60,14 +56,14 @@ const CodeMgtRemark = () => {
     updatedFiltered[index][field] = value;
     setFilteredFlights(updatedFiltered);
   
-    // 2. airports 배열도 수정 (AirportCode로 찾는 게 가장 안전)
-    const targetCode = updatedFiltered[index].AirportCode;
-    const updatedAirports = airports.map((airport) =>
-      airport.AirportCode === targetCode
-        ? { ...airport, [field]: value }
-        : airport
+    // 2. remarks 배열도 수정 (RemarkCode로 찾는 게 가장 안전)
+    const targetCode = updatedFiltered[index].RemarkCode;
+    const updatedRemarks = remarks.map((remark) =>
+      remark.RemarkCode === targetCode
+        ? { ...remark, [field]: value }
+        : remark
     );
-    setAirports(updatedAirports);
+    setRemarks(updatedRemarks);
   
     // 3. 수정 상태 관리
     const updatedCells = new Set(editedCells);
@@ -79,34 +75,34 @@ const CodeMgtRemark = () => {
     setEditedRows(updatedRows);
   };
 
-  const handleSave = (airport, index) => {
-    if (!airport.AirportCode || !airport.AirportName || !airport.City || !airport.Country) {
+  const handleSave = (remark, index) => {
+    if (!remark.RemarkCode || !remark.RemarkName) {
       alert("❗ Please fill in all fields before saving.");
       return;
     }
   
-    const isNew = !!airport.isNew;
+    const isNew = !!remark.isNew;
   
     if (isNew) {
-      axios.post("http://localhost:9999/api/airports", airport)
+      axios.post("http://localhost:9999/api/remarks", remark)
         .then(() => {
-          fetchAirports();         // ✅ 전체 리스트를 다시 불러오면 중복 방지
+          fetchRemarks();         // ✅ 전체 리스트를 다시 불러오면 중복 방지
           clearEditState(index);
         })
-        .catch(() => alert("❌ Error saving airport."));
+        .catch(() => alert("❌ Error saving remark."));
     } else {
-      axios.put(`http://localhost:9999/api/airports/${airport.AirportCode}`, airport)
+      axios.put(`http://localhost:9999/api/remarks/${remark.RemarkCode}`, remark)
         .then(() => {
-          fetchAirports();         // ✅ 동일하게 전체 새로고침
+          fetchRemarks();         // ✅ 동일하게 전체 새로고침
           clearEditState(index);
         })
-        .catch(() => alert("❌ Error updating airport."));
+        .catch(() => alert("❌ Error updating remark."));
     }
   };
 
   const clearEditState = (index) => {
-    const airport = filteredFlights[index]; // 화면 기준으로 접근
-    const target = airports.find(a => a.AirportCode === airport.AirportCode);
+    const remark = filteredFlights[index]; // 화면 기준으로 접근
+    const target = remarks.find(a => a.RemarkCode === remark.RemarkCode);
     if (!target) return;
   
     setEditedCells((prev) => {
@@ -126,25 +122,25 @@ const CodeMgtRemark = () => {
 
   
 
-  const handleDelete = (airport, index) => {
-    if (airport.isNew) {
+  const handleDelete = (remark, index) => {
+    if (remark.isNew) {
       const updatedFiltered = [...filteredFlights];
       updatedFiltered.splice(index, 1);
       setFilteredFlights(updatedFiltered);
   
-      const updatedAll = airports.filter(a => a.AirportCode !== airport.AirportCode);
-      setAirports(updatedAll);
+      const updatedAll = remarks.filter(a => a.RemarkCode !== remark.RemarkCode);
+      setRemarks(updatedAll);
       clearEditState(index);
     } else {
-      axios.delete(`http://localhost:9999/api/airports/${airport.AirportCode}`)
+      axios.delete(`http://localhost:9999/api/remarks/${remark.RemarkCode}`)
         .then(() => {
-          setAirports(prev => prev.filter(a => a.AirportCode !== airport.AirportCode));
-          setFilteredFlights(prev => prev.filter(a => a.AirportCode !== airport.AirportCode));
+          setRemarks(prev => prev.filter(a => a.RemarkCode !== remark.RemarkCode));
+          setFilteredFlights(prev => prev.filter(a => a.RemarkCode !== remark.RemarkCode));
           clearEditState(index);
         })
         .catch((err) => {
           console.error("❌ Delete error", err);
-          alert("❌ Error deleting airport.");
+          alert("❌ Error deleting remark.");
         });
     }
   };
@@ -153,10 +149,10 @@ const CodeMgtRemark = () => {
 
     <div className="flight-mgt-container">
       <div className="header-row">
-        <h2>Airport Code Management</h2>
+        <h2>Remark Code Management</h2>
         <select value={search.code} onChange={(e) => setSearch({ ...search, code: e.target.value })}>
           <option value="">-- Code --</option>
-          {[...new Set(airports.map(a => a.AirportCode))]
+          {[...new Set(remarks.map(a => a.RemarkCode))]
             .filter(Boolean)
             .sort()
             .map((code, i) => (
@@ -166,7 +162,7 @@ const CodeMgtRemark = () => {
 
         <select value={search.name} onChange={(e) => setSearch({ ...search, name: e.target.value })}>
           <option value="">-- Name --</option>
-          {[...new Set(airports.map(a => a.AirportName))]
+          {[...new Set(remarks.map(a => a.RemarkName))]
             .filter(Boolean)
             .sort()
             .map((name, i) => (
@@ -174,25 +170,6 @@ const CodeMgtRemark = () => {
             ))}
         </select>
 
-        <select value={search.city} onChange={(e) => setSearch({ ...search, city: e.target.value })}>
-          <option value="">-- City --</option>
-          {[...new Set(airports.map(a => a.City))]
-            .filter(Boolean)
-            .sort()
-            .map((city, i) => (
-              <option key={i} value={city}>{city}</option>
-            ))}
-        </select>
-
-        <select value={search.country} onChange={(e) => setSearch({ ...search, country: e.target.value })}>
-          <option value="">-- Country --</option>
-          {[...new Set(airports.map(a => a.Country))]
-            .filter(Boolean)
-            .sort()
-            .map((country, i) => (
-              <option key={i} value={country}>{country}</option>
-            ))}
-        </select>
         <button className="btn" onClick={handleSearch}>Search</button>
         <button className="btn" onClick={handleAddRow}>New</button>
       </div>
@@ -200,69 +177,49 @@ const CodeMgtRemark = () => {
       <table className="flight-table">
         <thead>
           <tr>
-            <th>Airport Code</th>
-            <th>Airport Name </th>
-            <th>City</th>
-            <th>Country</th>
+            <th>Remark Code</th>
+            <th>Remark Name </th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {filteredFlights.map((airport, index) => (
+          {filteredFlights.map((remark, index) => (
             <tr
-              key={airport.id || index}
+              key={remark.id || index}
               className={editedRows.has(index) ? "highlight-row" : ""}
               onDoubleClick={() => setEdixtedRows(prev => new Set(prev).add(index))}
             >
               <td>
-                {airport.isNew ? (
+                {remark.isNew ? (
                   <input
-                    value={airport.AirportCode}
-                    onChange={(e) => handleChange(index, "AirportCode", e.target.value)}
+                    value={remark.RemarkCode}
+                    onChange={(e) => handleChange(index, "RemarkCode", e.target.value)}
                     style={{
-                      fontWeight: editedCells.has(`${index}-AirportCode`) ? "bold" : "normal"
+                      fontWeight: editedCells.has(`${index}-RemarkCode`) ? "bold" : "normal"
                     }}
                   />
                 ) : (
                   <span
                     style={{
-                      fontWeight: editedCells.has(`${index}-AirportCode`) ? "bold" : "normal"
+                      fontWeight: editedCells.has(`${index}-RemarkCode`) ? "bold" : "normal"
                     }}
                   >
-                    {airport.AirportCode}
+                    {remark.RemarkCode}
                   </span>
                 )}
               </td>
               <td>
                 <input
-                  value={airport.AirportName}
-                  onChange={(e) => handleChange(index, "AirportName", e.target.value)}
+                  value={remark.RemarkName}
+                  onChange={(e) => handleChange(index, "RemarkName", e.target.value)}
                   style={{
-                    fontWeight: editedCells.has(`${index}-AirportName`) ? "bold" : "normal"
+                    fontWeight: editedCells.has(`${index}-RemarkName`) ? "bold" : "normal"
                   }}
                 />
               </td>
               <td>
-                <input
-                  value={airport.City}
-                  onChange={(e) => handleChange(index, "City", e.target.value)}
-                  style={{
-                    fontWeight: editedCells.has(`${index}-City`) ? "bold" : "normal"
-                  }}
-                />
-              </td>
-              <td>
-                <input
-                  value={airport.Country}
-                  onChange={(e) => handleChange(index, "Country", e.target.value)}
-                  style={{
-                    fontWeight: editedCells.has(`${index}-Country`) ? "bold" : "normal"
-                  }}
-                />
-              </td>
-              <td>
-                <button className="btn-sm" onClick={() => handleSave(airport, index)}>Save</button>
-                <button className="btn-sm danger" onClick={() => handleDelete(airport, index)}>Delete</button>
+                <button className="btn-sm" onClick={() => handleSave(remark, index)}>Save</button>
+                <button className="btn-sm danger" onClick={() => handleDelete(remark, index)}>Delete</button>
               </td>
             </tr>
           ))}

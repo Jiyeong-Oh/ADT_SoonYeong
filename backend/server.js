@@ -385,10 +385,93 @@ app.delete("/api/airlines/:code", (req, res) => {
 // ======= Remarks =======
 
 app.get("/api/remarks", (req, res) => {
-  const sql = `SELECT RemarkCode, RemarkName FROM Remarks ORDER BY RemarkName ASC`;
+  const sql = `SELECT RemarkCode, RemarkName, UseYn FROM Remarks ORDER BY RemarkName ASC`;
   db.all(sql, [], (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json(rows);
+  });
+});
+
+app.get("/api/remarks_filter", (req, res) => {
+  const { code, name, yn } = req.query;
+  let whereClauses = [];
+  let params = [];
+
+  if (code?.trim()) {
+    whereClauses.push("RemarkCode LIKE ?");
+    params.push(`%${code.trim()}%`);
+  }
+
+  if (name?.trim()) {
+    whereClauses.push("RemarkName LIKE ?");
+    params.push(`%${name.trim()}%`);
+  }
+
+  if (yn?.trim()) {
+    whereClauses.push("UseYn = ?");
+    params.push(yn.trim());
+  }
+
+  let sql = `SELECT RemarkCode, RemarkName, UseYn FROM Remarks`;
+  if (whereClauses.length > 0) {
+    sql += " WHERE " + whereClauses.join(" AND ");
+  }
+
+  db.all(sql, params, (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
+app.post("/api/remarks", (req, res) => {
+  const { RemarkCode, RemarkName, UseYn } = req.body;
+
+  if (!RemarkCode || !RemarkName) {
+    return res.status(400).json({ error: "RemarkCode and RemarkName are required." });
+  }
+
+  const sql = `
+    INSERT INTO Remarks (RemarkCode, RemarkName, UseYn)
+    VALUES (?, ?, ?)
+  `;
+
+  const params = [RemarkCode, RemarkName || null, UseYn || 'Y'];
+
+  db.run(sql, params, function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    res.status(201).json({ message: "✅ Remark added successfully.", id: this.lastID });
+  });
+});
+
+app.put("/api/remarks/:code", (req, res) => {
+  const { RemarkName, UseYn } = req.body;
+  const RemarkCode = req.params.code;
+
+  const sql = `
+    UPDATE Remarks 
+    SET RemarkName = ?, UseYn = ? 
+    WHERE RemarkCode = ?
+  `;
+  const params = [RemarkName, UseYn, RemarkCode];
+
+  db.run(sql, params, function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    if (this.changes === 0) {
+      return res.status(404).json({ error: "Remark not found." });
+    }
+    res.json({ message: "✅ Remark updated successfully." });
+  });
+});
+
+app.delete("/api/remarks/:code", (req, res) => {
+  const RemarkCode = req.params.code;
+
+  db.run("DELETE FROM Remarks WHERE RemarkCode = ?", RemarkCode, function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    if (this.changes === 0) {
+      return res.status(404).json({ error: "Remark not found." });
+    }
+    res.json({ message: "✅ Remark deleted successfully." });
   });
 });
 
