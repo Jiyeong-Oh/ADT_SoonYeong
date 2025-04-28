@@ -60,7 +60,7 @@ const Departure = ({ type = "D" }) => {
     fetchData();
     
     // Set up polling
-    const dataInterval = setInterval(fetchData, 5000); // 5 seconds
+    const dataInterval = setInterval(fetchData, 5000); 
     const clockInterval = setInterval(() => setCurrentTime(new Date()), 1000);
   
     // Cleanup intervals
