@@ -34,7 +34,14 @@ const Navbar = ({ isLoggedIn }) => {
                 <a href="/codemgtremark">Remarks</a>
               </div>
             </div></li>
-            <li><Link to="/usermgt">User Management</Link></li>
+            <li><div className="nav-item dropdown">
+              <span className="menu-title">User Role Management</span>
+              <div className="dropdown-menu">
+                <a href="/usermgtuser">Users</a>
+                <a href="/usermgtrole">Roles</a>
+                <a href="/usermgtuserrole">User Role</a>
+              </div>
+            </div></li>
           </ul>
         )}
       </div>

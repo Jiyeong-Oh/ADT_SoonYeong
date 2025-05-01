@@ -10,7 +10,9 @@ import Logout from "./pages/Logout";
 import CodeMgtAirport from "./pages/CodeMgtAirport";
 import CodeMgtAirline from "./pages/CodeMgtAirline";
 import CodeMgtRemark from "./pages/CodeMgtRemark";
-import UserMgt from "./pages/UserMgt";
+import UserMgtRole from "./pages/UserMgtRole";
+import UserMgtUser from "./pages/UserMgtUser";
+import UserMgtUserRole from "./pages/UserMgtUserRole";
 import Arrival from "./pages/Arrival";
 import Departure from "./pages/Departure";
 import Mixed from "./pages/Mixed";
@@ -116,10 +118,26 @@ function App() {
           }
         />
         <Route
-          path="/usermgt"
+          path="/usermgtrole"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <UserMgt />
+              <UserMgtRole />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/usermgtuser"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <UserMgtUser />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/usermgtuserrole"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <UserMgtUserRole />
             </ProtectedRoute>
           }
         />
