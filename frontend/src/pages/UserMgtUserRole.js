@@ -3,431 +3,308 @@ import axios from "axios";
 import "./FlightScheduleMgt.css";
 
 const UserMgtUserRole = () => {
-  const [flights, setFlights] = useState([]);
-  const [airlines, setAirlines] = useState([]);
-  const [airports, setAirports] = useState([]);
-  const [remarks, setRemarks] = useState([]);
+  const [userroles, setUserRoles] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [roles, setRoles] = useState([]);
+  const [filteredFlights, setFilteredFlights] = useState([]);
   const [editedCells, setEditedCells] = useState(new Set());
   const [editedRows, setEditedRows] = useState(new Set());
-  const [message, setMessage] = useState(null);
 
   const [search, setSearch] = useState({
-    airline: "",
-    airport: "",
-    flightNumber: "",
-    date: "",
+    code: "",
+    userid: "",
+    roleid: "",
   });
 
   useEffect(() => {
-    fetchFlights();
-    fetchAirlines();
-    fetchAirports();
-    fetchRemarks();
+    fetchUserRoles();
+    fetchUsers();
+    fetchRoles();
   }, []);
 
-  useEffect(() => {
-    if (message) {
-      const timer = setTimeout(() => setMessage(null), 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [message]);
-
-  const fetchFlights = () => {
+  const fetchUsers = () => {
     axios
-      .get("http://localhost:9999/api/flights")
-      .then((res) => {
-        setFlights(res.data);
-        setEditedRows(new Set());
-        setEditedCells(new Set());
+      .get("http://localhost:9999/api/users")
+      .then((res) => setUsers(res.data))
+      .catch((err) => console.error("❌ Error loading users", err));
+  };
+
+  const fetchRoles = () => {
+    axios
+      .get("http://localhost:9999/api/roles")
+      .then((res) => setRoles(res.data))
+      .catch((err) => console.error("❌ Error loading roles", err));
+  };
+
+  const fetchUserRoles = () => {
+    axios.get("http://localhost:9999/api/userroles")
+      .then(res => {
+        setUserRoles(res.data);
+        console.log(res.data);
+        setFilteredFlights(res.data); 
       })
-      .catch((err) => console.error("❌ Error loading flights", err));
+      .catch(err => console.error("❌ Error loading user roles", err));
   };
 
-  const fetchAirlines = () => {
-    axios
-      .get("http://localhost:9999/api/airlines")
-      .then((res) => setAirlines(res.data))
-      .catch((err) => console.error("❌ Error loading airlines", err));
-  };
-
-  const fetchAirports = () => {
-    axios
-      .get("http://localhost:9999/api/airports")
-      .then((res) => setAirports(res.data))
-      .catch((err) => console.error("❌ Error loading airports", err));
-  };
-
-  const fetchRemarks = () => {
-    axios
-      .get("http://localhost:9999/api/remarks")
-      .then((res) => setRemarks(res.data))
-      .catch((err) => console.error("❌ Error loading airlines", err));
-  };
 
   const handleSearch = () => {
-    axios
-      .get("http://localhost:9999/api/flights", { params: search })
-      .then((res) => {
-        setFlights(res.data);
-        setEditedRows(new Set());
-        setEditedCells(new Set());
-      })
-      .catch((err) => console.error("❌ Search error", err));
+    axios.get("http://localhost:9999/api/userroles_filter", { params: search })
+      .then(res => 
+        {console.log("🛬 Search result:", res.data); // ✅ 여기서 데이터 확인!
+          console.log(search);
+          setFilteredFlights(res.data);})
+      
+      .catch(err => console.error("❌ Search error", err));
   };
 
   const handleAddRow = () => {
+    // 1. 기존 ID 중 숫자만 추출하여 최대값 계산
+    const existingIDs = userroles
+      .map(u => u.UserRoleID)
+      .filter(id => /^UR\d+$/.test(id)) // UR로 시작하고 숫자만 있는 경우
+      .map(id => parseInt(id.replace("UR", ""), 10));
+  
+    const maxNum = existingIDs.length > 0 ? Math.max(...existingIDs) : 0;
+    const nextNum = maxNum + 1;
+  
+    // 2. 새로운 ID 생성 (숫자 부분을 항상 2자리 이상으로 포맷)
+    const newID = `UR${String(nextNum).padStart(2, '0')}`;  // 예: UR01, UR09, UR10
+  
+    // 3. 새 row 추가
     const newRow = {
-      FlightNumber: "",
-      ScheduledDate: "",
-      ScheduledTime: "",
-      EstimatedDate: "",
-      EstimatedTime: "",
-      AirportCode: "IND",
-      OriginDestAirport: "",
-      AirlineCode: "",
-      Remarks: "ONTIME",
-      FlightType: "A",
+      UserRoleID: newID,
+      UserID: "",
+      RoleID: "",
+      isNew: true,
     };
-    setFlights([...flights, newRow]);
+  
+    const newList = [...userroles, newRow];
+    setUserRoles(newList);
+    setFilteredFlights(newList);
   };
+  // const handleAddRow = () => {
+  //   const newRow = {
+  //     UserRoleID: "",
+  //     UserID: "",
+  //     RoleID: "",
+  //     isNew: true,
+  //   };
+  
+  //   const newList = [...userroles, newRow];  // ✅ 먼저 새 배열 생성
+  //   setUserRoles(newList);
+  //   setFilteredFlights(newList);           // ✅ 둘 다 같은 리스트로 업데이트
+  // };
 
   const handleChange = (index, field, value) => {
-    const updatedFlights = [...flights];
-    updatedFlights[index][field] = value;
-
+    // 1. filteredFlights 수정
+    const updatedFiltered = [...filteredFlights];
+    updatedFiltered[index][field] = value;
+    setFilteredFlights(updatedFiltered);
+  
+    // 2. userroles 배열도 수정 (UserRoleID로 찾는 게 가장 안전)
+    const targetCode = updatedFiltered[index].UserRoleID;
+    const updatedUserRoles = userroles.map((userrole) =>
+      userrole.UserRoleID === targetCode
+        ? { ...userrole, [field]: value }
+        : userrole
+    );
+    setUserRoles(updatedUserRoles);
+  
+    // 3. 수정 상태 관리
     const updatedCells = new Set(editedCells);
     updatedCells.add(`${index}-${field}`);
     setEditedCells(updatedCells);
-
+  
     const updatedRows = new Set(editedRows);
     updatedRows.add(index);
     setEditedRows(updatedRows);
-
-    setFlights(updatedFlights);
   };
-
-  const handleCancel = (index) => {
-    const updatedFlights = [...flights];
-    if (updatedFlights[index].FlightId) {
-      // revert to original data from server
-      fetchFlights();
-    } else {
-      // remove new row
-      updatedFlights.splice(index, 1);
-      setFlights(updatedFlights);
+  // ///////////////////////////////////////////////////////////////////////////////
+  const handleSave = (userrole, index) => {
+    console.log("🚀 Saving:", userrole);
+    if (!userrole.UserRoleID || !userrole.RoleID || !userrole.UserID) {
+      alert("❗ Please fill in all fields before saving.");
+      return;
     }
-    const updatedRows = new Set(editedRows);
-    updatedRows.delete(index);
-    setEditedRows(updatedRows);
+  
+    const isNew = !!userrole.isNew;
+  
+    if (isNew) {
+      // console.log(userrole);
+      axios.post("http://localhost:9999/api/userroles", userrole)
+        .then(() => {
+          fetchUsers();         // ✅ 전체 리스트를 다시 불러오면 중복 방지
+          clearEditState(index);
+        })
+        .catch(() => alert("❌ Error saving userrole."));
+    } else {
+      // console.log(userrole);
+      axios.put(`http://localhost:9999/api/userroles/${userrole.UserRoleID}`, userrole)
+        .then(() => {
+          fetchUsers();         // ✅ 동일하게 전체 새로고침
+          clearEditState(index);
+        })
+        .catch(() => alert("❌ Error updating userrole."));
+    }
   };
 
-  const handleSave = (flight, index) => {
-    const flightData = {
-      ...flight,
-      AirportCode: flight.AirportCode || "IND",
-      FlightType: flight.FlightType || "A",
-    };
-
-    const isUpdate = !!flight.FlightId;
-    const url = isUpdate
-      ? `http://localhost:9999/api/flights/${flight.FlightId}`
-      : "http://localhost:9999/api/flights";
-
-    const method = isUpdate ? axios.put : axios.post;
-
-    method(url, flightData)
-      .then(() => {
-        setMessage({ type: "success", text: "✅ Flight saved successfully." });
-        fetchFlights();
-      })
-      .catch((err) => {
-        console.error("❌ Error saving flight:", err);
-        setMessage({ type: "error", text: "❌ Failed to save flight." });
+  const clearEditState = (index) => {
+    const userrole = filteredFlights[index]; // 화면 기준으로 접근
+    const target = userroles.find(a => a.UserRoleID === userrole.UserRoleID);
+    if (!target) return;
+  
+    setEditedCells((prev) => {
+      const updated = new Set(prev);
+      Object.keys(target).forEach((field) => {
+        updated.delete(`${index}-${field}`);
       });
+      return updated;
+    });
+  
+    setEditedRows((prev) => {
+      const updated = new Set(prev);
+      updated.delete(index);
+      return updated;
+    });
   };
 
-  const handleDelete = (id) => {
-    axios
-      .delete(`http://localhost:9999/api/flights/${id}`)
-      .then(() => {
-        setMessage({ type: "success", text: "🗑️ Flight deleted successfully." });
-        fetchFlights();
-      })
-      .catch((err) => {
-        console.error("❌ Delete error", err);
-        setMessage({ type: "error", text: "❌ Failed to delete flight." });
-      });
-  };
+  
 
-  // Helper to get display value for Flight column
-  const getFlightDisplay = (flight) =>
-    (flight.AirlineCode || "") + (flight.FlightNumber || "");
+  const handleDelete = (userrole, index) => {
+    if (userrole.isNew) {
+      const updatedFiltered = [...filteredFlights];
+      updatedFiltered.splice(index, 1);
+      setFilteredFlights(updatedFiltered);
+  
+      const updatedAll = userroles.filter(a => a.UserRoleID !== userrole.UserRoleID);
+      setUsers(updatedAll);
+      clearEditState(index);
+    } else {
+      axios.delete(`http://localhost:9999/api/userroles/${userrole.UserRoleID}`)
+        .then(() => {
+          setUsers(prev => prev.filter(a => a.UserRoleID !== userrole.UserRoleID));
+          setFilteredFlights(prev => prev.filter(a => a.UserRoleID !== userrole.UserRoleID));
+          clearEditState(index);
+        })
+        .catch((err) => {
+          console.error("❌ Delete error", err);
+          alert("❌ Error deleting userrole.");
+        });
+    }
+  };
 
   return (
+
     <div className="flight-mgt-container">
       <div className="header-row">
-        <h2>Flight Schedule Management</h2>
+        <h2>User Management</h2>
+         <input
+              className="search-input"
+              placeholder="User ID"
+              value={search.userid}
+              onChange={(e) => setSearch({ ...search, userid: e.target.value })}
+            />
         <select
-          value={search.airline}
-          onChange={(e) => setSearch({ ...search, airline: e.target.value })}
+          value={search.roleid}
+          onChange={(e) => setSearch({ ...search, roleid: e.target.value })}
         >
-          <option value="">-- Airline --</option>
-          {airlines.map((a) => (
-            <option key={a.AirlineCode} value={a.AirlineCode}>
-              {a.AirlineName}
-            </option>
-          ))}
+          <option value="">-- Role Name --</option>
+          {[...new Map(roles.map(r => [r.RoleID, r.RoleName]))]
+            .map(([id, name]) => (
+              <option key={id} value={id}>{name}</option>
+            ))}
         </select>
-        <select
-          value={search.airport}
-          onChange={(e) => setSearch({ ...search, airport: e.target.value })}
-        >
-          <option value="">-- Airport --</option>
-          {airports.map((a) => (
-            <option key={a.AirportCode} value={a.AirportCode}>
-              {a.AirportName}
-            </option>
-          ))}
-        </select>
-        <input
-          className="search-input"
-          placeholder="Flight Number"
-          value={search.flightNumber}
-          onChange={(e) =>
-            setSearch({ ...search, flightNumber: e.target.value })
-          }
-        />
-        <input
-          type="date"
-          className="search-input"
-          value={search.date}
-          onChange={(e) => setSearch({ ...search, date: e.target.value })}
-        />
-        <button className="btn" onClick={handleSearch}>
-          Search
-        </button>
-        <button className="btn" onClick={handleAddRow}>
-          New
-        </button>
+        <button className="btn" onClick={handleSearch}>Search</button>
+        <button className="btn" onClick={handleAddRow}>New</button>
       </div>
-
-      {message && (
-        <div className={`message-box ${message.type}`}>{message.text}</div>
-      )}
 
       <table className="flight-table">
         <thead>
           <tr>
-            <th style={{ width: "140px" }}>Airline</th>
-            <th style={{ width: "110px" }}>Flight</th>
-            <th style={{ width: "100px" }}>Scheduled</th>
-            <th style={{ width: "70px" }}>Time</th>
-            <th style={{ width: "100px" }}>Estimated</th>
-            <th style={{ width: "70px" }}>Time</th>
-            <th style={{ width: "70px" }}>Type</th>
-            <th>Origin/Destination</th>
-            <th>Remarks</th>
+            <th>User Role ID</th>
+            <th>User ID</th>
+            <th>Role Name</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {flights.map((flight, index) => {
-            const isEditing = editedRows.has(index) || !flight.FlightId;
-            return (
-              <tr
-                key={flight.FlightId || index}
-                className={isEditing ? "highlight-row" : ""}
-                onDoubleClick={() =>
-                  setEditedRows((prev) => new Set(prev).add(index))
-                }
-              >
-                <td>
-                  {isEditing ? (
-                    <select
-                      value={flight.AirlineCode}
-                      onChange={(e) =>
-                        handleChange(index, "AirlineCode", e.target.value)
-                      }
-                    >
-                      <option value="">-- Select --</option>
-                      {airlines.map((a) => (
-                        <option
-                          key={a.AirlineCode}
-                          value={a.AirlineCode}
-                        >
-                          {a.AirlineName}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    airlines.find(
-                      (a) => a.AirlineCode === flight.AirlineCode
-                    )?.AirlineName || flight.AirlineCode
-                  )}
-                </td>
-                <td style={{ outline: "1px solid red" }}>
-                  {isEditing ? (
-                    <input
-                      value={flight.FlightNumber}
-                      maxLength={5}
-                      style={{ width: "60px" }}
-                      onChange={(e) =>
-                        handleChange(index, "FlightNumber", e.target.value)
-                      }
-                      placeholder="Number"
-                    />
-                  ) : (
-                    <span>
-                      {getFlightDisplay(flight)}
-                    </span>
-                  )}
-                </td>
-                <td>
-                  {isEditing ? (
-                    <input
-                      value={flight.ScheduledDate}
-                      maxLength={8}
-                      onChange={(e) =>
-                        handleChange(index, "ScheduledDate", e.target.value)
-                      }
-                    />
-                  ) : (
-                    flight.ScheduledDate
-                  )}
-                </td>
-                <td>
-                  {isEditing ? (
-                    <input
-                      value={flight.ScheduledTime}
-                      maxLength={4}
-                      onChange={(e) =>
-                        handleChange(index, "ScheduledTime", e.target.value)
-                      }
-                    />
-                  ) : (
-                    flight.ScheduledTime
-                  )}
-                </td>
-                <td>
-                  {isEditing ? (
-                    <input
-                      value={flight.EstimatedDate || ""}
-                      maxLength={8}
-                      onChange={(e) =>
-                        handleChange(index, "EstimatedDate", e.target.value)
-                      }
-                    />
-                  ) : (
-                    flight.EstimatedDate
-                  )}
-                </td>
-                <td>
-                  {isEditing ? (
-                    <input
-                      value={flight.EstimatedTime || ""}
-                      maxLength={4}
-                      onChange={(e) =>
-                        handleChange(index, "EstimatedTime", e.target.value)
-                      }
-                    />
-                  ) : (
-                    flight.EstimatedTime
-                  )}
-                </td>
-                <td>
-                  {isEditing ? (
-                    <select
-                      value={flight.FlightType || "A"}
-                      onChange={(e) =>
-                        handleChange(index, "FlightType", e.target.value)
-                      }
-                    >
-                      <option value="A">Arrival</option>
-                      <option value="D">Departure</option>
-                    </select>
-                  ) : flight.FlightType === "A" ? (
-                    "A"
-                  ) : (
-                    "D"
-                  )}
-                </td>
-                <td>
-                  {isEditing ? (
-                    <select
-                      value={flight.OriginDestAirport}
-                      onChange={(e) =>
-                        handleChange(
-                          index,
-                          "OriginDestAirport",
-                          e.target.value
-                        )
-                      }
-                    >
-                      <option value="">-- Select --</option>
-                      {airports.map((a) => (
-                        <option
-                          key={a.AirportCode}
-                          value={a.AirportCode}
-                        >
-                          {a.AirportName}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    airports.find(
-                      (a) => a.AirportCode === flight.OriginDestAirport
-                    )?.AirportName || flight.OriginDestAirport
-                  )}
-                </td>
-                <td>
-                  {isEditing ? (
-                    <select
-                      value={flight.Remarks}
-                      onChange={(e) =>
-                        handleChange(index, "Remarks", e.target.value)
-                      }
-                    >
-                      <option value="">-- Select --</option>
-                      {remarks.map((a) => (
-                        <option
-                          key={a.RemarkCode}
-                          value={a.RemarkCode}
-                        >
-                          {a.RemarkName}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    flight.RemarkName || flight.RemarkCode
-                  )}
-                </td>
-                <td>
-                  <button
-                    className="btn-sm"
-                    onClick={() => handleSave(flight, index)}
+          {filteredFlights.map((userrole, index) => (
+            <tr
+              key={userrole.id || index}
+              className={editedRows.has(index) ? "highlight-row" : ""}
+              onDoubleClick={() => setEdixtedRows(prev => new Set(prev).add(index))}
+            >
+              <td>
+                {userrole.isNew ? (
+                  <input
+                    value={userrole.UserRoleID}
+                    onChange={(e) => handleChange(index, "UserRoleID", e.target.value)}
+                    style={{
+                      fontWeight: editedCells.has(`${index}-UserRoleID`) ? "bold" : "normal"
+                    }}
+                  />
+                ) : (
+                  <span
+                    style={{
+                      fontWeight: editedCells.has(`${index}-UserRoleID`) ? "bold" : "normal"
+                    }}
                   >
-                    Save
-                  </button>
-                  {isEditing ? (
-                    <button
-                      className="btn-sm cancel-btn"
-                      onClick={() => handleCancel(index)}
+                    {userrole.UserRoleID}
+                  </span>
+                )}
+              </td>
+              <td>
+                {userrole.isNew ? (
+                  <select
+                      value={users.UserID}
+                      onChange={(e) =>
+                        handleChange(index, "UserID", e.target.value)
+                      }
                     >
-                      Cancel
-                    </button>
-                  ) : (
-                    <button
-                      className="btn-sm"
-                      onClick={() => handleDelete(flight.FlightId)}
-                      disabled={!flight.FlightId}
+                      <option value="">-- Select --</option>
+                      {users.map((a) => (
+                        <option
+                          key={a.UserID}
+                          value={a.UserID}
+                        >
+                          {a.UserID}
+                        </option>
+                      ))}
+                    </select>
+                ) : (
+                  <span
+                    style={{
+                      fontWeight: editedCells.has(`${index}-UserID`) ? "bold" : "normal"
+                    }}
+                  >
+                    {userrole.UserID}
+                  </span>
+                )}
+              </td>
+              <td>
+              <select
+                      value={userrole.RoleID}
+                      onChange={(e) =>
+                        handleChange(index, "RoleID", e.target.value)
+                      }
                     >
-                      Delete
-                    </button>
-                  )}
-                </td>
-              </tr>
-            );
-          })}
+                      <option value="">-- Select --</option>
+                      {roles.map((a) => (
+                        <option
+                          key={a.RoleID}
+                          value={a.RoleID}
+                        >
+                          {a.RoleName}
+                        </option>
+                      ))}
+                    </select>
+              </td>
+              <td>
+                <button className="btn-sm" onClick={() => handleSave(userrole, index)}>Save</button>
+                <button className="btn-sm danger" onClick={() => handleDelete(userrole, index)}>Delete</button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
