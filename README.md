@@ -1,4 +1,4 @@
-# ADT_FInal_Project
+# ADT_Final_Project
 
 # Flight Information Display System (FIDS)
 
@@ -8,8 +8,9 @@
 
 ## 🗂️ Project Structure
 
-- `/client`: React User Interface
-- `/server`: Node.js + Express + SQLite API Server
+- `/frontend`: React User Interface
+- `/backend`: Node.js + Express + SQLite API Server
+- `/Documents`: Project Document (report, design, db schema and etc.)
 - `/data/raw`: raw data (CSV/Excel)
 - `/data/structured_data.json`: structured JSON data
 - `/data/FIDS_dump.sql`: SQLite dump
