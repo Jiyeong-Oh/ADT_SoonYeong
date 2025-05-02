@@ -186,3 +186,35 @@
 .mixed-fids-fullscreen-button:hover {
     background: #2563eb;
 }
+.mixed-fids-scroll-cell {
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+  }
+  
+  .mixed-fids-scroll-cell span {
+    display: inline-block;
+    animation: scroll-left-pause 12s ease-in-out infinite;
+    padding-right: 60px;
+    min-width: 200%; 
+  }
+
+  /* keyframes with pause at start and end */
+@keyframes scroll-left-pause {
+    0% {
+      transform: translateX(0%); 
+    }
+    10% {
+      transform: translateX(0%); 
+    }
+    80% {
+      transform: translateX(-50%);
+    }
+    90% {
+      transform: translateX(-50%); 
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }

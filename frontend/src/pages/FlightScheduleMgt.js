@@ -265,7 +265,7 @@ const FlightScheduleMgt = () => {
                     )?.AirlineName || flight.AirlineCode
                   )}
                 </td>
-                <td style={{ outline: "1px solid red" }}>
+                <td>
                   {isEditing ? (
                     <input
                       value={flight.FlightNumber}

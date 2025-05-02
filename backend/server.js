@@ -4,27 +4,74 @@ const cors = require("cors");
 const path = require("path");
 
 const app = express();
-const PORT = 9999;
+const PORT = process.env.PORT || 9999;
 
 app.use(cors());
 app.use(express.json());
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
-const db = new sqlite3.Database("./FIDS.db", (err) => {
-  if (err) console.error("SQLite connection error:", err);
-  else console.log("✅ Connected to SQLite");
+const dbPath = path.join(__dirname, "FIDS.db");
+const db = new sqlite3.Database(dbPath, (err) => {
+  if (err) console.error("❌ SQLite connection error:", err);
+  else console.log("✅ Connected to SQLite at", dbPath);
 });
 
 db.run(`PRAGMA foreign_keys = ON`);
 
 // ======= TABLES =======
 db.run(`
+  CREATE TABLE IF NOT EXISTS Airports (
+    AirportCode TEXT NOT NULL PRIMARY KEY,
+    AirportName TEXT NOT NULL,
+    City TEXT,
+    Country TEXT,
+    UseYn TEXT NOT NULL DEFAULT 'Y'
+  )
+`);
+
+db.run(`
+  CREATE TABLE IF NOT EXISTS Airlines (
+    AirlineCode TEXT NOT NULL PRIMARY KEY,
+    AirlineName TEXT NOT NULL,
+    LogoPath TEXT,
+    UseYn TEXT NOT NULL DEFAULT 'Y'
+  )
+`);
+
+db.run(`
+  CREATE TABLE IF NOT EXISTS Remarks (
+    RemarkCode TEXT NOT NULL PRIMARY KEY,
+    RemarkName TEXT NOT NULL,
+    UseYn TEXT NOT NULL DEFAULT 'Y'
+  )
+`);
+
+db.run(`
+  CREATE TABLE IF NOT EXISTS Roles (
+    RoleID TEXT NOT NULL PRIMARY KEY,
+    RoleName TEXT NOT NULL
+  )
+`);
+
+db.run(`
   CREATE TABLE IF NOT EXISTS Users (
-    UserID TEXT PRIMARY KEY,
+    UserID TEXT NOT NULL PRIMARY KEY,
     UserName TEXT NOT NULL,
     Password TEXT NOT NULL,
+    AirportCode TEXT,
     AirlineCode TEXT,
+    FOREIGN KEY (AirportCode) REFERENCES Airports(AirportCode),
     FOREIGN KEY (AirlineCode) REFERENCES Airlines(AirlineCode)
+  )
+`);
+
+db.run(`
+  CREATE TABLE IF NOT EXISTS UserRoles (
+    UserRoleID TEXT NOT NULL PRIMARY KEY,
+    UserID TEXT NOT NULL,
+    RoleID TEXT NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    FOREIGN KEY (RoleID) REFERENCES Roles(RoleID)
   )
 `);
 
@@ -32,9 +79,9 @@ db.run(`
   CREATE TABLE IF NOT EXISTS ActiveFlightSchedules (
     FlightId INTEGER PRIMARY KEY AUTOINCREMENT,
     FlightNumber TEXT,
+    FlightType TEXT CHECK (FlightType IN ('A', 'D')),
     AirportCode TEXT NOT NULL,
     AirlineCode TEXT NOT NULL,
-    FlightType CHAR(1) CHECK (FlightType IN ('A', 'D')),
     ScheduledDate TEXT NOT NULL,
     ScheduledTime TEXT NOT NULL,
     EstimatedDate TEXT,

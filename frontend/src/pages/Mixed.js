@@ -22,30 +22,41 @@ const Mixed = () => {
   };
 
   useEffect(() => {
-    axios.get("http://localhost:9999/api/flights")
-      .then((response) => {
-        const rawFlights = response.data;
-        
-        const processData = (type) => rawFlights
-          .filter(flight => flight.FlightType === type)
-          .map(flight => ({
-            id: flight.FlightId,
-            time: formatTime(flight.ScheduledTime),
-            estimated: formatTime(flight.EstimatedTime),
-            airline: flight.AirlineName || "Unknown",
-            logo: flight.LogoPath || "/images/blank.png",
-            flightNumber: `${flight.AirlineCode} ${flight.FlightNumber}` || "N/A",
-            location: flight.AirportName || "Unknown",
-            status: flight.RemarkName || "Scheduled"
-          }));
-
-        setArrivals(processData('A'));
-        setDepartures(processData('D'));
-      })
-      .catch(error => console.error("Error fetching flight data:", error));
-
-    const interval = setInterval(() => setCurrentTime(new Date()), 1000);
-    return () => clearInterval(interval);
+    const fetchData = () => {
+      axios.get("http://localhost:9999/api/flights")
+        .then((response) => {
+          const rawFlights = response.data;
+  
+          const processData = (type) => rawFlights
+            .filter(flight => flight.FlightType === type)
+            .map(flight => ({
+              id: flight.FlightId,
+              time: formatTime(flight.ScheduledTime),
+              estimated: formatTime(flight.EstimatedTime),
+              airline: flight.AirlineName || "Unknown",
+              logo: flight.LogoPath || "/images/blank.png",
+              flightNumber: flight.AirlineCode && flight.FlightNumber
+                ? `${flight.AirlineCode} ${flight.FlightNumber}` : "N/A",
+              location: flight.AirportName || "Unknown",
+              status: flight.RemarkName || "Scheduled"
+            }));
+  
+          setArrivals(processData("A"));
+          setDepartures(processData("D"));
+        })
+        .catch(error => console.error("❌ Error fetching flight data:", error));
+    };
+  
+    fetchData();
+  
+    const dataInterval = setInterval(fetchData, 1000);
+    const clockInterval = setInterval(() => setCurrentTime(new Date()), 1000);
+  
+    // cleanup
+    return () => {
+      clearInterval(dataInterval);
+      clearInterval(clockInterval);
+    };
   }, []);
 
   const commonColumnDefs = {
@@ -93,7 +104,12 @@ const Mixed = () => {
       ...commonColumnDefs,
       field: "location",
       headerName: "Origin",
-      flex: 3
+      flex: 3,
+      cellRenderer: (params) => (
+        <div className="mixed-fids-scroll-cell">
+          <span>{params.value}</span>
+        </div>
+      )
     },
     {
       ...commonColumnDefs,
@@ -141,7 +157,12 @@ const Mixed = () => {
       ...commonColumnDefs,
       field: "location",
       headerName: "Destination",
-      flex: 3
+      flex: 3,
+      cellRenderer: (params) => (
+        <div className="mixed-fids-scroll-cell">
+          <span>{params.value}</span>
+        </div>
+      )
     },
     {
       ...commonColumnDefs,
