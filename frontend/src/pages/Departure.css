@@ -139,10 +139,12 @@
 }
 
 /* Remark Colors */
-.remark-normal {
+.remark-scheduled {
     color: white;
 }
-
+.remark-normal {
+    color: limegreen !important;
+}
 .remark-departed {
     color: limegreen !important;
 }
@@ -159,7 +161,7 @@
     color: limegreen !important;
 }
 
-.remark-progressing {
+.remark-processing {
     color: limegreen !important;
 }
 

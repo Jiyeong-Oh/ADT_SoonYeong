@@ -28,12 +28,24 @@ const Arrival = ({ type = "A" }) => {
       axios.get("http://localhost:9999/api/flights")
         .then((response) => {
           const rawFlights = response.data;
-  
+
+          const isWithinFutureOrRecent = (hhmm) => {
+            if (!hhmm || hhmm.length !== 4) return false;
+            const now = new Date();
+            const hh = parseInt(hhmm.slice(0, 2), 10);
+            const mm = parseInt(hhmm.slice(2), 10);
+            const flightTime = new Date();
+            flightTime.setHours(hh, mm, 0, 0);
+            const diffMs = flightTime - now;
+            return diffMs >= -30 * 60 * 1000;
+          };
+    
           const filtered = rawFlights.filter(flight => {
-            if (type === "ALL") return true;
-            return flight.FlightType === type;
+            const includeType = type === "ALL" || flight.FlightType === type;
+            const includeTime = isWithinFutureOrRecent(flight.ScheduledTime);
+            return includeType && includeTime;
           });
-  
+
           const formattedData = filtered.map(flight => ({
             id: flight.FlightId,
             sta: formatTime(flight.ScheduledTime),
@@ -45,21 +57,25 @@ const Arrival = ({ type = "A" }) => {
             origin: flight.AirportName || "Unknown",
             remark: flight.RemarkName || "Scheduled"
           }));
-  
-          setFlights(formattedData);
-          if (gridApi) {
-            gridApi.setRowData(formattedData);
-            gridApi.sizeColumnsToFit();
-          }
+
+          const MAX_VISIBLE_ROWS = 9;
+          const visibleData = formattedData.slice(0, MAX_VISIBLE_ROWS);
+    
+          setFlights(visibleData);
+
+          // if (gridApi) {
+          //   gridApi.setRowData(formattedData);
+          //   gridApi.sizeColumnsToFit();
+          // }
         })
         .catch(error => console.error("❌ Error fetching flight data:", error));
     };
-  
+
     fetchData();
-  
+
     const dataInterval = setInterval(fetchData, 1000);
     const clockInterval = setInterval(() => setCurrentTime(new Date()), 1000);
-  
+
     return () => {
       clearInterval(dataInterval);
       clearInterval(clockInterval);
@@ -133,12 +149,11 @@ const Arrival = ({ type = "A" }) => {
         </div>
       </div>
 
-      <div className="ag-theme-alpine-dark fids-table">
+      <div className="ag-theme-alpine-dark fids-table" style={{ height: "600px", width: "100%" }}>
         <AgGridReact
           rowData={flights}
           columnDefs={columnDefs}
-          domLayout="autoHeight"
-          rowHeight={70}
+          rowHeight={60}
           headerHeight={40}
           animateRows={true}
           onGridReady={(params) => {

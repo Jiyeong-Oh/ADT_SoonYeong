@@ -24,20 +24,33 @@ const Departure = ({ type = "D" }) => {
     if (!hhmm || hhmm.length !== 4) return "--:--";
     return `${hhmm.slice(0, 2)}:${hhmm.slice(2)}`;
   };
-  
+
   useEffect(() => {
     const fetchData = () => {
       axios.get("http://localhost:9999/api/flights")
         .then((response) => {
           const rawFlights = response.data;
-  
+    
+          const isWithinFutureOrRecent = (hhmm) => {
+            if (!hhmm || hhmm.length !== 4) return false;
+            const now = new Date();
+            const hh = parseInt(hhmm.slice(0, 2), 10);
+            const mm = parseInt(hhmm.slice(2), 10);
+            const flightTime = new Date();
+            flightTime.setHours(hh, mm, 0, 0);
+            const diffMs = flightTime - now;
+            return diffMs >= -30 * 60 * 1000;
+          };
+    
           const filtered = rawFlights.filter(flight => {
-            if (type === "ALL") return true;
-            return flight.FlightType === type;
+            const includeType = type === "ALL" || flight.FlightType === type;
+            const includeTime = isWithinFutureOrRecent(flight.ScheduledTime);
+            return includeType && includeTime;
           });
-  
+    
           const formattedData = filtered.map(flight => ({
             id: flight.FlightId,
+            stdRaw: flight.ScheduledTime,
             std: formatTime(flight.ScheduledTime),
             etd: formatTime(flight.EstimatedTime),
             airline: flight.AirlineName || "Unknown",
@@ -47,22 +60,23 @@ const Departure = ({ type = "D" }) => {
             destination: flight.AirportName || "Unknown",
             remark: flight.RemarkName || "Scheduled"
           }));
-  
-          setFlights(formattedData);
-          if (gridApi) {
-            gridApi.sizeColumnsToFit(); 
-          }
+    
+          const MAX_VISIBLE_ROWS = 9;
+          const visibleData = formattedData.slice(0, MAX_VISIBLE_ROWS);
+    
+          setFlights(visibleData);
         })
         .catch(error => console.error("❌ Error fetching flight data:", error));
     };
-  
+    
+
     // Initial fetch
     fetchData();
-    
+
     // Set up polling
-    const dataInterval = setInterval(fetchData, 1000); 
+    const dataInterval = setInterval(fetchData, 1000);
     const clockInterval = setInterval(() => setCurrentTime(new Date()), 1000);
-  
+
     // Cleanup intervals
     return () => {
       clearInterval(dataInterval);
@@ -70,7 +84,7 @@ const Departure = ({ type = "D" }) => {
     };
   }, [gridApi, type]);
 
-  useEffect(() => {    
+  useEffect(() => {
     const handleResize = () => {
       if (gridApi) gridApi.sizeColumnsToFit();
     };
@@ -112,7 +126,8 @@ const Departure = ({ type = "D" }) => {
         if (value === "DELAYED") return `${base} remark-delayed`;
         if (value === "DEPARTED") return `${base} remark-departed`;
         if (value === "BOARDING") return `${base} remark-boarding`;
-        if (value === "PROGRESSING") return `${base} remark-progressing`;
+        if (value === "SCHEDULED") return `${base} remark-scheduled`;
+        if (value === "PROCESSING") return `${base} remark-processing`;
 
         return `${base} remark-normal`;
       }
@@ -135,12 +150,11 @@ const Departure = ({ type = "D" }) => {
         </div>
       </div>
 
-      <div className="ag-theme-alpine-dark fids-table">
+      <div className="ag-theme-alpine-dark fids-table" style={{ height: "600px", width: "100%" }}>
         <AgGridReact
           rowData={flights}
           columnDefs={columnDefs}
-          domLayout="autoHeight"
-          rowHeight={70}
+          rowHeight={60}
           headerHeight={40}
           animateRows={true}
           onGridReady={(params) => {
