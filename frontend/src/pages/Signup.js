@@ -118,7 +118,7 @@ const Signup = () => {
               required
               placeholder="Enter a strong password"
             />
-            <small className="form-hint">Minimum 6 characters recommended</small>
+            <small className="form-hint">Minimum 9 characters recommended</small>
           </div>
           <div className="form-group">
             <label>Airline</label>

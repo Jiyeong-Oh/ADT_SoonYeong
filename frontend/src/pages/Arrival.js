@@ -24,47 +24,47 @@ const Arrival = ({ type = "A" }) => {
   };
 
   useEffect(() => {
-    axios.get("http://localhost:9999/api/flights")
-      .then((response) => {
-        const rawFlights = response.data;
-
-        const filtered = rawFlights.filter(flight => {
-          if (type === "ALL") return true;
-          return flight.FlightType === type;
-        });
-
-        const formattedData = filtered.map(flight => ({
-          id: flight.FlightId,
-          sta: formatTime(flight.ScheduledTime),
-          eta: formatTime(flight.EstimatedTime),
-          airline: flight.AirlineName || "Unknown",
-          logo: flight.LogoPath || "/images/blank.png",
-          flight_number: flight.AirlineCode && flight.FlightNumber
-            ? `${flight.AirlineCode} ${flight.FlightNumber}` : "N/A",
-          origin: flight.AirportName || "Unknown",
-          remark: flight.RemarkName || "Scheduled"
-        }));
-
-        setFlights(formattedData);
-
-        if (gridApi) {
-          gridApi.setRowData(formattedData);
-          gridApi.sizeColumnsToFit();
-        }
-      })
-      .catch(error => console.error("❌ Error fetching flight data:", error));
-
-    const interval = setInterval(() => setCurrentTime(new Date()), 1000);
-    return () => clearInterval(interval);
-  }, [gridApi, type]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (gridApi) gridApi.sizeColumnsToFit();
+    const fetchData = () => {
+      axios.get("http://localhost:9999/api/flights")
+        .then((response) => {
+          const rawFlights = response.data;
+  
+          const filtered = rawFlights.filter(flight => {
+            if (type === "ALL") return true;
+            return flight.FlightType === type;
+          });
+  
+          const formattedData = filtered.map(flight => ({
+            id: flight.FlightId,
+            sta: formatTime(flight.ScheduledTime),
+            eta: formatTime(flight.EstimatedTime),
+            airline: flight.AirlineName || "Unknown",
+            logo: flight.LogoPath || "/images/blank.png",
+            flight_number: flight.AirlineCode && flight.FlightNumber
+              ? `${flight.AirlineCode} ${flight.FlightNumber}` : "N/A",
+            origin: flight.AirportName || "Unknown",
+            remark: flight.RemarkName || "Scheduled"
+          }));
+  
+          setFlights(formattedData);
+          if (gridApi) {
+            gridApi.setRowData(formattedData);
+            gridApi.sizeColumnsToFit();
+          }
+        })
+        .catch(error => console.error("❌ Error fetching flight data:", error));
     };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [gridApi]);
+  
+    fetchData();
+  
+    const dataInterval = setInterval(fetchData, 1000);
+    const clockInterval = setInterval(() => setCurrentTime(new Date()), 1000);
+  
+    return () => {
+      clearInterval(dataInterval);
+      clearInterval(clockInterval);
+    };
+  }, [gridApi, type]);
 
   const columnDefs = [
     { field: "sta", headerName: "STA", flex: 1, cellClass: "center-text bold-text", headerClass: "center-header" },
