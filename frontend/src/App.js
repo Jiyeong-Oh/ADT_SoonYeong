@@ -7,8 +7,12 @@ import FlightScheduleMgt from "./pages/FlightScheduleMgt";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Logout from "./pages/Logout";
-import CodeMgt from "./pages/CodeMgt";
-import UserMgt from "./pages/UserMgt";
+import CodeMgtAirport from "./pages/CodeMgtAirport";
+import CodeMgtAirline from "./pages/CodeMgtAirline";
+import CodeMgtRemark from "./pages/CodeMgtRemark";
+import UserMgtRole from "./pages/UserMgtRole";
+import UserMgtUser from "./pages/UserMgtUser";
+import UserMgtUserRole from "./pages/UserMgtUserRole";
 import Arrival from "./pages/Arrival";
 import Departure from "./pages/Departure";
 import Mixed from "./pages/Mixed";
@@ -90,18 +94,50 @@ function App() {
           }
         />
         <Route
-          path="/codemgt"
+          path="/codemgtairport"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <CodeMgt />
+              <CodeMgtAirport />
             </ProtectedRoute>
           }
         />
         <Route
-          path="/usermgt"
+          path="/codemgtairline"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <UserMgt />
+              <CodeMgtAirline />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/codemgtremark"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <CodeMgtRemark />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/usermgtrole"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <UserMgtRole />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/usermgtuser"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <UserMgtUser />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/usermgtuserrole"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <UserMgtUserRole />
             </ProtectedRoute>
           }
         />

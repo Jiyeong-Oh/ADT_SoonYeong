@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./FlightScheduleMgt.css";
 
-const FlightScheduleMgt = () => {
+const UserMgtUserRole = () => {
   const [flights, setFlights] = useState([]);
   const [airlines, setAirlines] = useState([]);
   const [airports, setAirports] = useState([]);
@@ -61,7 +61,7 @@ const FlightScheduleMgt = () => {
     axios
       .get("http://localhost:9999/api/remarks")
       .then((res) => setRemarks(res.data))
-      .catch((err) => console.error("❌ Error loading remarks", err));
+      .catch((err) => console.error("❌ Error loading airlines", err));
   };
 
   const handleSearch = () => {
@@ -434,4 +434,4 @@ const FlightScheduleMgt = () => {
   );
 };
 
-export default FlightScheduleMgt;
+export default UserMgtUserRole;

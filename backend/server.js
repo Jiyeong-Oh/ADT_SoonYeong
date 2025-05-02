@@ -287,20 +287,279 @@ app.delete("/api/airports/:code", (req, res) => {
 // ======= AIRLINES =======
 
 app.get("/api/airlines", (req, res) => {
-  const sql = `SELECT AirlineCode, AirlineName FROM Airlines ORDER BY AirlineName ASC`;
+  const sql = `SELECT AirlineCode, AirlineName, LogoPath, UseYn FROM Airlines ORDER BY AirlineName ASC`;
   db.all(sql, [], (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json(rows);
   });
 });
 
+app.get("/api/airlines_filter", (req, res) => {
+  const { code, name, logopath, yn } = req.query;
+  let whereClauses = [];
+  let params = [];
+
+  if (code?.trim()) {
+    whereClauses.push("AirlineCode LIKE ?");
+    params.push(`%${code.trim()}%`);
+  }
+
+  if (name?.trim()) {
+    whereClauses.push("AirlineName LIKE ?");
+    params.push(`%${name.trim()}%`);
+  }
+
+  if (logopath?.trim()) {
+    whereClauses.push("LogoPath LIKE ?");
+    params.push(`%${logopath.trim()}%`);
+  }
+
+  if (yn?.trim()) {
+    whereClauses.push("UseYn = ?");
+    params.push(yn.trim());
+  }
+
+  let sql = `SELECT AirlineCode, AirlineName, LogoPath, UseYn FROM Airlines`;
+  if (whereClauses.length > 0) {
+    sql += " WHERE " + whereClauses.join(" AND ");
+  }
+
+  db.all(sql, params, (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
+app.post("/api/airlines", (req, res) => {
+  const { AirlineCode, AirlineName, LogoPath, UseYn } = req.body;
+
+  if (!AirlineCode || !AirlineName) {
+    return res.status(400).json({ error: "AirlineCode and AirlineName are required." });
+  }
+
+  const sql = `
+    INSERT INTO Airlines (AirlineCode, AirlineName, LogoPath, UseYn)
+    VALUES (?, ?, ?, ?)
+  `;
+
+  const params = [AirlineCode, AirlineName || null, LogoPath || null, UseYn || 'Y'];
+
+  db.run(sql, params, function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    res.status(201).json({ message: "✅ Airline added successfully.", id: this.lastID });
+  });
+});
+
+app.put("/api/airlines/:code", (req, res) => {
+  const { AirlineName, LogoPath, UseYn } = req.body;
+  const AirlineCode = req.params.code;
+
+  const sql = `
+    UPDATE Airlines 
+    SET AirlineName = ?, LogoPath = ?, UseYn = ? 
+    WHERE AirlineCode = ?
+  `;
+  const params = [AirlineName, LogoPath, UseYn, AirlineCode];
+
+  db.run(sql, params, function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    if (this.changes === 0) {
+      return res.status(404).json({ error: "Airline not found." });
+    }
+    res.json({ message: "✅ Airline updated successfully." });
+  });
+});
+
+app.delete("/api/airlines/:code", (req, res) => {
+  const AirlineCode = req.params.code;
+
+  db.run("DELETE FROM Airlines WHERE AirlineCode = ?", AirlineCode, function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    if (this.changes === 0) {
+      return res.status(404).json({ error: "Airline not found." });
+    }
+    res.json({ message: "✅ Airline deleted successfully." });
+  });
+});
+
 // ======= Remarks =======
 
 app.get("/api/remarks", (req, res) => {
-  const sql = `SELECT RemarkCode, RemarkName FROM Remarks ORDER BY RemarkName ASC`;
+  const sql = `SELECT RemarkCode, RemarkName, UseYn FROM Remarks ORDER BY RemarkName ASC`;
   db.all(sql, [], (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json(rows);
+  });
+});
+
+app.get("/api/remarks_filter", (req, res) => {
+  const { code, name, yn } = req.query;
+  let whereClauses = [];
+  let params = [];
+
+  if (code?.trim()) {
+    whereClauses.push("RemarkCode LIKE ?");
+    params.push(`%${code.trim()}%`);
+  }
+
+  if (name?.trim()) {
+    whereClauses.push("RemarkName LIKE ?");
+    params.push(`%${name.trim()}%`);
+  }
+
+  if (yn?.trim()) {
+    whereClauses.push("UseYn = ?");
+    params.push(yn.trim());
+  }
+
+  let sql = `SELECT RemarkCode, RemarkName, UseYn FROM Remarks`;
+  if (whereClauses.length > 0) {
+    sql += " WHERE " + whereClauses.join(" AND ");
+  }
+
+  db.all(sql, params, (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
+app.post("/api/remarks", (req, res) => {
+  const { RemarkCode, RemarkName, UseYn } = req.body;
+
+  if (!RemarkCode || !RemarkName) {
+    return res.status(400).json({ error: "RemarkCode and RemarkName are required." });
+  }
+
+  const sql = `
+    INSERT INTO Remarks (RemarkCode, RemarkName, UseYn)
+    VALUES (?, ?, ?)
+  `;
+
+  const params = [RemarkCode, RemarkName || null, UseYn || 'Y'];
+
+  db.run(sql, params, function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    res.status(201).json({ message: "✅ Remark added successfully.", id: this.lastID });
+  });
+});
+
+app.put("/api/remarks/:code", (req, res) => {
+  const { RemarkName, UseYn } = req.body;
+  const RemarkCode = req.params.code;
+
+  const sql = `
+    UPDATE Remarks 
+    SET RemarkName = ?, UseYn = ? 
+    WHERE RemarkCode = ?
+  `;
+  const params = [RemarkName, UseYn, RemarkCode];
+
+  db.run(sql, params, function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    if (this.changes === 0) {
+      return res.status(404).json({ error: "Remark not found." });
+    }
+    res.json({ message: "✅ Remark updated successfully." });
+  });
+});
+
+app.delete("/api/remarks/:code", (req, res) => {
+  const RemarkCode = req.params.code;
+
+  db.run("DELETE FROM Remarks WHERE RemarkCode = ?", RemarkCode, function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    if (this.changes === 0) {
+      return res.status(404).json({ error: "Remark not found." });
+    }
+    res.json({ message: "✅ Remark deleted successfully." });
+  });
+});
+
+// ======= ROLES =======
+
+app.get("/api/roles", (req, res) => {
+  const sql = `SELECT RoleID, RoleName FROM Roles ORDER BY RoleID ASC`;
+  db.all(sql, [], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
+app.get("/api/roles_filter", (req, res) => {
+  const { code, name } = req.query;
+  let whereClauses = [];
+  let params = [];
+
+  if (code?.trim()) {
+    whereClauses.push("RoleID LIKE ?");
+    params.push(`%${code.trim()}%`);
+  }
+
+  if (name?.trim()) {
+    whereClauses.push("RoleName LIKE ?");
+    params.push(`%${name.trim()}%`);
+  }
+
+  let sql = `SELECT RoleID, RoleName FROM Roles`;
+  if (whereClauses.length > 0) {
+    sql += " WHERE " + whereClauses.join(" AND ");
+  }
+
+  db.all(sql, params, (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
+app.post("/api/roles", (req, res) => {
+  const { RoleID, RoleName } = req.body;
+
+  if (!RoleID || !RoleName) {
+    return res.status(400).json({ error: "RoleID and RoleName are required." });
+  }
+
+  const sql = `
+    INSERT INTO Roles (RoleID, RoleName)
+    VALUES (?, ?)
+  `;
+
+  const params = [RoleID, RoleName];
+
+  db.run(sql, params, function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    res.status(201).json({ message: "✅ Role added successfully.", id: this.lastID });
+  });
+});
+
+app.put("/api/roles/:code", (req, res) => {
+  const { RoleName } = req.body;
+  const RoleID = req.params.code;
+
+  const sql = `
+    UPDATE Roles 
+    SET RoleName = ?
+    WHERE RoleID = ?
+  `;
+  const params = [RoleName, RoleID];
+
+  db.run(sql, params, function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    if (this.changes === 0) {
+      return res.status(404).json({ error: "Role not found." });
+    }
+    res.json({ message: "✅ Role updated successfully." });
+  });
+});
+
+app.delete("/api/roles/:code", (req, res) => {
+  const RoleID = req.params.code;
+
+  db.run("DELETE FROM Roles WHERE RoleID = ?", RoleID, function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    if (this.changes === 0) {
+      return res.status(404).json({ error: "Role not found." });
+    }
+    res.json({ message: "✅ Role deleted successfully." });
   });
 });
 
@@ -330,6 +589,93 @@ app.post("/api/users", (req, res) => {
     res.status(201).json({ message: "✅ User registered successfully." });
   });
 });
+
+app.get("/api/users", (req, res) => {
+  const sql = `SELECT UserID, UserName, Password, AirlineCode, AirportCode
+  FROM Users
+  ORDER BY UserID ASC`;
+  db.all(sql, [], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
+
+app.get("/api/users_filter", (req, res) => {
+  const { code, name, password, airlineCode, airportCode } = req.query;
+  let whereClauses = [];
+  let params = [];
+
+  if (code?.trim()) {
+    whereClauses.push("UserID LIKE ?");
+    params.push(`%${code.trim()}%`);
+  }
+
+  if (name?.trim()) {
+    whereClauses.push("UserName LIKE ?");
+    params.push(`%${name.trim()}%`);
+  }
+
+  if (password?.trim()) {
+    whereClauses.push("Password LIKE ?");
+    params.push(`%${password.trim()}%`);
+  }
+
+  if (airlineCode?.trim()) {
+    whereClauses.push("AirlineCode LIKE ?");
+    params.push(`%${airlineCode.trim()}%`);
+  }
+
+  if (airportCode?.trim()) {
+    whereClauses.push("AirportCode LIKE ?");
+    params.push(`%${airportCode.trim()}%`);
+  }
+
+  let sql = `SELECT UserID, UserName, Password, AirlineCode, AirportCode FROM Users`;
+  if (whereClauses.length > 0) {
+    sql += " WHERE " + whereClauses.join(" AND ");
+  }
+
+  db.all(sql, params, (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
+app.put("/api/users/:code", (req, res) => {
+  const { UserName, Password, AirlineCode, AirportCode } = req.body;
+  const UserID = req.params.code;
+
+  const sql = `
+    UPDATE Users 
+    SET UserName = ?, Password = ?, AirlineCode = ?, AirportCode = ?
+    WHERE UserID = ?
+  `;
+  const params = [UserName, Password, AirlineCode, AirportCode, UserID];
+
+  db.run(sql, params, function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    if (this.changes === 0) {
+      return res.status(404).json({ error: "User not found." });
+    }
+    res.json({ message: "✅ User updated successfully." });
+  });
+});
+
+
+app.delete("/api/users/:code", (req, res) => {
+  const UserID = req.params.code;
+
+  db.run("DELETE FROM Users WHERE UserID = ?", UserID, function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    if (this.changes === 0) {
+      return res.status(404).json({ error: "User not found." });
+    }
+    res.json({ message: "✅ User deleted successfully." });
+  });
+});
+
+// ======= LOGINS =======
 
 app.post("/api/login", (req, res) => {
   const { userID, password } = req.body;
