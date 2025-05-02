@@ -612,6 +612,7 @@ app.delete("/api/roles/:code", (req, res) => {
 
 // ======= USERS =======
 
+// Post is only available through Login Page
 app.post("/api/users", (req, res) => {
   const { userID, userName, password, airlineCode } = req.body;
 
@@ -649,7 +650,7 @@ app.get("/api/users", (req, res) => {
 
 
 app.get("/api/users_filter", (req, res) => {
-  const { code, name, password, airlineCode, airportCode } = req.query;
+  const { code, name, password, airline, airport } = req.query;
   let whereClauses = [];
   let params = [];
 
@@ -668,14 +669,14 @@ app.get("/api/users_filter", (req, res) => {
     params.push(`%${password.trim()}%`);
   }
 
-  if (airlineCode?.trim()) {
+  if (airline?.trim()) {
     whereClauses.push("AirlineCode LIKE ?");
-    params.push(`%${airlineCode.trim()}%`);
+    params.push(`%${airline.trim()}%`);
   }
 
-  if (airportCode?.trim()) {
+  if (airport?.trim()) {
     whereClauses.push("AirportCode LIKE ?");
-    params.push(`%${airportCode.trim()}%`);
+    params.push(`%${airport.trim()}%`);
   }
 
   let sql = `SELECT UserID, UserName, Password, AirlineCode, AirportCode FROM Users`;
@@ -719,6 +720,106 @@ app.delete("/api/users/:code", (req, res) => {
       return res.status(404).json({ error: "User not found." });
     }
     res.json({ message: "✅ User deleted successfully." });
+  });
+});
+
+
+// ======= USER_Roles =======
+
+
+app.post("/api/userroles", (req, res) => {
+  const { UserRoleID, UserID, RoleID } = req.body;
+
+  if (!UserRoleID || !UserID || !RoleID) {
+    return res.status(400).json({ error: "UserRoleID, UserID and RoleID are required." });
+  }
+
+  const sql = `
+    INSERT INTO UserRoles (UserRoleID, UserID, RoleID)
+    VALUES (?, ?, ?)
+  `;
+
+  const params = [UserRoleID, UserID, RoleID];
+
+  db.run(sql, params, function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    res.status(201).json({ message: "✅ UserRole added successfully.", id: this.lastID });
+  });
+});
+
+
+app.get("/api/userroles", (req, res) => {
+  const sql = `SELECT UserRoleID, UserID, RoleID
+  FROM UserRoles
+  ORDER BY UserRoleID ASC`;
+  db.all(sql, [], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
+
+app.get("/api/userroles_filter", (req, res) => {
+  const { userroleid, userid, roleid } = req.query;
+  let whereClauses = [];
+  let params = [];
+
+  if (userroleid?.trim()) {
+    whereClauses.push("UserRoleID LIKE ?");
+    params.push(`%${userroleid.trim()}%`);
+  }
+
+  if (userid?.trim()) {
+    whereClauses.push("UserID LIKE ?");
+    params.push(`%${userid.trim()}%`);
+  }
+
+  if (roleid?.trim()) {
+    whereClauses.push("RoleID LIKE ?");
+    params.push(`%${roleid.trim()}%`);
+  }
+
+  let sql = `SELECT UserRoleID, UserID, RoleID FROM UserRoles`;
+  if (whereClauses.length > 0) {
+    sql += " WHERE " + whereClauses.join(" AND ");
+  }
+
+  db.all(sql, params, (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
+app.put("/api/userroles/:code", (req, res) => {
+  const { UserID, RoleID } = req.body;
+  const UserRoleID = req.params.code;
+
+  const sql = `
+    UPDATE UserRoles 
+    SET UserID = ?, RoleID = ?
+    WHERE UserRoleID = ?
+  `;
+  const params = [UserID, RoleID, UserRoleID];
+
+  db.run(sql, params, function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    if (this.changes === 0) {
+      return res.status(404).json({ error: "User Role not found." });
+    }
+    res.json({ message: "✅ User Role updated successfully." });
+  });
+});
+
+
+app.delete("/api/userroles/:code", (req, res) => {
+  const UserRoleID = req.params.code;
+
+  db.run("DELETE FROM UserRoles WHERE UserRoleID = ?", UserRoleID, function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    if (this.changes === 0) {
+      return res.status(404).json({ error: "User Role not found." });
+    }
+    res.json({ message: "✅ User Role deleted successfully." });
   });
 });
 

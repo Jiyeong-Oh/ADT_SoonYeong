@@ -28,7 +28,7 @@ const UserMgtUser = () => {
     axios.get("http://localhost:9999/api/users")
       .then(res => {
         setUsers(res.data);
-        console.log(res.data);
+        // console.log(res.data);
         setFilteredFlights(res.data); 
       })
       .catch(err => console.error("❌ Error loading users", err));
@@ -107,7 +107,7 @@ const UserMgtUser = () => {
     const isNew = !!user.isNew;
   
     if (isNew) {
-      console.log(user);
+      // console.log(user);
       axios.post("http://localhost:9999/api/users", user)
         .then(() => {
           fetchUsers();         // ✅ 전체 리스트를 다시 불러오면 중복 방지
@@ -115,7 +115,7 @@ const UserMgtUser = () => {
         })
         .catch(() => alert("❌ Error saving user."));
     } else {
-      console.log(user);
+      // console.log(user);
       axios.put(`http://localhost:9999/api/users/${user.UserID}`, user)
         .then(() => {
           fetchUsers();         // ✅ 동일하게 전체 새로고침
@@ -187,6 +187,17 @@ const UserMgtUser = () => {
               value={search.name}
               onChange={(e) => setSearch({ ...search, name: e.target.value })}
             />
+        <select
+          value={search.airline}
+          onChange={(e) => setSearch({ ...search, airline: e.target.value })}
+        >
+          <option value="">-- Airline --</option>
+          {airlines.map((a) => (
+            <option key={a.AirlineCode} value={a.AirlineCode}>
+              {a.AirlineName}
+            </option>
+          ))}
+        </select>
         <button className="btn" onClick={handleSearch}>Search</button>
         {/* <button className="btn" onClick={handleAddRow}>New</button> */}
       </div>
