@@ -1,0 +1,12 @@
+AirlineCode,AirlineName,LogoPath,UseYn
+AA,AmericanAirlines,/images/aa.png,Y
+DL,DeltaAirLines,/images/dl.png,Y
+KE,KoreanAir,/images/ke.png,Y
+AC,Aer Lingus,/images/ac.png,Y
+AS,Air Canada,/images/as.png,Y
+G4,Alaska Air,/images/g4.png,Y
+F9,Delta,/images/f9.png,Y
+WN,Frontier,/images/wn.png,Y
+NK,Southwest,/images/nk.png,Y
+SY,Spirit,/images/sy.png,Y
+UA,Sun Country,/images/ua.png,Y

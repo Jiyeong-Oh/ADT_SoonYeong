@@ -1,0 +1,56 @@
+AirportCode,AirportName,City,Country,UseYn
+JFK,John F. Kennedy International Airport,New York,USA1,Y
+LAX,Los Angeles International Airport,Los Angeles,USA2,Y
+ICN,Incheon International Airport,Seoul,South Korea1,Y
+IND,Indiana International Airport,Indianapolis,USA,Y
+ATL,Atlanta ,,,Y
+AUS,Austin-Bergstrom ,,,Y
+BWI,Baltimore ,,,Y
+BOS,Boston ,,,Y
+CUN,Cancun ,,,Y
+CHS,Charleston ,,,Y
+CLT,Charlotte ,,,Y
+MDW,Chicago-Midway ,,,Y
+ORD,Chicago O'Hare ,,,Y
+DFW,Dallas-Fort Worth ,,,Y
+DAL,Dallas Love Field ,,,Y
+DEN,Denver ,,,Y
+VPS,Destin-Fort Walton Beach ,,,Y
+DTW,Detroit ,,,Y
+DUB,Dublin ,,,Y
+FLL,Ft. Lauderdale-Hollywood ,,,Y
+RSW,Ft. Myers ,,,Y
+HOU,Houston Hobby ,,,Y
+IAH,Houston Intercontinental ,,,Y
+JAX,Jacksonville ,,,Y
+MCI,Kansas City ,,,Y
+EYW,Key West ,,,Y
+LAS,Las Vegas ,,,Y
+MIA,Miami ,,,Y
+MSP,Minneapolis ,,,Y
+MYR,Myrtle Beach ,,,Y
+BNA,Nashville ,,,Y
+MSY,New Orleans ,,,Y
+LGA,New York LaGuardia ,,,Y
+EWR,New York-Newark ,,,Y
+MCO,Orlando ,,,Y
+SFB,Orlando Sanford ,,,Y
+ECP,Panama City ,,,Y
+PHL,Philadelphia ,,,Y
+PHX,Phoenix ,,,Y
+PDX,Portland ,,,Y
+PUJ,Punta Cana ,,,Y
+PGD,Punta Gorda ,,,Y
+RDU,Raleigh-Durham ,,,Y
+SLC,Salt Lake City ,,,Y
+SAN,San Diego ,,,Y
+SFO,San Francisco ,,,Y
+SRQ,Sarasota-Bradenton ,,,Y
+SAV,Savannah ,,,Y
+SEA,Seattle-Tacoma ,,,Y
+PIE,St. Pete Clearwater ,,,Y
+TPA,Tampa ,,,Y
+YYZ,Toronto ,,,Y
+DCA,Washington DC ﻿National﻿ ,,,Y
+IAD,Washington DC Dulles ,,,Y
+PBI,West Palm Beach ,,,Y

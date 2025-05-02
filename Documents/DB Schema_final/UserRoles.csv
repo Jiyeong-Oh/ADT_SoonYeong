@@ -1,0 +1,4 @@
+UserRoleID,UserID,RoleID
+UR01,user01,ADMIN
+UR02,user02,OPS
+UR03,user03,VIEWER

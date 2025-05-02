@@ -1,0 +1,11 @@
+RemarkCode,RemarkName,UseYn
+PRG,Processing,Y
+BRD,Boarding,Y
+DPT,Departed,Y
+ARR,Arrived,Y
+DLY,Delayed,Y
+CNL,Cancelled,Y
+OTM,ON-TIME,Y
+DLT,Delayed,Y
+ONT,On Time,Y
+ERL,Early,Y

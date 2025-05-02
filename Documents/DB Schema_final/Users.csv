@@ -1,0 +1,7 @@
+UserID,UserName,Password,AirportCode,AirlineCode
+user01,Alice Johnson,5e884898da28047151d0e56f8dc62927,JFK,AA
+user02,Bob Smith,6cb75f652a9b52798eb6cf2201057c73,LAX,DL
+user03,Charlie Kim,2b3a8d0a34e3e237c54b4cf2d80a3c41,ICN,KE
+soon1,soon,c9ec007b6094cd0bc58ec969bcd909bf03ebba1f4bfc9baea8b1f4114ace1020,,
+ohjiye,Jiyeong Oh,b5d848cc4a45d05ecde4f566c99a9892c118c595a420865e53478554952c8dff,,DL
+soon4,soonsoon,b0d107a1cb94cd60c513a8636f99b8d700154887e2a96f0310a1b5f3e60a6ddd,,
