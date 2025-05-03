@@ -38,7 +38,7 @@ const Login = ({ setIsLoggedIn }) => {
     try {
       const hashedPassword = await hashPassword(form.password);
 
-      const res = await fetch("/api/login", {
+      const res = await fetch("http://localhost:9999/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
