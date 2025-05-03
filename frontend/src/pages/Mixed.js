@@ -6,6 +6,7 @@ import axios from "axios";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import "./Mixed.css";
+import AirlineLogo from "../components/AirlineLogo";
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
@@ -85,12 +86,7 @@ const Mixed = () => {
       flex: 1.5,
       cellRenderer: (params) => (
         <div className="mixed-fids-airline-cell">
-          <img
-            src={params.data.logo}
-            alt="Airline"
-            className="mixed-fids-airline-logo"
-            onError={(e) => { e.target.src = "/images/blank.png"; }}
-          />
+          <AirlineLogo src={params.data.logo} alt="Airline" />
         </div>
       )
     },

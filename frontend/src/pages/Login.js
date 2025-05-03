@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Login.css";
 
@@ -8,6 +8,13 @@ const Login = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const successMessage = location.state?.message || "";
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    if (isLoggedIn) {
+      navigate("/home");
+    }
+  }, [navigate]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -31,7 +38,7 @@ const Login = ({ setIsLoggedIn }) => {
     try {
       const hashedPassword = await hashPassword(form.password);
 
-      const res = await fetch("http://localhost:9999/api/login", {
+      const res = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

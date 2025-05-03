@@ -7,6 +7,7 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import axios from "axios";
 import "./Departure.css";
+import AirlineLogo from "../components/AirlineLogo";
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
@@ -102,12 +103,7 @@ const Departure = ({ type = "D" }) => {
       headerClass: "center-header",
       cellRenderer: (params) => (
         <div className="airline-cell">
-          <img
-            src={params.data.logo}
-            alt="Airline Logo"
-            className="airline-logo"
-            onError={(e) => { e.target.src = "/images/blank.png"; }}
-          />
+          <AirlineLogo src={params.data.logo} alt="Airline Logo" />
           <span className="airline-name">{params.value}</span>
         </div>
       )
