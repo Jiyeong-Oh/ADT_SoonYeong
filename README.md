@@ -15,3 +15,6 @@
 - `/data/structured_data.json`: structured JSON data
 - `/data/FIDS_dump.sql`: SQLite dump
 - `/data/FIDS_ExpressExtractedQueries.sql`: Actual API queries
+
+
+![alt text](image.png)
