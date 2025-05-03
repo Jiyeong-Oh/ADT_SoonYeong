@@ -29,7 +29,7 @@ const UserMgtRole = () => {
   const handleSearch = () => {
     axios.get("http://localhost:9999/api/roles_filter", { params: search })
       .then(res => 
-        {console.log("🛬 Search result:", res.data); // ✅ 여기서 데이터 확인!
+        {console.log("🛬 Search result:", res.data);  
           console.log(search);
           setFilteredFlights(res.data);})
       
@@ -43,18 +43,18 @@ const UserMgtRole = () => {
       isNew: true,
     };
   
-    const newList = [...roles, newRow];  // ✅ 먼저 새 배열 생성
+    const newList = [...roles, newRow];   
     setRoles(newList);
-    setFilteredFlights(newList);           // ✅ 둘 다 같은 리스트로 업데이트
+    setFilteredFlights(newList);            
   };
 
   const handleChange = (index, field, value) => {
-    // 1. filteredFlights 수정
+     
     const updatedFiltered = [...filteredFlights];
     updatedFiltered[index][field] = value;
     setFilteredFlights(updatedFiltered);
   
-    // 2. roles 배열도 수정 (RoleID로 찾는 게 가장 안전)
+     
     const targetCode = updatedFiltered[index].RoleID;
     const updatedRoles = roles.map((role) =>
       role.RoleID === targetCode
@@ -63,7 +63,7 @@ const UserMgtRole = () => {
     );
     setRoles(updatedRoles);
   
-    // 3. 수정 상태 관리
+     
     const updatedCells = new Set(editedCells);
     updatedCells.add(`${index}-${field}`);
     setEditedCells(updatedCells);
@@ -84,14 +84,14 @@ const UserMgtRole = () => {
     if (isNew) {
       axios.post("http://localhost:9999/api/roles", role)
         .then(() => {
-          fetchRoles();         // ✅ 전체 리스트를 다시 불러오면 중복 방지
+          fetchRoles();          
           clearEditState(index);
         })
         .catch(() => alert("❌ Error saving role."));
     } else {
       axios.put(`http://localhost:9999/api/roles/${role.RoleID}`, role)
         .then(() => {
-          fetchRoles();         // ✅ 동일하게 전체 새로고침
+          fetchRoles();          
           clearEditState(index);
         })
         .catch(() => alert("❌ Error updating role."));
@@ -99,7 +99,7 @@ const UserMgtRole = () => {
   };
 
   const clearEditState = (index) => {
-    const role = filteredFlights[index]; // 화면 기준으로 접근
+    const role = filteredFlights[index];  
     const target = roles.find(a => a.RoleID === role.RoleID);
     if (!target) return;
   

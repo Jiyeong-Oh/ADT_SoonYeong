@@ -51,7 +51,7 @@ const UserMgtUser = () => {
   const handleSearch = () => {
     axios.get("http://localhost:9999/api/users_filter", { params: search })
       .then(res => 
-        {console.log("🛬 Search result:", res.data); // ✅ 여기서 데이터 확인!
+        {console.log("🛬 Search result:", res.data);  
           console.log(search);
           setFilteredFlights(res.data);})
       
@@ -68,18 +68,18 @@ const UserMgtUser = () => {
       isNew: true,
     };
   
-    const newList = [...users, newRow];  // ✅ 먼저 새 배열 생성
+    const newList = [...users, newRow];   
     setUsers(newList);
-    setFilteredFlights(newList);           // ✅ 둘 다 같은 리스트로 업데이트
+    setFilteredFlights(newList);            
   };
 
   const handleChange = (index, field, value) => {
-    // 1. filteredFlights 수정
+     
     const updatedFiltered = [...filteredFlights];
     updatedFiltered[index][field] = value;
     setFilteredFlights(updatedFiltered);
   
-    // 2. users 배열도 수정 (UserID로 찾는 게 가장 안전)
+     
     const targetCode = updatedFiltered[index].UserID;
     const updatedUsers = users.map((user) =>
       user.UserID === targetCode
@@ -88,7 +88,7 @@ const UserMgtUser = () => {
     );
     setUsers(updatedUsers);
   
-    // 3. 수정 상태 관리
+     
     const updatedCells = new Set(editedCells);
     updatedCells.add(`${index}-${field}`);
     setEditedCells(updatedCells);
@@ -110,7 +110,7 @@ const UserMgtUser = () => {
       // console.log(user);
       axios.post("http://localhost:9999/api/users", user)
         .then(() => {
-          fetchUsers();         // ✅ 전체 리스트를 다시 불러오면 중복 방지
+          fetchUsers();          
           clearEditState(index);
         })
         .catch(() => alert("❌ Error saving user."));
@@ -118,7 +118,7 @@ const UserMgtUser = () => {
       // console.log(user);
       axios.put(`http://localhost:9999/api/users/${user.UserID}`, user)
         .then(() => {
-          fetchUsers();         // ✅ 동일하게 전체 새로고침
+          fetchUsers();          
           clearEditState(index);
         })
         .catch(() => alert("❌ Error updating user."));
@@ -126,7 +126,7 @@ const UserMgtUser = () => {
   };
 
   const clearEditState = (index) => {
-    const user = filteredFlights[index]; // 화면 기준으로 접근
+    const user = filteredFlights[index];  
     const target = users.find(a => a.UserID === user.UserID);
     if (!target) return;
   

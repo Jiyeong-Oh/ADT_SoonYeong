@@ -25,7 +25,7 @@ const Home = () => {
   const [airportFlightData, setAirportFlightData] = useState([]);
 
   useEffect(() => {
-    // 통계 요약 정보
+     
     Promise.all([
       axios.get("http://localhost:9999/api/users"),
       axios.get("http://localhost:9999/api/airlines"),
@@ -42,7 +42,7 @@ const Home = () => {
           roles: roles.data.length,
         });
 
-        // 항공사별 운항편 수 세기
+         
         const airlineMap = {};
         flights.data.forEach((flight) => {
           const name = flight.AirlineName || "Unknown";
@@ -57,7 +57,7 @@ const Home = () => {
 
         const airportMap = {};
         flights.data.forEach((flight) => {
-          const name = flight.AirportName || "Unknown";  // ✅ 이름 기준으로 그룹
+          const name = flight.AirportName || "Unknown";   
           airportMap[name] = (airportMap[name] || 0) + 1;
         });
 
@@ -118,7 +118,7 @@ const Home = () => {
               <YAxis
                 dataKey="AirportName"
                 type="category"
-                width={120} // 너비를 넉넉히 줘야 함
+                width={120}  
                 tick={{ fontSize: 11, angle: -15, textAnchor: "end" }}
               />
               <Tooltip />

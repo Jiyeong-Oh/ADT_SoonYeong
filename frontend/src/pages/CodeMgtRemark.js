@@ -30,7 +30,7 @@ const CodeMgtRemark = () => {
   const handleSearch = () => {
     axios.get("http://localhost:9999/api/remarks_filter", { params: search })
       .then(res => 
-        {console.log("🛬 Search result:", res.data); // ✅ 여기서 데이터 확인!
+        {console.log("🛬 Search result:", res.data);  
           console.log(search);
           setFilteredFlights(res.data);})
       
@@ -45,18 +45,18 @@ const CodeMgtRemark = () => {
       isNew: true,
     };
   
-    const newList = [...remarks, newRow];  // ✅ 먼저 새 배열 생성
+    const newList = [...remarks, newRow];   
     setRemarks(newList);
-    setFilteredFlights(newList);           // ✅ 둘 다 같은 리스트로 업데이트
+    setFilteredFlights(newList);            
   };
 
   const handleChange = (index, field, value) => {
-    // 1. filteredFlights 수정
+     
     const updatedFiltered = [...filteredFlights];
     updatedFiltered[index][field] = value;
     setFilteredFlights(updatedFiltered);
   
-    // 2. remarks 배열도 수정 (RemarkCode로 찾는 게 가장 안전)
+     
     const targetCode = updatedFiltered[index].RemarkCode;
     const updatedRemarks = remarks.map((remark) =>
       remark.RemarkCode === targetCode
@@ -65,7 +65,7 @@ const CodeMgtRemark = () => {
     );
     setRemarks(updatedRemarks);
   
-    // 3. 수정 상태 관리
+     
     const updatedCells = new Set(editedCells);
     updatedCells.add(`${index}-${field}`);
     setEditedCells(updatedCells);
@@ -86,14 +86,14 @@ const CodeMgtRemark = () => {
     if (isNew) {
       axios.post("http://localhost:9999/api/remarks", remark)
         .then(() => {
-          fetchRemarks();         // ✅ 전체 리스트를 다시 불러오면 중복 방지
+          fetchRemarks();          
           clearEditState(index);
         })
         .catch(() => alert("❌ Error saving remark."));
     } else {
       axios.put(`http://localhost:9999/api/remarks/${remark.RemarkCode}`, remark)
         .then(() => {
-          fetchRemarks();         // ✅ 동일하게 전체 새로고침
+          fetchRemarks();          
           clearEditState(index);
         })
         .catch(() => alert("❌ Error updating remark."));
@@ -101,7 +101,7 @@ const CodeMgtRemark = () => {
   };
 
   const clearEditState = (index) => {
-    const remark = filteredFlights[index]; // 화면 기준으로 접근
+    const remark = filteredFlights[index];  
     const target = remarks.find(a => a.RemarkCode === remark.RemarkCode);
     if (!target) return;
   

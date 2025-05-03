@@ -50,7 +50,7 @@ const UserMgtUserRole = () => {
   const handleSearch = () => {
     axios.get("http://localhost:9999/api/userroles_filter", { params: search })
       .then(res => 
-        {console.log("🛬 Search result:", res.data); // ✅ 여기서 데이터 확인!
+        {console.log("🛬 Search result:", res.data);  
           console.log(search);
           setFilteredFlights(res.data);})
       
@@ -58,19 +58,19 @@ const UserMgtUserRole = () => {
   };
 
   const handleAddRow = () => {
-    // 1. 기존 ID 중 숫자만 추출하여 최대값 계산
+     
     const existingIDs = userroles
       .map(u => u.UserRoleID)
-      .filter(id => /^UR\d+$/.test(id)) // UR로 시작하고 숫자만 있는 경우
+      .filter(id => /^UR\d+$/.test(id))  
       .map(id => parseInt(id.replace("UR", ""), 10));
   
     const maxNum = existingIDs.length > 0 ? Math.max(...existingIDs) : 0;
     const nextNum = maxNum + 1;
   
-    // 2. 새로운 ID 생성 (숫자 부분을 항상 2자리 이상으로 포맷)
-    const newID = `UR${String(nextNum).padStart(2, '0')}`;  // 예: UR01, UR09, UR10
+     
+    const newID = `UR${String(nextNum).padStart(2, '0')}`;   
   
-    // 3. 새 row 추가
+     
     const newRow = {
       UserRoleID: newID,
       UserID: "",
@@ -90,18 +90,18 @@ const UserMgtUserRole = () => {
   //     isNew: true,
   //   };
   
-  //   const newList = [...userroles, newRow];  // ✅ 먼저 새 배열 생성
+   
   //   setUserRoles(newList);
-  //   setFilteredFlights(newList);           // ✅ 둘 다 같은 리스트로 업데이트
+   
   // };
 
   const handleChange = (index, field, value) => {
-    // 1. filteredFlights 수정
+     
     const updatedFiltered = [...filteredFlights];
     updatedFiltered[index][field] = value;
     setFilteredFlights(updatedFiltered);
   
-    // 2. userroles 배열도 수정 (UserRoleID로 찾는 게 가장 안전)
+     
     const targetCode = updatedFiltered[index].UserRoleID;
     const updatedUserRoles = userroles.map((userrole) =>
       userrole.UserRoleID === targetCode
@@ -110,7 +110,7 @@ const UserMgtUserRole = () => {
     );
     setUserRoles(updatedUserRoles);
   
-    // 3. 수정 상태 관리
+     
     const updatedCells = new Set(editedCells);
     updatedCells.add(`${index}-${field}`);
     setEditedCells(updatedCells);
@@ -133,7 +133,7 @@ const UserMgtUserRole = () => {
       // console.log(userrole);
       axios.post("http://localhost:9999/api/userroles", userrole)
         .then(() => {
-          fetchUsers();         // ✅ 전체 리스트를 다시 불러오면 중복 방지
+          fetchUsers();          
           clearEditState(index);
         })
         .catch(() => alert("❌ Error saving userrole."));
@@ -141,7 +141,7 @@ const UserMgtUserRole = () => {
       // console.log(userrole);
       axios.put(`http://localhost:9999/api/userroles/${userrole.UserRoleID}`, userrole)
         .then(() => {
-          fetchUsers();         // ✅ 동일하게 전체 새로고침
+          fetchUsers();          
           clearEditState(index);
         })
         .catch(() => alert("❌ Error updating userrole."));
@@ -149,7 +149,7 @@ const UserMgtUserRole = () => {
   };
 
   const clearEditState = (index) => {
-    const userrole = filteredFlights[index]; // 화면 기준으로 접근
+    const userrole = filteredFlights[index];  
     const target = userroles.find(a => a.UserRoleID === userrole.UserRoleID);
     if (!target) return;
   

@@ -31,7 +31,7 @@ const CodeMgtAirline = () => {
   const handleSearch = () => {
     axios.get("http://localhost:9999/api/airlines_filter", { params: search })
       .then(res => 
-        {console.log("🛬 Search result:", res.data); // ✅ 여기서 데이터 확인!
+        {console.log("🛬 Search result:", res.data);
           console.log(search);
           setFilteredFlights(res.data);})
       
@@ -47,18 +47,18 @@ const CodeMgtAirline = () => {
       isNew: true,
     };
   
-    const newList = [...airlines, newRow];  // ✅ 먼저 새 배열 생성
+    const newList = [...airlines, newRow];   
     setAirlines(newList);
-    setFilteredFlights(newList);           // ✅ 둘 다 같은 리스트로 업데이트
+    setFilteredFlights(newList);            
   };
 
   const handleChange = (index, field, value) => {
-    // 1. filteredFlights 수정
+     
     const updatedFiltered = [...filteredFlights];
     updatedFiltered[index][field] = value;
     setFilteredFlights(updatedFiltered);
   
-    // 2. airlines 배열도 수정 (AirlineCode로 찾는 게 가장 안전)
+     
     const targetCode = updatedFiltered[index].AirlineCode;
     const updatedAirlines = airlines.map((airline) =>
       airline.AirlineCode === targetCode
@@ -67,7 +67,7 @@ const CodeMgtAirline = () => {
     );
     setAirlines(updatedAirlines);
   
-    // 3. 수정 상태 관리
+     
     const updatedCells = new Set(editedCells);
     updatedCells.add(`${index}-${field}`);
     setEditedCells(updatedCells);
@@ -89,14 +89,14 @@ const CodeMgtAirline = () => {
     if (isNew) {
       axios.post("http://localhost:9999/api/airlines", airline)
         .then(() => {
-          fetchAirlines();         // ✅ 전체 리스트를 다시 불러오면 중복 방지
+          fetchAirlines();          
           clearEditState(index);
         })
         .catch(() => alert("❌ Error saving airline."));
     } else {
       axios.put(`http://localhost:9999/api/airlines/${airline.AirlineCode}`, airline)
         .then(() => {
-          fetchAirlines();         // ✅ 동일하게 전체 새로고침
+          fetchAirlines();          
           clearEditState(index);
         })
         .catch(() => alert("❌ Error updating airline."));
@@ -104,7 +104,7 @@ const CodeMgtAirline = () => {
   };
 
   const clearEditState = (index) => {
-    const airline = filteredFlights[index]; // 화면 기준으로 접근
+    const airline = filteredFlights[index];  
     const target = airlines.find(a => a.AirlineCode === airline.AirlineCode);
     if (!target) return;
   

@@ -32,7 +32,7 @@ const CodeMgtAirport = () => {
   const handleSearch = () => {
     axios.get("http://localhost:9999/api/airports_filter", { params: search })
       .then(res => 
-        {console.log("🛬 Search result:", res.data); // ✅ 여기서 데이터 확인!
+        {console.log("🛬 Search result:", res.data);  
           console.log(search);
           setFilteredFlights(res.data);})
       
@@ -49,18 +49,18 @@ const CodeMgtAirport = () => {
       isNew: true,
     };
   
-    const newList = [...airports, newRow];  // ✅ 먼저 새 배열 생성
+    const newList = [...airports, newRow];   
     setAirports(newList);
-    setFilteredFlights(newList);           // ✅ 둘 다 같은 리스트로 업데이트
+    setFilteredFlights(newList);            
   };
 
   const handleChange = (index, field, value) => {
-    // 1. filteredFlights 수정
+     
     const updatedFiltered = [...filteredFlights];
     updatedFiltered[index][field] = value;
     setFilteredFlights(updatedFiltered);
   
-    // 2. airports 배열도 수정 (AirportCode로 찾는 게 가장 안전)
+     
     const targetCode = updatedFiltered[index].AirportCode;
     const updatedAirports = airports.map((airport) =>
       airport.AirportCode === targetCode
@@ -69,7 +69,7 @@ const CodeMgtAirport = () => {
     );
     setAirports(updatedAirports);
   
-    // 3. 수정 상태 관리
+     
     const updatedCells = new Set(editedCells);
     updatedCells.add(`${index}-${field}`);
     setEditedCells(updatedCells);
@@ -90,14 +90,14 @@ const CodeMgtAirport = () => {
     if (isNew) {
       axios.post("http://localhost:9999/api/airports", airport)
         .then(() => {
-          fetchAirports();         // ✅ 전체 리스트를 다시 불러오면 중복 방지
+          fetchAirports();          
           clearEditState(index);
         })
         .catch(() => alert("❌ Error saving airport."));
     } else {
       axios.put(`http://localhost:9999/api/airports/${airport.AirportCode}`, airport)
         .then(() => {
-          fetchAirports();         // ✅ 동일하게 전체 새로고침
+          fetchAirports();          
           clearEditState(index);
         })
         .catch(() => alert("❌ Error updating airport."));
@@ -105,7 +105,7 @@ const CodeMgtAirport = () => {
   };
 
   const clearEditState = (index) => {
-    const airport = filteredFlights[index]; // 화면 기준으로 접근
+    const airport = filteredFlights[index];  
     const target = airports.find(a => a.AirportCode === airport.AirportCode);
     if (!target) return;
   
